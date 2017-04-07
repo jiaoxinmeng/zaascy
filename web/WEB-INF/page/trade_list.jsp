@@ -7,9 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <title>trade list jsp</title>
+
 </head>
 <body>
     <div>
@@ -19,7 +21,7 @@
                     <td>序号</td>
                     <td>项目名称</td>
                     <td>院成果编码</td>
-                    <td>操作</td>
+                    <td>操作<fmt:formatDate value="${date}" type="both"/></td>
                 </tr>
             </thead>
             <tbody>

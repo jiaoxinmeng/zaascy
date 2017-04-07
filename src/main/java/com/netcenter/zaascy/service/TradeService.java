@@ -1,6 +1,7 @@
 package com.netcenter.zaascy.service;
 
 import com.netcenter.zaascy.bean.Trade;
+import com.netcenter.zaascy.bean.TradeChild;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface TradeService {
     int updateByPrimaryKey(Trade record);
 
     List<Trade> selectAll();
+
+    List<TradeChild> selectAllTradeChildByQuarter(String quarter);
+
+    int insertTradeChildsByQuarty();
 }

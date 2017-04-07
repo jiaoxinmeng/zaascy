@@ -1,6 +1,8 @@
 package com.netcenter.zaascy.service.impl;
 
 import com.netcenter.zaascy.bean.Trade;
+import com.netcenter.zaascy.bean.TradeChild;
+import com.netcenter.zaascy.dao.TradeChildMapper;
 import com.netcenter.zaascy.dao.TradeMapper;
 import com.netcenter.zaascy.service.TradeService;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class TradeServiceImpl implements TradeService,Serializable {
     @Resource(name="tradeDao")
     private TradeMapper dao;
 
+    @Resource(name="tradeChildDao")
+    private TradeChildMapper childDao;
 
     public int deleteByPrimaryKey(Long id) {
         return dao.deleteByPrimaryKey(id);
@@ -45,5 +49,13 @@ public class TradeServiceImpl implements TradeService,Serializable {
 
     public List<Trade> selectAll() {
         return dao.selectAll();
+    }
+
+    public List<TradeChild> selectAllTradeChildByQuarter(String quarter) {
+        return childDao.selectAll();
+    }
+
+    public int insertTradeChildsByQuarty() {
+        return 0;
     }
 }

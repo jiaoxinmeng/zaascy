@@ -9,7 +9,9 @@
 <html>
 <head>
     <title>trade edit jsp</title>
-    <script type="application/javascript" src="/resources/js/jquery.js"></script>
+    <script type="application/javascript" src="/resources/js/jquery.js">
+
+    </script>
 </head>
 <body>
     <div>

@@ -126,40 +126,45 @@ public class SecurityUtil {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        try {
+//        try {
 //          String pwd = SecurityUtil.encryptMessage("11111111");
 //          System.out.println(pwd);
-//          String rs = SecurityUtil.decryptMessage("gdKEiQ5s2Plpu89cBJnz7Q==");//oou16do5
-
-            String pwd = SecurityUtil.createToken(8);
-            System.out.println("生成的随机令牌为:" + pwd);
-            String token = SecurityUtil.encryptMessage(pwd);
-            System.out.println("加密的随机令牌为:" + token + "长度为:" + token.length());
-            String username = "pengyh";
-            String last_token_2 = SecurityUtil.encryptMessage(username + "&" + token);
-            System.out.println("最终传递的令牌为:" + last_token_2 + "长度为:" + last_token_2.length());
-            String last_token_de = SecurityUtil.decryptMessage(last_token_2);
-            System.out.println("客户端第一次解码:" + last_token_de);
-            String[] arr = last_token_de.split("&");
-            if (arr.length == 2) {
-                String username_de = arr[0];
-                System.out.println("客户端得到用户名:" + username_de);
-                String token_de = arr[1];
-                System.out.println("客户端得到的令牌:" + token_de);
-                String token_de_d = SecurityUtil.decryptMessage(token_de);
-                System.out.println("客户端解码的令牌:" + token_de_d);
-            }
-
+        try {
+            String rs = SecurityUtil.decryptMessage("kqVbe44FrMo++JE+0gur5g==");//oou16do5
+            System.out.println(rs);
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
-        long endTime = System.currentTimeMillis();
-        Date startDate = new Date(startTime);
-        Date endDate = new Date(endTime);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss SSS");
-        System.out.println("程序结束时间：" + sdf.format(endDate));
-        System.out.println("程序开始时间：" + sdf.format(startDate));
-        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
+
+//            String pwd = SecurityUtil.createToken(8);
+//            System.out.println("生成的随机令牌为:" + pwd);
+//            String token = SecurityUtil.encryptMessage(pwd);
+//            System.out.println("加密的随机令牌为:" + token + "长度为:" + token.length());
+//            String username = "pengyh";
+//            String last_token_2 = SecurityUtil.encryptMessage(username + "&" + token);
+//            System.out.println("最终传递的令牌为:" + last_token_2 + "长度为:" + last_token_2.length());
+//            String last_token_de = SecurityUtil.decryptMessage(last_token_2);
+//            System.out.println("客户端第一次解码:" + last_token_de);
+//            String[] arr = last_token_de.split("&");
+//            if (arr.length == 2) {
+//                String username_de = arr[0];
+//                System.out.println("客户端得到用户名:" + username_de);
+//                String token_de = arr[1];
+//                System.out.println("客户端得到的令牌:" + token_de);
+//                String token_de_d = SecurityUtil.decryptMessage(token_de);
+//                System.out.println("客户端解码的令牌:" + token_de_d);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+//        long endTime = System.currentTimeMillis();
+//        Date startDate = new Date(startTime);
+//        Date endDate = new Date(endTime);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss SSS");
+//        System.out.println("程序结束时间：" + sdf.format(endDate));
+//        System.out.println("程序开始时间：" + sdf.format(startDate));
+//        System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
     }
 
 

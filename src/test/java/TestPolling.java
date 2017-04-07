@@ -20,7 +20,6 @@ public class TestPolling implements Runnable{
      * @return
      */
     private static Date getLastedDate(String tableName){
-        Long startTime = System.currentTimeMillis();
         Date date = null;
         Connection conn = DBUtil.getConnection();
         String sql = "select MAX(JILXGSJ) AS date from " + tableName;
@@ -37,8 +36,6 @@ public class TestPolling implements Runnable{
         } finally {
             DBUtil.close(conn);
         }
-        Long endTime = System.currentTimeMillis();
-        System.out.println("本次getLastedDate操作用时:"+(endTime-startTime));
         return date;
     }
 
@@ -48,7 +45,6 @@ public class TestPolling implements Runnable{
      * @return
      */
     private static List<Long> getModifyIdList(Date lastDate){
-        Long startTime = System.currentTimeMillis();
         List<Long> list = new ArrayList<Long>();
         Date date = null;
         Connection conn = DBUtil.getConnection();
@@ -60,6 +56,7 @@ public class TestPolling implements Runnable{
             while (rs.next()) {
                 Long id = rs.getLong("YONGH_ID");
                 list.add(id);
+                System.out.println("需要更新的id:"+id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,8 +65,6 @@ public class TestPolling implements Runnable{
         } finally {
             DBUtil.close(conn);
         }
-        Long endTime = System.currentTimeMillis();
-        System.out.println("本次getModifyIdList操作用时:"+(endTime-startTime) + "  list长度" + list.size());
         return list;
     }
 
@@ -79,11 +74,6 @@ public class TestPolling implements Runnable{
      * @return
      */
     private static void insertByIdList(List<Long> ids){
-        Long startTime = System.currentTimeMillis();
-
-        for(long id : ids){
-            System.out.println("id 为"+id);
-        }
 
         if(ids!=null){
             Connection conn = DBUtil.getConnection();
@@ -106,8 +96,6 @@ public class TestPolling implements Runnable{
                 DBUtil.close(conn);
             }
         }
-        Long endTime = System.currentTimeMillis();
-        System.out.println("本次insertByIdList操作用时:"+(endTime-startTime));
     }
 
     /**
@@ -115,8 +103,6 @@ public class TestPolling implements Runnable{
      * @param ids
      */
     private static void delByIdList(List<Long> ids){
-        Long startTime = System.currentTimeMillis();
-
         if(ids!=null){
             Connection conn = DBUtil.getConnection();
             String sql = "DELETE FROM XTYH_NEW where YONGH_ID in ( ? ";
@@ -136,21 +122,39 @@ public class TestPolling implements Runnable{
                 DBUtil.close(conn);
             }
         }
-        Long endTime = System.currentTimeMillis();
-        System.out.println("本次insertByIdList操作用时:"+(endTime-startTime));
     }
 
+    /**
+     * 得到目标表删除记录
+     * @return
+     */
     public static List<Long> getDelIdList(){
         List<Long> list = new ArrayList<Long>();
         Connection conn = DBUtil.getConnection();
-        String sql = "insert into XTYH_NEW_LOG VALUES (?,?,?,?)";
-
+        String sql = "SELECT XTYH_NEW.YONGH_ID FROM XTYH_NEW WHERE XTYH_NEW.YONGH_ID NOT IN (SELECT XTYH.YONGH_ID FROM XTYH)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Long id = rs.getLong("YONGH_ID");
+                list.add(id);
+                System.out.println("需要删除的id为:"+id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close(conn);
+        }
         return list;
     }
 
     /**
-     * 新增查询记录
-     * @param date
+     * 新增日志
+     * @param date  原表最后更新时间
+     * @param remark    备注
+     * @param count 操作记录数
      */
     public static void insertLog(Date date,String remark, Integer count){
         Connection conn = DBUtil.getConnection();
@@ -171,20 +175,32 @@ public class TestPolling implements Runnable{
         }
     }
 
+    /**
+     * 一次完整轮询操作
+     */
     public static void oneSearch(){
+        Long startTime = System.currentTimeMillis();
         Date date_log = getLastedDate("XTYH_NEW");
         Date date = getLastedDate("XTYH");
-        if(date_log.compareTo(date)>=0){
-            System.out.println("一次轮询成功,没有更新记录");
-        }else{
-            List<Long> ids = getModifyIdList(date_log);
-            delByIdList(ids);
-            insertByIdList(ids);
-            insertLog(date,"",ids.size());
-            System.out.println("一次轮询成功,记录条数:"+ids.size());
+        List<Long> ids_d = getDelIdList();
+        List<Long> ids_m = new ArrayList<Long>();
+        //首先判断原表有无删除记录
+        if(ids_d!=null&&ids_d.size()>0){
+            delByIdList(ids_d);
+            System.out.println("删除记录条数:"+ids_d.size());
         }
-        System.out.println("----------------------------------------");
-
+        //其次判断有无更新记录
+        if(date_log.compareTo(date)>=0){
+            System.out.println("更新记录条数:0");
+        }else{
+            ids_m = getModifyIdList(date_log);
+            delByIdList(ids_m);
+            insertByIdList(ids_m);
+            System.out.println("更新记录条数:"+ids_m.size());
+        }
+        insertLog(date,"",ids_d.size()+ids_m.size());
+        Long endTime = System.currentTimeMillis();
+        System.out.println("----------一次轮询成功,本次用时"+(endTime-startTime)+"------------------");
     }
 
     public void run() {
@@ -195,7 +211,6 @@ public class TestPolling implements Runnable{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

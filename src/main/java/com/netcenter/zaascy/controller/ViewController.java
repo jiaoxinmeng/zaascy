@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +32,7 @@ public class ViewController {
         ModelAndView mav = new ModelAndView();
         log.info(test);
         Integer id = tradeService.insertSelective(trade);
-        //id一直显示为1  这明显是错误的 不是应该返回id吗
-        log.info("id为："+id);
+        log.info("id为：" + id);
         //这个是返回的id
         Long ids = trade.getId();
         log.info("ids为："+ids);
@@ -64,7 +64,9 @@ public class ViewController {
         for(Trade trade : tradeList){
             System.out.println(trade.toString());
         }
+        Date date = new Date();
         mav.addObject("tradeList",tradeList);
+        mav.addObject("date",date);
         mav.setViewName("trade_list");
         return mav;
     }

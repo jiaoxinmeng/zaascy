@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.netcenter.zaascy.dao.TradeChildMapper" >
+  <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.TradeChild" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <arg column="year" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="project_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sample_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sample_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="provide_unit" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="accept_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="report_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="amount" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="manager" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="operator_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="operator" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="quarter" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, year, project_number, sample_number, sample_name, provide_unit, accept_date, 
+    report_date, amount, manager, operator_id, operator, create_date, modify_date, quarter
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from CY_CGZHJY_ZB
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from CY_CGZHJY_ZB
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeChild" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into CY_CGZHJY_ZB (year, project_number, sample_number, 
+      sample_name, provide_unit, accept_date, 
+      report_date, amount, manager, 
+      operator_id, operator, create_date, 
+      modify_date, quarter)
+    values (#{year,jdbcType=INTEGER}, #{projectNumber,jdbcType=VARCHAR}, #{sampleNumber,jdbcType=VARCHAR}, 
+      #{sampleName,jdbcType=VARCHAR}, #{provideUnit,jdbcType=VARCHAR}, #{acceptDate,jdbcType=TIMESTAMP}, 
+      #{reportDate,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{manager,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=INTEGER}, #{operator,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyDate,jdbcType=TIMESTAMP},#{quarter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeChild" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into CY_CGZHJY_ZB
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="projectNumber != null" >
+        project_number,
+      </if>
+      <if test="sampleNumber != null" >
+        sample_number,
+      </if>
+      <if test="sampleName != null" >
+        sample_name,
+      </if>
+      <if test="provideUnit != null" >
+        provide_unit,
+      </if>
+      <if test="acceptDate != null" >
+        accept_date,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="manager != null" >
+        manager,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="quarter != null" >
+        quarter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="projectNumber != null" >
+        #{projectNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleNumber != null" >
+        #{sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleName != null" >
+        #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="provideUnit != null" >
+        #{provideUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptDate != null" >
+        #{acceptDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="manager != null" >
+        #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quarter != null" >
+        quarter = #{quarter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.TradeChild" >
+    update CY_CGZHJY_ZB
+    <set >
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="projectNumber != null" >
+        project_number = #{projectNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleNumber != null" >
+        sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleName != null" >
+        sample_name = #{sampleName,jdbcType=VARCHAR},
+      </if>
+      <if test="provideUnit != null" >
+        provide_unit = #{provideUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptDate != null" >
+        accept_date = #{acceptDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportDate != null" >
+        report_date = #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="manager != null" >
+        manager = #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quarter != null" >
+        quarter = #{quarter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.TradeChild" >
+    update CY_CGZHJY_ZB
+    set year = #{year,jdbcType=INTEGER},
+      project_number = #{projectNumber,jdbcType=VARCHAR},
+      sample_number = #{sampleNumber,jdbcType=VARCHAR},
+      sample_name = #{sampleName,jdbcType=VARCHAR},
+      provide_unit = #{provideUnit,jdbcType=VARCHAR},
+      accept_date = #{acceptDate,jdbcType=TIMESTAMP},
+      report_date = #{reportDate,jdbcType=TIMESTAMP},
+      amount = #{amount,jdbcType=DECIMAL},
+      manager = #{manager,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=INTEGER},
+      operator = #{operator,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      quarter = #{quarter,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT * from CY_CGZHJY_ZB
+    <if test="year != null">
+      where year = #{year,jdbcType=INTEGER}
+      <if test="quarter != null">
+        and quarter = #{quarter,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </select>
+</mapper>
