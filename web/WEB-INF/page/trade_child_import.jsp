@@ -23,7 +23,6 @@
         function addYearSelect(){
             var nowDate = new Date();
             var nowYear = nowDate.getFullYear();
-            var yearSelect = $("#year_select");
             for(var i = nowYear;i>2010;i--){
                 $("#year_select").append(
                     "<option value='" + i + "'>" + i + "</option>");
@@ -31,28 +30,20 @@
         }
 
         function upload() {
-            var formData = new FormData(document.getElementById("upform"));
+            var formData = new FormData();
             formData.append("myfile",$("#myfile").get(0).files[0]);
+            formData.append("year",$("#year_select").val());
+            formData.append("quarter",$("#quarter_select").val());
             formData.append("mydata",$("#mydata").val());
-            console.log($("#myfile").get(0).files[0]);
-            console.log($("#mydata").val());
             $.ajax({
                 type:'POST',
-                url:"trade/childImport.do",
+                url:"childImport.do",
                 cache: false,
                 data: formData,
                 contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
                 processData: false,  // 告诉jQuery不要去处理发送的数据
-                async: true,
                 success: function(data){
-                    document.getElementById("tip").innerHTML = data.mydata;
-                    $("#tip").append("<table class=''>");
-                    $.each(data.list, function(i, item) {
-                        $("#tip").append(
-                            "<tr><td>"+item[0]+"</td><td>"+item[1]+"</td><td>"+item[2]+"</td><td>"+item[3]+"</td></tr>"
-                        );
-                        $("#tip").append("</table>");
-                    });
+                    alert("success");
                 }
             });
         }
@@ -60,18 +51,18 @@
 </head>
 <body>
     <div>
-        <from name="upform" action="" enctype="multipart/form-data" method="post">
+        <form id="upform" enctype="multipart/form-data" >
             <table>
                 <tr>
                     <td>请选择年份</td>
                     <td>
-                        <select id="year_select"></select>
+                        <select id="year_select" name="year"></select>
                     </td>
                 </tr>
                 <tr>
                     <td>请选择季度</td>
                     <td>
-                        <select id="quarter_select">
+                        <select id="quarter_select" name="quarter">
                             <option value="spring">春季</option>
                             <option value="summer">夏季</option>
                             <option value="autumn">秋季</option>
@@ -88,16 +79,16 @@
                 <tr>
                     <td>备注</td>
                     <td>
-                        <input type="text" id="mydata" value=""/>
+                        <input type="text" id="mydata" name="mydata" value=""/>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="button" id="submit" value="上传"/>
+                        <input type="button" id="submit" value="上传" onclick="upload()"/>
                     </td>
                 </tr>
             </table>
-        </from>
+        </form>
     </div>
 </body>
 </html>

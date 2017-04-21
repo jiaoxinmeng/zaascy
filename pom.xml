@@ -20,10 +20,35 @@
         <log4j.version>1.2.17</log4j.version>
         <axis2.version>1.7.4</axis2.version>
         <!-- jackson包版本 -->
-        <jackson.version>2.5.0</jackson.version>
+        <jackson.version>2.8.1</jackson.version>
     </properties>
 
     <dependencies>
+        <!-- jackson包依赖 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- jxl 依赖 -->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6.12</version>
+        </dependency>
 
         <!-- axis2 核心包 -->
         <dependency>
@@ -204,11 +229,31 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- sql server连接包 -->
+        <!-- sql server 2005连接包
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>sqljdbc4</artifactId>
             <version>4.0</version>
+        </dependency>
+        -->
+
+        <!-- sql server 2000连接包 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>msbase</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssqlserver</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>msutil</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <dependency>

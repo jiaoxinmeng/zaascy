@@ -34,7 +34,9 @@ public class TradeChild {
 
     private String quarter;
 
-    public TradeChild(Long id, Integer year, String projectNumber, String sampleNumber, String sampleName, String provideUnit, Date acceptDate, Date reportDate, BigDecimal amount, String manager, Integer operatorId, Integer operator, Date createDate, Date modifyDate,String quarter) {
+    private String remarks;
+
+    public TradeChild(Long id, Integer year, String projectNumber, String sampleNumber, String sampleName, String provideUnit, Date acceptDate, Date reportDate, BigDecimal amount, String manager, Integer operatorId, Integer operator, Date createDate, Date modifyDate, String quarter, String remarks) {
         this.id = id;
         this.year = year;
         this.projectNumber = projectNumber;
@@ -50,6 +52,7 @@ public class TradeChild {
         this.createDate = createDate;
         this.modifyDate = modifyDate;
         this.quarter = quarter;
+        this.remarks = remarks;
     }
 
     public TradeChild() {
@@ -173,6 +176,14 @@ public class TradeChild {
     }
 
     public void setQuarter(String quarter) {
-        this.quarter = quarter;
+        this.quarter = quarter == null ? null : quarter.trim();
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
     }
 }

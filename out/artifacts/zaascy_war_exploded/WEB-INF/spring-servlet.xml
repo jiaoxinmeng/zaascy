@@ -75,8 +75,7 @@
     </bean>
 
     <!-- 支持上传文件 -->
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -107,4 +106,15 @@
         <property name="defaultStatusCode" value="500"/>
     </bean>
     <!-- 全局异常配置 end -->
+
+    <mvc:interceptors>
+        <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
+        <bean class="com.netcenter.zaascy.interceptor.BaseInterceptor" abstract="true"/>
+        <!--
+        <mvc:interceptor>
+            <mvc:mapping path="/test/number.do"/>
+            <bean class="com.host.app.web.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+         -->
+    </mvc:interceptors>
 </beans>

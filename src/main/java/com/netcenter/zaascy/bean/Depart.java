@@ -55,6 +55,13 @@ public class Depart {
         this.paixh = paixh;
     }
 
+    public Depart(BigDecimal danwId, String danwbh, String danwmc, String danwjc){
+        this.danwId = danwId;
+        this.danwbh = danwbh;
+        this.danwmc = danwmc;
+        this.danwjc = danwjc;
+    }
+
     public Depart() {
         super();
     }

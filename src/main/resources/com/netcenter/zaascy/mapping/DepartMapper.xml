@@ -21,205 +21,22 @@
       <arg column="PAIXH" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
-  <sql id="Base_Column_List" >
-    DANW_ID, DANWBH, DANWMC, JIGBZDM, DANWJC, SHIFWXCDW, DANWDH, SHUOM, BEIZ, SHIFWDJG, 
-    SHIFWXTKYDW, JILCJZ, JILCJSJ, JILXGZ, JILXGSJ, PAIXH
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
-    select 
-    <include refid="Base_Column_List" />
-    from DW
-    where DANW_ID = #{danwId,jdbcType=NUMERIC}
+  <resultMap id="selectResultMap" type="com.netcenter.zaascy.bean.Depart" >
+    <constructor >
+      <idArg column="DANW_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="DANWBH" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DANWMC" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DANWJC" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+  <select id="getAll" resultMap="selectResultMap">
+    SELECT DANW_ID, DANWBH, DANWJC, DANWMC FROM DW
+    WHERE SHIFWXCDW = 'Y' and SHIFWXTKYDW = 'Y' and SHIFWDJG = 'Y'
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
-    delete from DW
-    where DANW_ID = #{danwId,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.Depart" >
-    insert into DW (DANW_ID, DANWBH, DANWMC, 
-      JIGBZDM, DANWJC, SHIFWXCDW, 
-      DANWDH, SHUOM, BEIZ, 
-      SHIFWDJG, SHIFWXTKYDW, JILCJZ, 
-      JILCJSJ, JILXGZ, JILXGSJ, 
-      PAIXH)
-    values (#{danwId,jdbcType=NUMERIC}, #{danwbh,jdbcType=VARCHAR}, #{danwmc,jdbcType=VARCHAR}, 
-      #{jigbzdm,jdbcType=VARCHAR}, #{danwjc,jdbcType=VARCHAR}, #{shifwxcdw,jdbcType=VARCHAR}, 
-      #{danwdh,jdbcType=VARCHAR}, #{shuom,jdbcType=VARCHAR}, #{beiz,jdbcType=VARCHAR}, 
-      #{shifwdjg,jdbcType=VARCHAR}, #{shifwxtkydw,jdbcType=VARCHAR}, #{jilcjz,jdbcType=NUMERIC}, 
-      #{jilcjsj,jdbcType=TIMESTAMP}, #{jilxgz,jdbcType=NUMERIC}, #{jilxgsj,jdbcType=TIMESTAMP}, 
-      #{paixh,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.Depart" >
-    insert into DW
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="danwId != null" >
-        DANW_ID,
-      </if>
-      <if test="danwbh != null" >
-        DANWBH,
-      </if>
-      <if test="danwmc != null" >
-        DANWMC,
-      </if>
-      <if test="jigbzdm != null" >
-        JIGBZDM,
-      </if>
-      <if test="danwjc != null" >
-        DANWJC,
-      </if>
-      <if test="shifwxcdw != null" >
-        SHIFWXCDW,
-      </if>
-      <if test="danwdh != null" >
-        DANWDH,
-      </if>
-      <if test="shuom != null" >
-        SHUOM,
-      </if>
-      <if test="beiz != null" >
-        BEIZ,
-      </if>
-      <if test="shifwdjg != null" >
-        SHIFWDJG,
-      </if>
-      <if test="shifwxtkydw != null" >
-        SHIFWXTKYDW,
-      </if>
-      <if test="jilcjz != null" >
-        JILCJZ,
-      </if>
-      <if test="jilcjsj != null" >
-        JILCJSJ,
-      </if>
-      <if test="jilxgz != null" >
-        JILXGZ,
-      </if>
-      <if test="jilxgsj != null" >
-        JILXGSJ,
-      </if>
-      <if test="paixh != null" >
-        PAIXH,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="danwId != null" >
-        #{danwId,jdbcType=NUMERIC},
-      </if>
-      <if test="danwbh != null" >
-        #{danwbh,jdbcType=VARCHAR},
-      </if>
-      <if test="danwmc != null" >
-        #{danwmc,jdbcType=VARCHAR},
-      </if>
-      <if test="jigbzdm != null" >
-        #{jigbzdm,jdbcType=VARCHAR},
-      </if>
-      <if test="danwjc != null" >
-        #{danwjc,jdbcType=VARCHAR},
-      </if>
-      <if test="shifwxcdw != null" >
-        #{shifwxcdw,jdbcType=VARCHAR},
-      </if>
-      <if test="danwdh != null" >
-        #{danwdh,jdbcType=VARCHAR},
-      </if>
-      <if test="shuom != null" >
-        #{shuom,jdbcType=VARCHAR},
-      </if>
-      <if test="beiz != null" >
-        #{beiz,jdbcType=VARCHAR},
-      </if>
-      <if test="shifwdjg != null" >
-        #{shifwdjg,jdbcType=VARCHAR},
-      </if>
-      <if test="shifwxtkydw != null" >
-        #{shifwxtkydw,jdbcType=VARCHAR},
-      </if>
-      <if test="jilcjz != null" >
-        #{jilcjz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjsj != null" >
-        #{jilcjsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="jilxgz != null" >
-        #{jilxgz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilxgsj != null" >
-        #{jilxgsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="paixh != null" >
-        #{paixh,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.Depart" >
-    update DW
-    <set >
-      <if test="danwbh != null" >
-        DANWBH = #{danwbh,jdbcType=VARCHAR},
-      </if>
-      <if test="danwmc != null" >
-        DANWMC = #{danwmc,jdbcType=VARCHAR},
-      </if>
-      <if test="jigbzdm != null" >
-        JIGBZDM = #{jigbzdm,jdbcType=VARCHAR},
-      </if>
-      <if test="danwjc != null" >
-        DANWJC = #{danwjc,jdbcType=VARCHAR},
-      </if>
-      <if test="shifwxcdw != null" >
-        SHIFWXCDW = #{shifwxcdw,jdbcType=VARCHAR},
-      </if>
-      <if test="danwdh != null" >
-        DANWDH = #{danwdh,jdbcType=VARCHAR},
-      </if>
-      <if test="shuom != null" >
-        SHUOM = #{shuom,jdbcType=VARCHAR},
-      </if>
-      <if test="beiz != null" >
-        BEIZ = #{beiz,jdbcType=VARCHAR},
-      </if>
-      <if test="shifwdjg != null" >
-        SHIFWDJG = #{shifwdjg,jdbcType=VARCHAR},
-      </if>
-      <if test="shifwxtkydw != null" >
-        SHIFWXTKYDW = #{shifwxtkydw,jdbcType=VARCHAR},
-      </if>
-      <if test="jilcjz != null" >
-        JILCJZ = #{jilcjz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjsj != null" >
-        JILCJSJ = #{jilcjsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="jilxgz != null" >
-        JILXGZ = #{jilxgz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilxgsj != null" >
-        JILXGSJ = #{jilxgsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="paixh != null" >
-        PAIXH = #{paixh,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where DANW_ID = #{danwId,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.Depart" >
-    update DW
-    set DANWBH = #{danwbh,jdbcType=VARCHAR},
-      DANWMC = #{danwmc,jdbcType=VARCHAR},
-      JIGBZDM = #{jigbzdm,jdbcType=VARCHAR},
-      DANWJC = #{danwjc,jdbcType=VARCHAR},
-      SHIFWXCDW = #{shifwxcdw,jdbcType=VARCHAR},
-      DANWDH = #{danwdh,jdbcType=VARCHAR},
-      SHUOM = #{shuom,jdbcType=VARCHAR},
-      BEIZ = #{beiz,jdbcType=VARCHAR},
-      SHIFWDJG = #{shifwdjg,jdbcType=VARCHAR},
-      SHIFWXTKYDW = #{shifwxtkydw,jdbcType=VARCHAR},
-      JILCJZ = #{jilcjz,jdbcType=NUMERIC},
-      JILCJSJ = #{jilcjsj,jdbcType=TIMESTAMP},
-      JILXGZ = #{jilxgz,jdbcType=NUMERIC},
-      JILXGSJ = #{jilxgsj,jdbcType=TIMESTAMP},
-      PAIXH = #{paixh,jdbcType=VARCHAR}
-    where DANW_ID = #{danwId,jdbcType=NUMERIC}
-  </update>
+
+  <select id="getAllInstitute" resultMap="selectResultMap">
+    SELECT DANW_ID, DANWBH, DANWJC, DANWMC FROM DW
+    WHERE SHIFWXCDW = 'Y' and SHIFWXTKYDW = 'Y' and SHIFWDJG = 'Y' AND DANWBH LIKE 'R%'
+  </select>
 </mapper>

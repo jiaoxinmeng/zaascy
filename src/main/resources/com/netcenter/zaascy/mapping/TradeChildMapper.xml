@@ -18,11 +18,13 @@
       <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="quarter" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="remarks" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     id, year, project_number, sample_number, sample_name, provide_unit, accept_date, 
-    report_date, amount, manager, operator_id, operator, create_date, modify_date, quarter
+    report_date, amount, manager, operator_id, operator, create_date, modify_date, quarter, 
+    remarks
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -42,12 +44,14 @@
       sample_name, provide_unit, accept_date, 
       report_date, amount, manager, 
       operator_id, operator, create_date, 
-      modify_date, quarter)
+      modify_date, quarter, remarks
+      )
     values (#{year,jdbcType=INTEGER}, #{projectNumber,jdbcType=VARCHAR}, #{sampleNumber,jdbcType=VARCHAR}, 
       #{sampleName,jdbcType=VARCHAR}, #{provideUnit,jdbcType=VARCHAR}, #{acceptDate,jdbcType=TIMESTAMP}, 
       #{reportDate,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{manager,jdbcType=VARCHAR}, 
       #{operatorId,jdbcType=INTEGER}, #{operator,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{modifyDate,jdbcType=TIMESTAMP},#{quarter,jdbcType=VARCHAR})
+      #{modifyDate,jdbcType=TIMESTAMP}, #{quarter,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeChild" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -97,6 +101,9 @@
       <if test="quarter != null" >
         quarter,
       </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="year != null" >
@@ -139,7 +146,10 @@
         #{modifyDate,jdbcType=TIMESTAMP},
       </if>
       <if test="quarter != null" >
-        quarter = #{quarter,jdbcType=VARCHAR},
+        #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -188,6 +198,9 @@
       <if test="quarter != null" >
         quarter = #{quarter,jdbcType=VARCHAR},
       </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -206,17 +219,8 @@
       operator = #{operator,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-      quarter = #{quarter,jdbcType=VARCHAR}
+      quarter = #{quarter,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
-  <select id="selectAll" resultMap="BaseResultMap">
-    SELECT * from CY_CGZHJY_ZB
-    <if test="year != null">
-      where year = #{year,jdbcType=INTEGER}
-      <if test="quarter != null">
-        and quarter = #{quarter,jdbcType=VARCHAR}
-      </if>
-    </if>
-  </select>
 </mapper>

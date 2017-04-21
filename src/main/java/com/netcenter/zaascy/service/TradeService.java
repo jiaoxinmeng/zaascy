@@ -27,4 +27,8 @@ public interface TradeService {
     List<TradeChild> selectAllTradeChildByQuarter(String quarter);
 
     int insertTradeChildsByQuarty();
+
+    List<String> getZaasCodeListByZaasTechType(String zaasTechType, Integer departId, Integer year);
+
+    String getNameByZaasCode(String zassCode);
 }

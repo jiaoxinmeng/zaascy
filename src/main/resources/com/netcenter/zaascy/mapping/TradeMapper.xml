@@ -367,7 +367,51 @@
       join_state = #{joinState,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectAll" resultMap="listResultMap">
-      SELECT id,project_name,zaas_code FROM CY_CGZHJY
+  <select id="selectAll" resultMap="BaseResultMap">
+      SELECT * FROM CY_CGZHJY
+  </select>
+
+  <select id="getZaasCodeListByZaasTechType" resultType="String">
+    SELECT CGBM
+    FROM
+      <if test="zaasTechType=='研究成果'"> KY_CG_JBXX </if>
+      <if test="zaasTechType=='育成品种'"> KY_CG_YCPZ </if>
+      <if test="zaasTechType=='品种权品种'"> KY_CG_PZQPZ </if>
+      <if test="zaasTechType=='发明专利'||zaasTechType=='实用新型专利'"> KY_CG_ZL </if>
+      <if test="zaasTechType=='软件著作权'"> KY_CG_RJZZQXX </if>
+      <if test="zaasTechType=='颁布标准'"> KY_CG_ZDBZXX </if>
+    WHERE TIJZT = 'Y' AND CGBM LIKE '2%'
+    <if test="year!=0">
+      <if test="zaasTechType=='研究成果'||zaasTechType=='育成品种'||zaasTechType=='品种权品种'"> AND NIANF = #{year} </if>
+      <if test="zaasTechType=='发明专利'||zaasTechType=='实用新型专利'"> AND NIANFEN = #{year} </if>
+      <if test="zaasTechType=='软件著作权'||zaasTechType=='颁布标准'"> AND NF = #{year} </if>
+    </if>
+    <if test="departId!=0">
+      <if test="zaasTechType=='研究成果'">
+        and DWID = #{departId}
+      </if>
+      <if test="zaasTechType=='育成品种'||zaasTechType=='品种权品种'||zaasTechType=='发明专利'||zaasTechType=='实用新型专利'">
+        and DANW_ID = #{departId}
+      </if>
+    </if>
+
+
+  </select>
+
+  <select id="getNameByZaasCode" resultType="String">
+    SELECT
+    <if test="mark=='CG'"> CHENGGMC </if>
+    <if test="mark=='PZ'||mark=='PQ'"> PINZMC </if>
+    <if test="mark=='ZL'"> ZHUANLMC </if>
+    <if test="mark=='RZ'"> RJMC </if>
+    <if test="mark=='BZ'"> BIAOZMC </if>
+    FROM
+    <if test="mark=='CG'"> KY_CG_JBXX </if>
+    <if test="mark=='PZ'"> KY_CG_YCPZ </if>
+    <if test="mark=='PQ'"> KY_CG_PZQPZ </if>
+    <if test="mark=='ZL'"> KY_CG_ZL </if>
+    <if test="mark=='RZ'"> KY_CG_RJZZQXX </if>
+    <if test="mark=='BZ'"> KY_CG_ZDBZXX </if>
+    WHERE TIJZT = 'Y' AND CGBM = #{zaasCode}
   </select>
 </mapper>

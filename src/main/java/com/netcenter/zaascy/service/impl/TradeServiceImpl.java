@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,5 +58,29 @@ public class TradeServiceImpl implements TradeService,Serializable {
 
     public int insertTradeChildsByQuarty() {
         return 0;
+    }
+
+    public List<String> getZaasCodeListByZaasTechType(String zaasTechType, Integer departId, Integer year) {
+        if(zaasTechType.equals("实用技术")){
+            return new ArrayList<String>();
+        }
+        return dao.getZaasCodeListByZaasTechType(zaasTechType,departId,year);
+    }
+
+    public String getNameByZaasCode(String zassCode){
+        // 获取年份
+        Integer year = Integer.valueOf(zassCode.substring(0, 4));
+
+        // 获取编码标识符 类别
+        String mark = "";
+        if (year <= 2015) {
+            mark = zassCode.substring(4, 6);
+        } else {
+            mark = zassCode.substring(7, 9);
+        }
+        if(mark.equals("JS")){
+            return "";
+        }
+        return dao.getNameByZaasCode(mark,zassCode);
     }
 }
