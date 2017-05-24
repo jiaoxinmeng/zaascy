@@ -1,36 +1,35 @@
 package com.netcenter.zaascy.bean;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class Privilege {
-    private BigDecimal quanxId;
+    private Long quanxId;
 
     private String quanxbh;
 
     private String quanxmc;
 
-    private BigDecimal mokId;
+    private Long mokId;
 
     private String shifkxg;
 
-    private BigDecimal juesId;
+    private Long juesId;
 
     private String quanxsm;
 
-    private BigDecimal jilcjz;
+    private Long jilcjz;
 
     private Date jilcjsj;
 
-    private BigDecimal jilxgz;
+    private Long jilxgz;
 
     private Date jilxgsj;
 
-    private BigDecimal yonghId;
+    private Long yonghId;
 
-    private BigDecimal juesjb;
+    private Long juesjb;
 
-    public Privilege(BigDecimal quanxId, String quanxbh, String quanxmc, BigDecimal mokId, String shifkxg, BigDecimal juesId, String quanxsm, BigDecimal jilcjz, Date jilcjsj, BigDecimal jilxgz, Date jilxgsj, BigDecimal yonghId, BigDecimal juesjb) {
+    public Privilege(Long quanxId, String quanxbh, String quanxmc, Long mokId, String shifkxg, Long juesId, String quanxsm, Long jilcjz, Date jilcjsj, Long jilxgz, Date jilxgsj, Long yonghId, Long juesjb) {
         this.quanxId = quanxId;
         this.quanxbh = quanxbh;
         this.quanxmc = quanxmc;
@@ -50,11 +49,11 @@ public class Privilege {
         super();
     }
 
-    public BigDecimal getQuanxId() {
+    public Long getQuanxId() {
         return quanxId;
     }
 
-    public void setQuanxId(BigDecimal quanxId) {
+    public void setQuanxId(Long quanxId) {
         this.quanxId = quanxId;
     }
 
@@ -74,11 +73,11 @@ public class Privilege {
         this.quanxmc = quanxmc == null ? null : quanxmc.trim();
     }
 
-    public BigDecimal getMokId() {
+    public Long getMokId() {
         return mokId;
     }
 
-    public void setMokId(BigDecimal mokId) {
+    public void setMokId(Long mokId) {
         this.mokId = mokId;
     }
 
@@ -90,11 +89,11 @@ public class Privilege {
         this.shifkxg = shifkxg == null ? null : shifkxg.trim();
     }
 
-    public BigDecimal getJuesId() {
+    public Long getJuesId() {
         return juesId;
     }
 
-    public void setJuesId(BigDecimal juesId) {
+    public void setJuesId(Long juesId) {
         this.juesId = juesId;
     }
 
@@ -106,11 +105,11 @@ public class Privilege {
         this.quanxsm = quanxsm == null ? null : quanxsm.trim();
     }
 
-    public BigDecimal getJilcjz() {
+    public Long getJilcjz() {
         return jilcjz;
     }
 
-    public void setJilcjz(BigDecimal jilcjz) {
+    public void setJilcjz(Long jilcjz) {
         this.jilcjz = jilcjz;
     }
 
@@ -122,11 +121,11 @@ public class Privilege {
         this.jilcjsj = jilcjsj;
     }
 
-    public BigDecimal getJilxgz() {
+    public Long getJilxgz() {
         return jilxgz;
     }
 
-    public void setJilxgz(BigDecimal jilxgz) {
+    public void setJilxgz(Long jilxgz) {
         this.jilxgz = jilxgz;
     }
 
@@ -138,19 +137,19 @@ public class Privilege {
         this.jilxgsj = jilxgsj;
     }
 
-    public BigDecimal getYonghId() {
+    public Long getYonghId() {
         return yonghId;
     }
 
-    public void setYonghId(BigDecimal yonghId) {
+    public void setYonghId(Long yonghId) {
         this.yonghId = yonghId;
     }
 
-    public BigDecimal getJuesjb() {
+    public Long getJuesjb() {
         return juesjb;
     }
 
-    public void setJuesjb(BigDecimal juesjb) {
+    public void setJuesjb(Long juesjb) {
         this.juesjb = juesjb;
     }
 }

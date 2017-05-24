@@ -24,9 +24,9 @@ public class TradeChild {
 
     private String manager;
 
-    private Integer operatorId;
+    private Long operatorId;
 
-    private Integer operator;
+    private String operator;
 
     private Date createDate;
 
@@ -36,7 +36,7 @@ public class TradeChild {
 
     private String remarks;
 
-    public TradeChild(Long id, Integer year, String projectNumber, String sampleNumber, String sampleName, String provideUnit, Date acceptDate, Date reportDate, BigDecimal amount, String manager, Integer operatorId, Integer operator, Date createDate, Date modifyDate, String quarter, String remarks) {
+    public TradeChild(Long id, Integer year, String projectNumber, String sampleNumber, String sampleName, String provideUnit, Date acceptDate, Date reportDate, BigDecimal amount, String manager, Long operatorId, String operator, Date createDate, Date modifyDate, String quarter, String remarks) {
         this.id = id;
         this.year = year;
         this.projectNumber = projectNumber;
@@ -139,19 +139,19 @@ public class TradeChild {
         this.manager = manager == null ? null : manager.trim();
     }
 
-    public Integer getOperatorId() {
+    public Long getOperatorId() {
         return operatorId;
     }
 
-    public void setOperatorId(Integer operatorId) {
+    public void setOperatorId(Long operatorId) {
         this.operatorId = operatorId;
     }
 
-    public Integer getOperator() {
+    public String getOperator() {
         return operator;
     }
 
-    public void setOperator(Integer operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
 

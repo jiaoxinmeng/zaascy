@@ -109,12 +109,42 @@
 
     <mvc:interceptors>
         <!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-        <bean class="com.netcenter.zaascy.interceptor.BaseInterceptor" abstract="true"/>
+
         <!--
         <mvc:interceptor>
             <mvc:mapping path="/test/number.do"/>
             <bean class="com.host.app.web.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
          -->
+        <mvc:interceptor>
+            <!-- 需拦截的地址 -->
+            <!-- 一级目录 -->
+            <mvc:mapping path="/*.do" />
+
+
+            <!-- 二级目录 -->
+            <mvc:mapping path="/*/*.do" />
+
+            <!-- 需排除拦截的地址 -->
+            <mvc:exclude-mapping path="/user/goLogin.do"/>
+            <mvc:exclude-mapping path="/user/login.do"/>
+            <mvc:exclude-mapping path="/user/noPermission.do"/>
+            <bean class="com.netcenter.zaascy.interceptor.BaseInterceptor" abstract="true"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <!-- 需拦截的地址 -->
+            <!-- 一级目录 -->
+            <mvc:mapping path="/trade.do" />
+            <!-- 二级目录 -->
+            <mvc:mapping path="/trade/*.do" />
+            <mvc:exclude-mapping path="/trade/getDepartFullName.do"/>
+            <mvc:exclude-mapping path="/trade/getProjectNum.do"/>
+            <mvc:exclude-mapping path="/trade/getZaasCodeList.do"/>
+            <mvc:exclude-mapping path="/trade/getTechName.do"/>
+            <mvc:exclude-mapping path="/trade/childImport.do"/>
+            <mvc:exclude-mapping path="/trade/checkChildExist.do"/>
+            <bean class="com.netcenter.zaascy.interceptor.TradeInterceptor" abstract="true"/>
+        </mvc:interceptor>
     </mvc:interceptors>
 </beans>

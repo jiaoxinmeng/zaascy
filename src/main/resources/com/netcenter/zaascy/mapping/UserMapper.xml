@@ -3,14 +3,14 @@
 <mapper namespace="com.netcenter.zaascy.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.User" >
     <constructor >
-      <idArg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <idArg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="DENGLM" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="MIM" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="XITMK" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="RENY_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="JILCJZ" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="XITMK" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="RENY_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="JILCJZ" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="JILCJSJ" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="JILXGZ" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="JILXGZ" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="JILXGSJ" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="boshih_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="yanjius_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -26,9 +26,9 @@
       <arg column="TIJR" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="SHENHR" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="JIAOYR" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="TIJR_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="SHENHR_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="JIAOYR_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="TIJR_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="SHENHR_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="JIAOYR_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="zhaop" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="shifouyx" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="youxiaoq" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -43,13 +43,13 @@
     SHENHZT, JIAOYZT, TIJR, SHENHR, JIAOYR, TIJR_ID, SHENHR_ID, JIAOYR_ID, zhaop, shifouyx, 
     youxiaoq, shouj, email, danw_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
     from XTYH
     where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from XTYH
     where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
   </delete>
@@ -410,4 +410,12 @@
       danw_id = #{danwId,jdbcType=NUMERIC}
     where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
   </update>
+
+  <select id="findPasswordByLoginname" resultType="String">
+    SELECT MIM FROM XTYH WHERE DENGLM = #{username} AND shifouyx = 1
+  </select>
+
+  <select id="getUserByUsername" resultMap="BaseResultMap">
+    SELECT * FROM XTYH WHERE DENGLM = #{username} AND MIM = #{password} AND shifouyx = 1
+  </select>
 </mapper>

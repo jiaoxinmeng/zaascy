@@ -39,7 +39,7 @@ laydate.v = '1.1';
 //获取组件存放路径
 Dates.getPath = (function(){
     var js = document.scripts, jsPath = js[js.length - 1].src;
-    return config.path ? config.path : jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
+    return config.path ? config.path : jsPath.substring(0, jsPath.lastIndexOf("/") + 1) ;
 }());
 
 Dates.use = function(lib, id){

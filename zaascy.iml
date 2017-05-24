@@ -30,6 +30,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 6.0.30" level="application_server_libraries" />
+    <orderEntry type="library" name="Maven: net.sourceforge.jtds:jtds:1.2.8" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.1" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.1" level="project" />
@@ -142,9 +143,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.1.4.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:msbase:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssqlserver:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:msutil:1.0" level="project" />
     <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.2.8" level="project" />

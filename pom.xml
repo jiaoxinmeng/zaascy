@@ -24,6 +24,14 @@
     </properties>
 
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.jtds/jtds -->
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+
         <!-- jackson包依赖 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -237,7 +245,7 @@
         </dependency>
         -->
 
-        <!-- sql server 2000连接包 -->
+        <!-- sql server 2000连接包
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>msbase</artifactId>
@@ -255,6 +263,7 @@
             <artifactId>msutil</artifactId>
             <version>1.0</version>
         </dependency>
+         -->
 
         <dependency>
             <groupId>commons-dbcp</groupId>

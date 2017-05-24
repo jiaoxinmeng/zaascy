@@ -130,7 +130,7 @@ public class SecurityUtil {
 //          String pwd = SecurityUtil.encryptMessage("11111111");
 //          System.out.println(pwd);
         try {
-            String rs = SecurityUtil.decryptMessage("kqVbe44FrMo++JE+0gur5g==");//oou16do5
+            String rs = SecurityUtil.decryptMessage("rC4Lp5XB2DFjKZCsH+pdhQ==");//oou16do5
             System.out.println(rs);
         } catch (Exception e) {
             e.printStackTrace();

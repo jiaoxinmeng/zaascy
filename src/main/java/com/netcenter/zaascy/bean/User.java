@@ -1,24 +1,23 @@
 package com.netcenter.zaascy.bean;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class User {
-    private BigDecimal yonghId;
+    private Long yonghId;
 
     private String denglm;
 
     private String mim;
 
-    private BigDecimal xitmk;
+    private Long xitmk;
 
-    private BigDecimal renyId;
+    private Long renyId;
 
-    private BigDecimal jilcjz;
+    private Long jilcjz;
 
     private Date jilcjsj;
 
-    private BigDecimal jilxgz;
+    private Long jilxgz;
 
     private Date jilxgsj;
 
@@ -50,11 +49,11 @@ public class User {
 
     private String jiaoyr;
 
-    private BigDecimal tijrId;
+    private Long tijrId;
 
-    private BigDecimal shenhrId;
+    private Long shenhrId;
 
-    private BigDecimal jiaoyrId;
+    private Long jiaoyrId;
 
     private String zhaop;
 
@@ -68,7 +67,7 @@ public class User {
 
     private Long danwId;
 
-    public User(BigDecimal yonghId, String denglm, String mim, BigDecimal xitmk, BigDecimal renyId, BigDecimal jilcjz, Date jilcjsj, BigDecimal jilxgz, Date jilxgsj, Integer boshihId, Integer yanjiusId, Integer linshiryId, Integer laowupqryId, Integer shenhezt, Integer renyLx, String shenfenz, String xingm, String tijzt, String shenhzt, String jiaoyzt, String tijr, String shenhr, String jiaoyr, BigDecimal tijrId, BigDecimal shenhrId, BigDecimal jiaoyrId, String zhaop, Integer shifouyx, Date youxiaoq, String shouj, String email, Long danwId) {
+    public User(Long yonghId, String denglm, String mim, Long xitmk, Long renyId, Long jilcjz, Date jilcjsj, Long jilxgz, Date jilxgsj, Integer boshihId, Integer yanjiusId, Integer linshiryId, Integer laowupqryId, Integer shenhezt, Integer renyLx, String shenfenz, String xingm, String tijzt, String shenhzt, String jiaoyzt, String tijr, String shenhr, String jiaoyr, Long tijrId, Long shenhrId, Long jiaoyrId, String zhaop, Integer shifouyx, Date youxiaoq, String shouj, String email, Long danwId) {
         this.yonghId = yonghId;
         this.denglm = denglm;
         this.mim = mim;
@@ -145,11 +144,11 @@ public class User {
         super();
     }
 
-    public BigDecimal getYonghId() {
+    public Long getYonghId() {
         return yonghId;
     }
 
-    public void setYonghId(BigDecimal yonghId) {
+    public void setYonghId(Long yonghId) {
         this.yonghId = yonghId;
     }
 
@@ -169,27 +168,27 @@ public class User {
         this.mim = mim == null ? null : mim.trim();
     }
 
-    public BigDecimal getXitmk() {
+    public Long getXitmk() {
         return xitmk;
     }
 
-    public void setXitmk(BigDecimal xitmk) {
+    public void setXitmk(Long xitmk) {
         this.xitmk = xitmk;
     }
 
-    public BigDecimal getRenyId() {
+    public Long getRenyId() {
         return renyId;
     }
 
-    public void setRenyId(BigDecimal renyId) {
+    public void setRenyId(Long renyId) {
         this.renyId = renyId;
     }
 
-    public BigDecimal getJilcjz() {
+    public Long getJilcjz() {
         return jilcjz;
     }
 
-    public void setJilcjz(BigDecimal jilcjz) {
+    public void setJilcjz(Long jilcjz) {
         this.jilcjz = jilcjz;
     }
 
@@ -201,11 +200,11 @@ public class User {
         this.jilcjsj = jilcjsj;
     }
 
-    public BigDecimal getJilxgz() {
+    public Long getJilxgz() {
         return jilxgz;
     }
 
-    public void setJilxgz(BigDecimal jilxgz) {
+    public void setJilxgz(Long jilxgz) {
         this.jilxgz = jilxgz;
     }
 
@@ -329,27 +328,27 @@ public class User {
         this.jiaoyr = jiaoyr == null ? null : jiaoyr.trim();
     }
 
-    public BigDecimal getTijrId() {
+    public Long getTijrId() {
         return tijrId;
     }
 
-    public void setTijrId(BigDecimal tijrId) {
+    public void setTijrId(Long tijrId) {
         this.tijrId = tijrId;
     }
 
-    public BigDecimal getShenhrId() {
+    public Long getShenhrId() {
         return shenhrId;
     }
 
-    public void setShenhrId(BigDecimal shenhrId) {
+    public void setShenhrId(Long shenhrId) {
         this.shenhrId = shenhrId;
     }
 
-    public BigDecimal getJiaoyrId() {
+    public Long getJiaoyrId() {
         return jiaoyrId;
     }
 
-    public void setJiaoyrId(BigDecimal jiaoyrId) {
+    public void setJiaoyrId(Long jiaoyrId) {
         this.jiaoyrId = jiaoyrId;
     }
 

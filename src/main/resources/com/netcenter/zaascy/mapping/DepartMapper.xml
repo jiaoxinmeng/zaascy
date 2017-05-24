@@ -39,4 +39,16 @@
     SELECT DANW_ID, DANWBH, DANWJC, DANWMC FROM DW
     WHERE SHIFWXCDW = 'Y' and SHIFWXTKYDW = 'Y' and SHIFWDJG = 'Y' AND DANWBH LIKE 'R%'
   </select>
+
+  <select id="getDepartNumById" resultType="String">
+    SELECT DANWBH FROM DW WHERE DANW_ID = #{departId} AND SHIFWXCDW = 'Y' and SHIFWXTKYDW = 'Y' and SHIFWDJG = 'Y'
+  </select>
+
+  <select id="getDepartFullNameById" resultType="String">
+    SELECT DANWMC FROM DW WHERE DANW_ID = #{departId} AND SHIFWXCDW = 'Y' and SHIFWXTKYDW = 'Y' and SHIFWDJG = 'Y'
+  </select>
+
+  <select id="getDepartNameById" resultType="String">
+    SELECT DANWJC FROM DW WHERE DANW_ID = #{departId} AND SHIFWXCDW = 'Y' and SHIFWXTKYDW = 'Y' and SHIFWDJG = 'Y'
+  </select>
 </mapper>

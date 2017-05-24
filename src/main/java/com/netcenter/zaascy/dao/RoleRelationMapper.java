@@ -1,11 +1,11 @@
 package com.netcenter.zaascy.dao;
 
 import com.netcenter.zaascy.bean.RoleRelationKey;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository(value = "roleRelationDao")
 public interface RoleRelationMapper {
-    int deleteByPrimaryKey(RoleRelationKey key);
-
-    int insert(RoleRelationKey record);
-
-    int insertSelective(RoleRelationKey record);
+    List<RoleRelationKey> getRelosByUserId(Long userId);
 }

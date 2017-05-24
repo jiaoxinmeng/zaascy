@@ -13,8 +13,8 @@
       <arg column="report_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="amount" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="manager" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="operator_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="operator" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="quarter" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -37,10 +37,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeChild" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into CY_CGZHJY_ZB (year, project_number, sample_number, 
+    insert into CY_CGZHJY_ZB (year, project_number, sample_number,
       sample_name, provide_unit, accept_date, 
       report_date, amount, manager, 
       operator_id, operator, create_date, 
@@ -54,9 +51,6 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeChild" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into CY_CGZHJY_ZB
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="year != null" >
@@ -223,4 +217,30 @@
       remarks = #{remarks,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="delChildByYearAndQuarter">
+    DELETE FROM CY_CGZHJY_ZB WHERE year = #{year} AND quarter = #{quarter}
+  </delete>
+
+  <select id="getColumnStr" resultType="String">
+    SELECT TOP 1 ${columnName} FROM CY_CGZHJY_ZB
+    WHERE year = #{year} AND quarter = #{quarter}
+    GROUP BY ${columnName}
+  </select>
+
+  <select id="getColumnInt" resultType="Integer">
+    SELECT TOP 1 ${columnName} FROM CY_CGZHJY_ZB
+    WHERE year = #{year} AND quarter = #{quarter}
+    GROUP BY ${columnName}
+  </select>
+
+  <select id="getSumAmount" resultType="java.math.BigDecimal">
+    SELECT SUM(amount) FROM CY_CGZHJY_ZB
+    WHERE year = #{year} AND quarter = #{quarter}
+  </select>
+
+  <select id="getCount" resultType="Integer">
+    SELECT COUNT(*) FROM CY_CGZHJY_ZB
+    WHERE year = #{year} AND quarter = #{quarter}
+  </select>
 </mapper>

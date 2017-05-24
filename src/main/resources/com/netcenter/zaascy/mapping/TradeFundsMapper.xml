@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.netcenter.zaascy.dao.TradeFundsMapper" >
+  <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.TradeFunds" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <arg column="project_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="year" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="date" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="depart" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="funds" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.netcenter.zaascy.bean.TradeFunds" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <arg column="project_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="year" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="date" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="depart" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="funds" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="remarks" jdbcType="CLOB" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, project_id, year, date, depart, funds, operator_id, operator, create_date, modify_date
+  </sql>
+  <sql id="Blob_Column_List" >
+    remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from CY_CGZHJY_JFB
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from CY_CGZHJY_JFB
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+    insert into CY_CGZHJY_JFB (project_id, year, date,
+      depart, funds, operator_id, 
+      operator, create_date, modify_date, 
+      remarks)
+    values (#{projectId,jdbcType=NUMERIC}, #{year,jdbcType=INTEGER}, #{date,jdbcType=NUMERIC}, 
+      #{depart,jdbcType=NUMERIC}, #{funds,jdbcType=NUMERIC}, #{operatorId,jdbcType=NUMERIC}, 
+      #{operator,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+    insert into CY_CGZHJY_JFB
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="depart != null" >
+        depart,
+      </if>
+      <if test="funds != null" >
+        funds,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectId != null" >
+        #{projectId,jdbcType=NUMERIC},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=NUMERIC},
+      </if>
+      <if test="depart != null" >
+        #{depart,jdbcType=NUMERIC},
+      </if>
+      <if test="funds != null" >
+        #{funds,jdbcType=NUMERIC},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=NUMERIC},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+    update CY_CGZHJY_JFB
+    <set >
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=NUMERIC},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=NUMERIC},
+      </if>
+      <if test="depart != null" >
+        depart = #{depart,jdbcType=NUMERIC},
+      </if>
+      <if test="funds != null" >
+        funds = #{funds,jdbcType=NUMERIC},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=NUMERIC},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=CLOB},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+    update CY_CGZHJY_JFB
+    set project_id = #{projectId,jdbcType=NUMERIC},
+      year = #{year,jdbcType=INTEGER},
+      date = #{date,jdbcType=NUMERIC},
+      depart = #{depart,jdbcType=NUMERIC},
+      funds = #{funds,jdbcType=NUMERIC},
+      operator_id = #{operatorId,jdbcType=NUMERIC},
+      operator = #{operator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=CLOB}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+    update CY_CGZHJY_JFB
+    set project_id = #{projectId,jdbcType=NUMERIC},
+      year = #{year,jdbcType=INTEGER},
+      date = #{date,jdbcType=NUMERIC},
+      depart = #{depart,jdbcType=NUMERIC},
+      funds = #{funds,jdbcType=NUMERIC},
+      operator_id = #{operatorId,jdbcType=NUMERIC},
+      operator = #{operator,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectFundsByProjectId" resultMap="ResultMapWithBLOBs">
+    SELECT * FROM CY_CGZHJY_JFB
+    WHERE project_id = #{projectId}
+  </select>
+
+  <delete id="delFundsByProjectId" >
+    DELETE FROM CY_CGZHJY_JFB
+    WHERE project_id = #{projectId}
+  </delete>
+</mapper>

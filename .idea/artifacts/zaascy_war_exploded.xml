@@ -146,18 +146,13 @@
           <element id="library" level="project" name="Maven: xml-resolver:xml-resolver:1.2" />
           <element id="library" level="project" name="Maven: org.apache.maven:maven-archiver:2.2" />
           <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:1.1.2" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-expression:3.2.4.RELEASE" />
-          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:3.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.4.RELEASE" />
           <element id="library" level="project" name="Maven: net.sourceforge.jexcelapi:jxl:2.6.12" />
-          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:sqljdbc:1.0" />
-          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:msbase:1.0" />
-          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:mssqlserver:1.0" />
-          <element id="library" level="project" name="Maven: com.microsoft.sqlserver:msutil:1.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.1" />
+          <element id="library" level="project" name="Maven: net.sourceforge.jtds:jtds:1.2.8" />
         </element>
       </element>
     </root>

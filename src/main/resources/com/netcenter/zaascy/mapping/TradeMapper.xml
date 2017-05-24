@@ -3,7 +3,7 @@
 <mapper namespace="com.netcenter.zaascy.dao.TradeMapper" >
   <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.Trade" >
     <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <idArg column="id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="project_num" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="project_year" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="depart_id" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -14,6 +14,7 @@
       <arg column="zaas_tech_type" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="zaas_code" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="customer_depart" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="other_customer_depart" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="depart_full_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="project_person" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="start_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -31,6 +32,10 @@
       <arg column="assess_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="download_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="join_state" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+        <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
 
   </resultMap>
@@ -43,13 +48,13 @@
     </resultMap>
   <sql id="Base_Column_List" >
     id, project_num, project_year, depart_id, depart, project_type, project_type_code, 
-    project_name, zaas_tech_type, zaas_code, customer_depart, depart_full_name, project_person, 
+    project_name, zaas_tech_type, zaas_code, customer_depart, other_customer_depart,depart_full_name, project_person,
     start_date, end_date, project_summary, intention_amount, intention_amount_explain, 
     sign_amount, remarks, submiter_id, submiter, assessor_id, assessor, submit_state, 
-    assess_state, download_state, join_state
+    assess_state, download_state, join_state, operator_id, operator, create_date, modify_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from CY_CGZHJY
     where id = #{id,jdbcType=INTEGER}
@@ -62,23 +67,24 @@
     insert into CY_CGZHJY (project_num, project_year, depart_id,
       depart, project_type, project_type_code, 
       project_name, zaas_tech_type, zaas_code, 
-      customer_depart, depart_full_name, project_person, 
+      customer_depart, other_customer_depart, depart_full_name, project_person,
       start_date, end_date, project_summary, 
       intention_amount, intention_amount_explain, 
       sign_amount, remarks, submiter_id, 
       submiter, assessor_id, assessor, 
       submit_state, assess_state, download_state, 
-      join_state)
+      join_state, operator_id, operator, create_date, modify_date)
     values (#{projectNum,jdbcType=VARCHAR}, #{projectYear,jdbcType=INTEGER}, #{departId,jdbcType=VARCHAR}, 
       #{depart,jdbcType=VARCHAR}, #{projectType,jdbcType=VARCHAR}, #{projectTypeCode,jdbcType=VARCHAR}, 
       #{projectName,jdbcType=VARCHAR}, #{zaasTechType,jdbcType=VARCHAR}, #{zaasCode,jdbcType=VARCHAR}, 
-      #{customerDepart,jdbcType=VARCHAR}, #{departFullName,jdbcType=VARCHAR}, #{projectPerson,jdbcType=VARCHAR}, 
+      #{customerDepart,jdbcType=VARCHAR},#{otherCustomerDepart,jdbcType=VARCHAR}, #{departFullName,jdbcType=VARCHAR}, #{projectPerson,jdbcType=VARCHAR},
       #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{projectSummary,jdbcType=VARCHAR}, 
       #{intentionAmount,jdbcType=NUMERIC}, #{intentionAmountExplain,jdbcType=VARCHAR}, 
       #{signAmount,jdbcType=NUMERIC}, #{remarks,jdbcType=VARCHAR}, #{submiterId,jdbcType=NUMERIC}, 
       #{submiter,jdbcType=VARCHAR}, #{assessorId,jdbcType=NUMERIC}, #{assessor,jdbcType=VARCHAR}, 
       #{submitState,jdbcType=INTEGER}, #{assessState,jdbcType=INTEGER}, #{downloadState,jdbcType=INTEGER}, 
-      #{joinState,jdbcType=INTEGER})
+      #{joinState,jdbcType=INTEGER},#{operatorId,jdbcType=NUMERIC},#{operator,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},
+      #{modifyDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.Trade" keyProperty="id" useGeneratedKeys="true">
     insert into CY_CGZHJY
@@ -112,6 +118,9 @@
       </if>
       <if test="customerDepart != null" >
         customer_depart,
+      </if>
+      <if test="otherCustomerDepart != null" >
+        otherCustomerDepart,
       </if>
       <if test="departFullName != null" >
         depart_full_name,
@@ -164,6 +173,18 @@
       <if test="joinState != null" >
         join_state,
       </if>
+        <if test="operatorId != null" >
+            operator_id,
+        </if>
+        <if test="operator != null" >
+            operator,
+        </if>
+        <if test="createDate != null" >
+            create_date,
+        </if>
+        <if test="modifyDate != null" >
+            modify_date,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectNum != null" >
@@ -195,6 +216,9 @@
       </if>
       <if test="customerDepart != null" >
         #{customerDepart,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCustomerDepart != null" >
+        #{otherCustomerDepart,jdbcType=VARCHAR},
       </if>
       <if test="departFullName != null" >
         #{departFullName,jdbcType=VARCHAR},
@@ -247,6 +271,18 @@
       <if test="joinState != null" >
         #{joinState,jdbcType=INTEGER},
       </if>
+        <if test="operatorId != null" >
+            #{operatorId,jdbcType=NUMERIC},
+        </if>
+        <if test="operator != null" >
+            #{operator,jdbcType=VARCHAR},
+        </if>
+        <if test="createDate != null" >
+            #{createDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="modifyDate != null" >
+            #{modifyDate,jdbcType=TIMESTAMP},
+        </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.Trade" >
@@ -281,6 +317,9 @@
       </if>
       <if test="customerDepart != null" >
         customer_depart = #{customerDepart,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCustomerDepart != null" >
+        customer_depart = #{otherCustomerDepart,jdbcType=VARCHAR},
       </if>
       <if test="departFullName != null" >
         depart_full_name = #{departFullName,jdbcType=VARCHAR},
@@ -333,6 +372,18 @@
       <if test="joinState != null" >
         join_state = #{joinState,jdbcType=INTEGER},
       </if>
+        <if test="operatorId != null" >
+            operator_id = #{operatorId,jdbcType=NUMERIC},
+        </if>
+        <if test="operator != null" >
+            operator = #{operator,jdbcType=VARCHAR},
+        </if>
+        <if test="createDate != null" >
+            create_date = #{createDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="modifyDate != null" >
+            modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+        </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -348,6 +399,7 @@
       zaas_tech_type = #{zaasTechType,jdbcType=VARCHAR},
       zaas_code = #{zaasCode,jdbcType=VARCHAR},
       customer_depart = #{customerDepart,jdbcType=VARCHAR},
+      other_customer_depart = #{otherCustomerDepart,jdbcType=VARCHAR},
       depart_full_name = #{departFullName,jdbcType=VARCHAR},
       project_person = #{projectPerson,jdbcType=VARCHAR},
       start_date = #{startDate,jdbcType=TIMESTAMP},
@@ -364,7 +416,11 @@
       submit_state = #{submitState,jdbcType=INTEGER},
       assess_state = #{assessState,jdbcType=INTEGER},
       download_state = #{downloadState,jdbcType=INTEGER},
-      join_state = #{joinState,jdbcType=INTEGER}
+      join_state = #{joinState,jdbcType=INTEGER},
+        operator_id = #{operatorId,jdbcType=NUMERIC},
+        operator = #{operator,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectAll" resultMap="BaseResultMap">
@@ -413,5 +469,34 @@
     <if test="mark=='RZ'"> KY_CG_RJZZQXX </if>
     <if test="mark=='BZ'"> KY_CG_ZDBZXX </if>
     WHERE TIJZT = 'Y' AND CGBM = #{zaasCode}
+  </select>
+
+  <select id="getProjectNumByMark" resultType="String">
+    SELECT TOP 1 project_num FROM CY_CGZHJY
+    WHERE project_num LIKE #{mark} + '%'
+    ORDER BY project_num DESC
+  </select>
+
+  <update id="submit" >
+    UPDATE CY_CGZHJY
+    SET submit_state = #{submitState},
+      submiter_id = #{userId},
+      submiter = #{name},
+      operator_id = #{userId},
+      operator = #{name},
+      modify_date = #{date}
+    WHERE id = #{id}
+  </update>
+
+  <select id="getCount" resultType="Integer">
+    SELECT COUNT(*) FROM CY_CGZHJY WHERE project_num = #{projectNum} AND submit_state = 1
+  </select>
+
+  <select id="getCountByType" resultType="Integer">
+    SELECT COUNT(*) FROM CY_CGZHJY WHERE project_type_code like #{typeCode}+'%'
+  </select>
+
+  <select id="selectByType" resultMap="BaseResultMap">
+    SELECT * FROM CY_CGZHJY WHERE project_type_code LIKE #{typeCode}+'%'
   </select>
 </mapper>

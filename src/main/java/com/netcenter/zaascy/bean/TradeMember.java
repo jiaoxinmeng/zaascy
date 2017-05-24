@@ -5,11 +5,11 @@ import java.util.Date;
 public class TradeMember {
     private Long id;
 
-    private Integer projectId;
+    private Long projectId;
 
     private Integer rankNumber;
 
-    private Integer userId;
+    private Long userId;
 
     private String name;
 
@@ -17,11 +17,11 @@ public class TradeMember {
 
     private Date modifyDate;
 
-    private Integer operatorId;
+    private Long operatorId;
 
     private String operator;
 
-    public TradeMember(Long id, Integer projectId, Integer rankNumber, Integer userId, String name, Date createDate, Date modifyDate, Integer operatorId, String operator) {
+    public TradeMember(Long id, Long projectId, Integer rankNumber, Long userId, String name, Date createDate, Date modifyDate, Long operatorId, String operator) {
         this.id = id;
         this.projectId = projectId;
         this.rankNumber = rankNumber;
@@ -45,11 +45,11 @@ public class TradeMember {
         this.id = id;
     }
 
-    public Integer getProjectId() {
+    public Long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
 
@@ -61,11 +61,11 @@ public class TradeMember {
         this.rankNumber = rankNumber;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -93,11 +93,11 @@ public class TradeMember {
         this.modifyDate = modifyDate;
     }
 
-    public Integer getOperatorId() {
+    public Long getOperatorId() {
         return operatorId;
     }
 
-    public void setOperatorId(Integer operatorId) {
+    public void setOperatorId(Long operatorId) {
         this.operatorId = operatorId;
     }
 

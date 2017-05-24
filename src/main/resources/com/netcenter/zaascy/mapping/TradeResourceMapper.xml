@@ -95,4 +95,11 @@
     WHERE type = #{type,jdbcType=VARCHAR}
     ORDER BY sort_num
   </select>
+
+  <select id="getProjectTypeList" resultType="String">
+    SELECT     SUBSTRING([key], 1, 1) AS a
+    FROM         CY_CGZHJY_ZYB
+    WHERE     type = 'projectType'
+    GROUP BY SUBSTRING([key], 1, 1)
+  </select>
 </mapper>

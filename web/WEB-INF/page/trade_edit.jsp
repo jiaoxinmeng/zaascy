@@ -13,10 +13,19 @@
 <head>
     <title>trade edit jsp</title>
     <link rel="stylesheet" href="/resources/css/dropify.css">
+    <!-- Include Twitter Bootstrap and jQuery: -->
+    <link rel="stylesheet" href="/resources/css/bootstrap-3.3.2.min.css" type="text/css"/>
+    <script type="text/javascript" src="/resources/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="/resources/js/bootstrap-3.3.2.min.js"></script>
+
+
+    <!-- Include the plugin's CSS and JS: -->
+    <script type="text/javascript" src="/resources/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="/resources/css/bootstrap-multiselect.css" type="text/css"/>
+
     <script charset="utf-8" src="/resources/kindeditor/kindeditor-all.js"></script>
     <script charset="utf-8" src="/resources/kindeditor/lang/zh-CN.js"></script>
     <script charset="utf-8" src="/resources/kindeditor/plugins/code/prettify.js"></script>
-    <script src="/resources/js/jquery-1.8.1.min.js" type="text/javascript"></script>
     <script src="/resources/js/jquery.form.min.js" type="text/javascript"></script>
     <script src="/resources/js/dropify.min.js"></script>
     <script src="/resources/laydate/laydate.js"></script>
@@ -26,8 +35,12 @@
         <form action="save.do" method="post" >
             <table>
                 <tr>
+                    <c:if test="${not empty trade.id}">
+                        <input type="hidden" name="id" value="${trade.id}"/>
+                    </c:if>
                     <td>项目编号</td>
                     <td>
+
                         <input type="text" name="projectNum" value="${trade.projectNum}"/>
                     </td>
                     <td>年份</td>
@@ -87,7 +100,15 @@
                     </td>
                     <td>让与/承担单位全称</td>
                     <td>
-                        <input type="text" name="departFullName" value="${trade.departFullName}"/>
+                        <select id="departFullName_select" name="departFullName" multiple="multiple" >
+                            <option value="浙江省农业科学院">浙江省农业科学院</option>
+                            <c:forEach items="${departList}" var="depart">
+                                <option value="<c:out value="${depart.danwmc}"/>"><c:out value="${depart.danwmc}"/></option>
+                            </c:forEach>
+                            <c:forEach items="${otherDepartList}" var="depart">
+                                <option value="<c:out value="${depart.key}"/>"><c:out value="${depart.value}"/></option>
+                            </c:forEach>
+                        </select>
                     </td>
                 </tr>
 
@@ -146,9 +167,14 @@
             addYearSelect();
             $("#year_select").val(${trade.projectYear});
             $("#depart_select").val(${trade.departId})
-            $("#projectType_select").val(${trade.projectTypeCode});
-            $("#zaasTechType_select").val(${trade.zaasTechType});
+            $("#projectType_select").val("${trade.projectTypeCode}");
+            $("#zaasTechType_select").val("${trade.zaasTechType}");
 
+            var departFullNames = "${trade.departFullName}".split(",");
+            for (var j = 0; j < departFullNames.length; j++){
+                $("#departFullName_select  option[value='" + departFullNames[j] + "'] ").attr("selected", true);
+            }
+            $("#departFullName_select").multiselect();
 
         }
     );
@@ -158,8 +184,13 @@
     });
 
     $("#depart_select").change(function () {
-        //alert($("#depart_select").find("option:selected").text());
         $("#depart_name").val($("#depart_select").find("option:selected").text());
+
+        $.post("getDepartFullName.do",{departId:$("#depart_select").val()},function(date){
+            $("#departFullName_select").find("option:selected").removeAttr("selected", true);
+            $("#departFullName_select  option[value='" + date.departFullName + "'] ").attr("selected", true);
+            $("#departFullName_select").multiselect("refresh");
+        },"json");
     });
 
     $("#projectType_select").change(function () {

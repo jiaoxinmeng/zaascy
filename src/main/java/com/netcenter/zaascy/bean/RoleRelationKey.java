@@ -3,11 +3,11 @@ package com.netcenter.zaascy.bean;
 import java.math.BigDecimal;
 
 public class RoleRelationKey {
-    private BigDecimal yonghId;
+    private Long yonghId;
 
-    private BigDecimal juesId;
+    private Long juesId;
 
-    public RoleRelationKey(BigDecimal yonghId, BigDecimal juesId) {
+    public RoleRelationKey(Long yonghId, Long juesId) {
         this.yonghId = yonghId;
         this.juesId = juesId;
     }
@@ -16,19 +16,19 @@ public class RoleRelationKey {
         super();
     }
 
-    public BigDecimal getYonghId() {
+    public Long getYonghId() {
         return yonghId;
     }
 
-    public void setYonghId(BigDecimal yonghId) {
+    public void setYonghId(Long yonghId) {
         this.yonghId = yonghId;
     }
 
-    public BigDecimal getJuesId() {
+    public Long getJuesId() {
         return juesId;
     }
 
-    public void setJuesId(BigDecimal juesId) {
+    public void setJuesId(Long juesId) {
         this.juesId = juesId;
     }
 }

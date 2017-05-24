@@ -26,6 +26,8 @@ public class Trade {
 
     private String customerDepart;
 
+    private String otherCustomerDepart;
+
     private String departFullName;
 
     private String projectPerson;
@@ -60,7 +62,17 @@ public class Trade {
 
     private Integer joinState;
 
-    public Trade(Long id, String projectNum, Integer projectYear, String departId, String depart, String projectType, String projectTypeCode, String projectName, String zaasTechType, String zaasCode, String customerDepart, String departFullName, String projectPerson, Date startDate, Date endDate, String projectSummary, BigDecimal intentionAmount, String intentionAmountExplain, BigDecimal signAmount, String remarks, Long submiterId, String submiter, Long assessorId, String assessor, Integer submitState, Integer assessState, Integer downloadState, Integer joinState) {
+    private Long operatorId;
+
+    private String operator;
+
+    private Date createDate;
+
+    private Date modifyDate;
+
+    private String otherZaasCode;
+
+    public Trade(Long id, String projectNum, Integer projectYear, String departId, String depart, String projectType, String projectTypeCode, String projectName, String zaasTechType, String zaasCode, String customerDepart, String otherCustomerDepart,String departFullName, String projectPerson, Date startDate, Date endDate, String projectSummary, BigDecimal intentionAmount, String intentionAmountExplain, BigDecimal signAmount, String remarks, Long submiterId, String submiter, Long assessorId, String assessor, Integer submitState, Integer assessState, Integer downloadState, Integer joinState, Long operatorId, String operator, Date createDate, Date modifyDate) {
         this.id = id;
         this.projectNum = projectNum;
         this.projectYear = projectYear;
@@ -72,6 +84,7 @@ public class Trade {
         this.zaasTechType = zaasTechType;
         this.zaasCode = zaasCode;
         this.customerDepart = customerDepart;
+        this.otherCustomerDepart = otherCustomerDepart;
         this.departFullName = departFullName;
         this.projectPerson = projectPerson;
         this.startDate = startDate;
@@ -89,6 +102,10 @@ public class Trade {
         this.assessState = assessState;
         this.downloadState = downloadState;
         this.joinState = joinState;
+        this.operatorId = operatorId;
+        this.operator = operator;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
     }
 
     public Trade(Long id,String projectName,String zaasCode){
@@ -357,5 +374,53 @@ public class Trade {
 
     public void setJoinState(Integer joinState) {
         this.joinState = joinState;
+    }
+
+    public Long getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(Long operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public String getOtherCustomerDepart() {
+        return otherCustomerDepart;
+    }
+
+    public void setOtherCustomerDepart(String otherCustomerDepart) {
+        this.otherCustomerDepart = otherCustomerDepart;
+    }
+
+    public String getOtherZaasCode() {
+        return otherZaasCode;
+    }
+
+    public void setOtherZaasCode(String otherZaasCode) {
+        this.otherZaasCode = otherZaasCode;
     }
 }

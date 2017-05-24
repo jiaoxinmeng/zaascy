@@ -3,188 +3,23 @@
 <mapper namespace="com.netcenter.zaascy.dao.PrivilegeMapper" >
   <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.Privilege" >
     <constructor >
-      <idArg column="QUANX_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <idArg column="QUANX_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="QUANXBH" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="QUANXMC" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="MOK_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="MOK_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="SHIFKXG" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="JUES_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="JUES_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="QUANXSM" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="JILCJZ" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="JILCJZ" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="JILCJSJ" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="JILXGZ" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="JILXGZ" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="JILXGSJ" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="JUESJB" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="JUESJB" jdbcType="NUMERIC" javaType="java.lang.Long" />
     </constructor>
   </resultMap>
-  <sql id="Base_Column_List" >
-    QUANX_ID, QUANXBH, QUANXMC, MOK_ID, SHIFKXG, JUES_ID, QUANXSM, JILCJZ, JILCJSJ, JILXGZ, 
-    JILXGSJ, YONGH_ID, JUESJB
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
-    select 
-    <include refid="Base_Column_List" />
-    from QX
-    where QUANX_ID = #{quanxId,jdbcType=NUMERIC}
+  <select id="getPrivilege" resultMap="BaseResultMap">
+    SELECT * FROM QX
+    WHERE MOK_ID = #{moduleId} AND YONGH_ID = #{userId}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
-    delete from QX
-    where QUANX_ID = #{quanxId,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.Privilege" >
-    insert into QX (QUANX_ID, QUANXBH, QUANXMC, 
-      MOK_ID, SHIFKXG, JUES_ID, 
-      QUANXSM, JILCJZ, JILCJSJ, 
-      JILXGZ, JILXGSJ, YONGH_ID, 
-      JUESJB)
-    values (#{quanxId,jdbcType=NUMERIC}, #{quanxbh,jdbcType=VARCHAR}, #{quanxmc,jdbcType=VARCHAR}, 
-      #{mokId,jdbcType=NUMERIC}, #{shifkxg,jdbcType=VARCHAR}, #{juesId,jdbcType=NUMERIC}, 
-      #{quanxsm,jdbcType=VARCHAR}, #{jilcjz,jdbcType=NUMERIC}, #{jilcjsj,jdbcType=TIMESTAMP}, 
-      #{jilxgz,jdbcType=NUMERIC}, #{jilxgsj,jdbcType=TIMESTAMP}, #{yonghId,jdbcType=NUMERIC}, 
-      #{juesjb,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.Privilege" >
-    insert into QX
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="quanxId != null" >
-        QUANX_ID,
-      </if>
-      <if test="quanxbh != null" >
-        QUANXBH,
-      </if>
-      <if test="quanxmc != null" >
-        QUANXMC,
-      </if>
-      <if test="mokId != null" >
-        MOK_ID,
-      </if>
-      <if test="shifkxg != null" >
-        SHIFKXG,
-      </if>
-      <if test="juesId != null" >
-        JUES_ID,
-      </if>
-      <if test="quanxsm != null" >
-        QUANXSM,
-      </if>
-      <if test="jilcjz != null" >
-        JILCJZ,
-      </if>
-      <if test="jilcjsj != null" >
-        JILCJSJ,
-      </if>
-      <if test="jilxgz != null" >
-        JILXGZ,
-      </if>
-      <if test="jilxgsj != null" >
-        JILXGSJ,
-      </if>
-      <if test="yonghId != null" >
-        YONGH_ID,
-      </if>
-      <if test="juesjb != null" >
-        JUESJB,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="quanxId != null" >
-        #{quanxId,jdbcType=NUMERIC},
-      </if>
-      <if test="quanxbh != null" >
-        #{quanxbh,jdbcType=VARCHAR},
-      </if>
-      <if test="quanxmc != null" >
-        #{quanxmc,jdbcType=VARCHAR},
-      </if>
-      <if test="mokId != null" >
-        #{mokId,jdbcType=NUMERIC},
-      </if>
-      <if test="shifkxg != null" >
-        #{shifkxg,jdbcType=VARCHAR},
-      </if>
-      <if test="juesId != null" >
-        #{juesId,jdbcType=NUMERIC},
-      </if>
-      <if test="quanxsm != null" >
-        #{quanxsm,jdbcType=VARCHAR},
-      </if>
-      <if test="jilcjz != null" >
-        #{jilcjz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjsj != null" >
-        #{jilcjsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="jilxgz != null" >
-        #{jilxgz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilxgsj != null" >
-        #{jilxgsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="yonghId != null" >
-        #{yonghId,jdbcType=NUMERIC},
-      </if>
-      <if test="juesjb != null" >
-        #{juesjb,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.Privilege" >
-    update QX
-    <set >
-      <if test="quanxbh != null" >
-        QUANXBH = #{quanxbh,jdbcType=VARCHAR},
-      </if>
-      <if test="quanxmc != null" >
-        QUANXMC = #{quanxmc,jdbcType=VARCHAR},
-      </if>
-      <if test="mokId != null" >
-        MOK_ID = #{mokId,jdbcType=NUMERIC},
-      </if>
-      <if test="shifkxg != null" >
-        SHIFKXG = #{shifkxg,jdbcType=VARCHAR},
-      </if>
-      <if test="juesId != null" >
-        JUES_ID = #{juesId,jdbcType=NUMERIC},
-      </if>
-      <if test="quanxsm != null" >
-        QUANXSM = #{quanxsm,jdbcType=VARCHAR},
-      </if>
-      <if test="jilcjz != null" >
-        JILCJZ = #{jilcjz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjsj != null" >
-        JILCJSJ = #{jilcjsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="jilxgz != null" >
-        JILXGZ = #{jilxgz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilxgsj != null" >
-        JILXGSJ = #{jilxgsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="yonghId != null" >
-        YONGH_ID = #{yonghId,jdbcType=NUMERIC},
-      </if>
-      <if test="juesjb != null" >
-        JUESJB = #{juesjb,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where QUANX_ID = #{quanxId,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.Privilege" >
-    update QX
-    set QUANXBH = #{quanxbh,jdbcType=VARCHAR},
-      QUANXMC = #{quanxmc,jdbcType=VARCHAR},
-      MOK_ID = #{mokId,jdbcType=NUMERIC},
-      SHIFKXG = #{shifkxg,jdbcType=VARCHAR},
-      JUES_ID = #{juesId,jdbcType=NUMERIC},
-      QUANXSM = #{quanxsm,jdbcType=VARCHAR},
-      JILCJZ = #{jilcjz,jdbcType=NUMERIC},
-      JILCJSJ = #{jilcjsj,jdbcType=TIMESTAMP},
-      JILXGZ = #{jilxgz,jdbcType=NUMERIC},
-      JILXGSJ = #{jilxgsj,jdbcType=TIMESTAMP},
-      YONGH_ID = #{yonghId,jdbcType=NUMERIC},
-      JUESJB = #{juesjb,jdbcType=NUMERIC}
-    where QUANX_ID = #{quanxId,jdbcType=NUMERIC}
-  </update>
 </mapper>

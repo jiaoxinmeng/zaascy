@@ -1,18 +1,13 @@
 package com.netcenter.zaascy.dao;
 
 import com.netcenter.zaascy.bean.Module;
+import org.springframework.stereotype.Repository;
+
 import java.math.BigDecimal;
 
+@Repository(value = "moduleDao")
 public interface ModuleMapper {
-    int deleteByPrimaryKey(BigDecimal mokId);
+    String getSubmitors(int moduleId);
 
-    int insert(Module record);
-
-    int insertSelective(Module record);
-
-    Module selectByPrimaryKey(BigDecimal mokId);
-
-    int updateByPrimaryKeySelective(Module record);
-
-    int updateByPrimaryKey(Module record);
+    String getAssessors(int moduleId);
 }

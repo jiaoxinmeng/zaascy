@@ -3,36 +3,11 @@
 <mapper namespace="com.netcenter.zaascy.dao.RoleRelationMapper" >
   <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.RoleRelationKey" >
     <constructor >
-      <idArg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <idArg column="JUES_ID" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <idArg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="JUES_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
     </constructor>
   </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="com.netcenter.zaascy.bean.RoleRelationKey" >
-    delete from XTYH_JS
-    where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
-      and JUES_ID = #{juesId,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.RoleRelationKey" >
-    insert into XTYH_JS (YONGH_ID, JUES_ID)
-    values (#{yonghId,jdbcType=NUMERIC}, #{juesId,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.RoleRelationKey" >
-    insert into XTYH_JS
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="yonghId != null" >
-        YONGH_ID,
-      </if>
-      <if test="juesId != null" >
-        JUES_ID,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="yonghId != null" >
-        #{yonghId,jdbcType=NUMERIC},
-      </if>
-      <if test="juesId != null" >
-        #{juesId,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
+  <select id="getRelosByUserId" resultMap="BaseResultMap">
+    SELECT * FROM XTYH_JS WHERE (JUES_ID = 1 OR JUES_ID = 33) AND YONGH_ID = #{userId}
+  </select>
 </mapper>

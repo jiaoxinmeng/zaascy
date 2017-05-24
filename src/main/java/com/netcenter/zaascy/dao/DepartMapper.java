@@ -8,19 +8,14 @@ import java.util.List;
 
 @Repository(value = "departDao")
 public interface DepartMapper {
-    int deleteByPrimaryKey(BigDecimal danwId);
-
-    int insert(Depart record);
-
-    int insertSelective(Depart record);
-
-    Depart selectByPrimaryKey(BigDecimal danwId);
-
-    int updateByPrimaryKeySelective(Depart record);
-
-    int updateByPrimaryKey(Depart record);
 
     List<Depart> getAll();
 
     List<Depart> getAllInstitute();
+
+    String getDepartNumById(Integer departId);
+
+    String getDepartFullNameById(Integer departId);
+
+    String getDepartNameById(Integer departId);
 }

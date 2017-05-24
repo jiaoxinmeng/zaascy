@@ -11,6 +11,7 @@ public class TestWsdl {
             String token = "tMqwR1mR4doflVSmpc9g+ZmNYZfdy7/kTQH3QLbajtA=";
             ll.setToken(token);
             System.out.println(ls.login(ll).get_return());
+            //true则登录
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,4 +20,6 @@ public interface TradeResourceMapper {
     int updateByPrimaryKey(TradeResource record);
 
     List<TradeResource> selectByType(String type);
+
+    List<String> getProjectTypeList();
 }

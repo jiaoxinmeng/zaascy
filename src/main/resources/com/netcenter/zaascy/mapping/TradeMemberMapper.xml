@@ -4,21 +4,18 @@
   <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.TradeMember" >
     <constructor >
       <arg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
-      <arg column="project_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="project_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="rank_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="modify_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="operator_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeMember" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into CY_CGZHJY_CYB (project_id, rank_number, user_id, 
+    insert into CY_CGZHJY_CYB (project_id, rank_number, user_id,
       name, create_date, modify_date, 
       operator_id, operator)
     values (#{projectId,jdbcType=INTEGER}, #{rankNumber,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
@@ -26,9 +23,6 @@
       #{operatorId,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeMember" >
-    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
     insert into CY_CGZHJY_CYB
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectId != null" >
@@ -83,4 +77,46 @@
       </if>
     </trim>
   </insert>
+  <update id="updateSelective" parameterType="com.netcenter.zaascy.bean.TradeMember">
+    UPDATE CY_CGZHJY_CYB
+    <set >
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=NUMERIC},
+      </if>
+      <if test="rankNumber != null" >
+        rank_number = #{rankNumber,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=NUMERIC},
+      </if>
+      <if test="projectType != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectById" resultType="com.netcenter.zaascy.bean.TradeMember">
+    SELECT * FROM CY_CGZHJY_CYB WHERE id = #{id}
+  </select>
+  <select id="selectByProjectId" resultType="com.netcenter.zaascy.bean.TradeMember">
+    SELECT * FROM CY_CGZHJY_CYB WHERE project_id = #{projectId}
+  </select>
+  <delete id="deleteByProjectId">
+    DELETE FROM CY_CGZHJY_CYB WHERE project_id = #{projectId}
+  </delete>
+  <delete id="deleteById" >
+    DELETE FROM CY_CGZHJY_CYB WHERE id = #{id}
+  </delete>
 </mapper>
