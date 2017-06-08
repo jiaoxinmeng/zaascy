@@ -37,6 +37,7 @@ public class LoginController {
             try {
                 String result = ls.login(login).get_return();
                 if(result.equals("success")){
+
                     mav.setViewName("redirect:/index.do");
                 }
             } catch (RemoteException e) {
@@ -56,7 +57,7 @@ public class LoginController {
             mav.setViewName("login");
         }else if(commonService.valiDatePassword(username,password)){
             User user = commonService.getUser(username,password);
-            System.out.println(user.toString());
+            //System.out.println(user.toString());
             session.setAttribute("user",user);
             mav.setViewName("redirect:/index.do");
         }else{
@@ -89,7 +90,7 @@ public class LoginController {
     @RequestMapping(value={"/noPermission"})
     public ModelAndView noPermission(){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("../../errors/no_permission");
+        mav.setViewName("errors/no_permission");
         return mav;
     }
 

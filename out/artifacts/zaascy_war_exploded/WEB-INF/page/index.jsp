@@ -40,10 +40,6 @@
     <link href="/resources/css/style.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -73,7 +69,7 @@
                 <ul class="dropdown-menu dropdown-user">
 
                     <li>
-                        <a href="loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
+                        <a href="/user/loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -87,29 +83,29 @@
                 <ul class="nav" id="side-menu">
 
                     <li >
-                        <a href="/trade/newFirst.do">
-                            <i class="fa fa-home"></i>&nbsp;&nbsp;录入项目</a>
+                        <a href="/index.do">
+                            <i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;技术转让<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;成果转化<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;专利权</a>
+                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;技术转让-专利权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;专利申请权</a>
+                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;技术转让-专利申请权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;专利实施许可</a>
+                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;技术转让-专利实施许可</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术秘密</a>
+                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术转让-技术秘密</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li>
@@ -121,20 +117,17 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/trade/list.do?codeType=F1"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
-                    </li>
-                    <li>
-                        <a href="/trade/list.do?codeType=J"><i class="fa fa-flask"></i>&nbsp;&nbsp;&nbsp;检测服务</a>
-
+                        <a href="javascript:void(0);"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测项目</a>
+                                <a href="/trade/list.do?codeType=F1">&nbsp;&nbsp;技术服务（非检测）</a>
                             </li>
                             <li>
-                                <a href="/trade/goChildImport.do">&nbsp;&nbsp;零散检测单导入</a>
+                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测服务</a>
                             </li>
                         </ul>
                     </li>
+
                     <li>
                         <a href="/trade/list.do?codeType=Z1"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
                     </li>
@@ -219,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/trade/list.do?codeType=F">
+                    <a href="/trade/list.do?codeType=F1">
                         <div class="panel-footer">
                             <span class="pull-left">查看详情</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -242,7 +235,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/trade/list.do?codeType=J">
+                    <a href="/trade/list.do?codeType=J1">
                         <div class="panel-footer">
                             <span class="pull-left">查看详情</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -265,7 +258,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/trade/list.do?codeType=Z">
+                    <a href="/trade/list.do?codeType=Z1">
                         <div class="panel-footer">
                             <span class="pull-left">查看详情</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -288,7 +281,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="/trade/list.do?codeType=P">
+                    <a href="/trade/list.do?codeType=P1">
                         <div class="panel-footer">
                             <span class="pull-left">查看详情</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -303,12 +296,40 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> 2017年各研究所统计
+                        <i class="fa fa-bar-chart-o fa-fw"></i> 数据统计
 
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <div id="morris-area-chart"></div>
+                        <div id="morris-area-chart">
+                            <table id="myTable1">
+                                <caption>
+                                    总体数据统计
+                                </caption>
+                                <thead>
+                                <tr>
+                                    <th>农发所</th>
+                                    <th>数农所</th>
+                                    <th>亚作所</th>
+                                    <th>园艺所</th>
+                                    <th>植微所</th>
+                                    <th>质标所</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th></th>
+                                    <th>6</th>
+                                    <th>1</th>
+                                    <th>1</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>4</th>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -334,14 +355,32 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="/resources/vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
+<!-- Morris Charts JavaScript
 <script src="/resources/vendor/raphael/raphael.min.js"></script>
 <script src="/resources/vendor/morrisjs/morris.min.js"></script>
-<script src="/resources/data/morris-data.js"></script>
+-->
+
+<script type="text/javascript" src="/resources/js/jsapi.js"></script>
+<script type="text/javascript" src="/resources/js/corechart.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.gvChart-1.0.1.min.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.ba-resize.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="/resources/dist/js/sb-admin-2.js"></script>
 
 </body>
-
+<script>
+    gvChartInit();
+    $(document).ready(function(){
+        $("#myTable1").gvChart({
+            chartType: 'PieChart',
+            gvSettings: {
+                vAxis: {title: 'No of players'},
+                hAxis: {title: 'Month'},
+                width: 500,
+                height: 350
+            }
+        });
+    });
+</script>
 </html>

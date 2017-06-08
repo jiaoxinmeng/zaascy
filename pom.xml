@@ -25,7 +25,14 @@
 
     <dependencies>
 
-        <!-- https://mvnrepository.com/artifact/net.sourceforge.jtds/jtds -->
+        <!-- jbarcode -->
+        <dependency>
+            <groupId>org.jbarcode</groupId>
+            <artifactId>jbarcode</artifactId>
+            <version>0.2.8</version>
+        </dependency>
+
+        <!-- jtds sql2000连接 -->
         <dependency>
             <groupId>net.sourceforge.jtds</groupId>
             <artifactId>jtds</artifactId>

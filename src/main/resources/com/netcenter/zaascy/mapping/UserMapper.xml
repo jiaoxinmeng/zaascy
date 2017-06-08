@@ -37,6 +37,12 @@
       <arg column="danw_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
     </constructor>
   </resultMap>
+  <resultMap id="listResultMap" type="com.netcenter.zaascy.bean.User" >
+    <constructor >
+      <idArg column="YONGH_ID" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="xingm" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
   <sql id="Base_Column_List" >
     YONGH_ID, DENGLM, MIM, XITMK, RENY_ID, JILCJZ, JILCJSJ, JILXGZ, JILXGSJ, boshih_id, 
     yanjius_id, linshiry_id, laowupqry_id, shenhezt, reny_lx, shenfenz, xingm, TIJZT, 
@@ -49,367 +55,6 @@
     from XTYH
     where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from XTYH
-    where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
-  </delete>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.User" >
-    insert into XTYH (YONGH_ID, DENGLM, MIM, 
-      XITMK, RENY_ID, JILCJZ, 
-      JILCJSJ, JILXGZ, JILXGSJ, 
-      boshih_id, yanjius_id, linshiry_id, 
-      laowupqry_id, shenhezt, reny_lx, 
-      shenfenz, xingm, TIJZT, 
-      SHENHZT, JIAOYZT, TIJR, 
-      SHENHR, JIAOYR, TIJR_ID, 
-      SHENHR_ID, JIAOYR_ID, zhaop, 
-      shifouyx, youxiaoq, shouj, 
-      email, danw_id)
-    values (#{yonghId,jdbcType=NUMERIC}, #{denglm,jdbcType=VARCHAR}, #{mim,jdbcType=VARCHAR}, 
-      #{xitmk,jdbcType=NUMERIC}, #{renyId,jdbcType=NUMERIC}, #{jilcjz,jdbcType=NUMERIC}, 
-      #{jilcjsj,jdbcType=TIMESTAMP}, #{jilxgz,jdbcType=NUMERIC}, #{jilxgsj,jdbcType=TIMESTAMP}, 
-      #{boshihId,jdbcType=INTEGER}, #{yanjiusId,jdbcType=INTEGER}, #{linshiryId,jdbcType=INTEGER}, 
-      #{laowupqryId,jdbcType=INTEGER}, #{shenhezt,jdbcType=INTEGER}, #{renyLx,jdbcType=INTEGER}, 
-      #{shenfenz,jdbcType=VARCHAR}, #{xingm,jdbcType=VARCHAR}, #{tijzt,jdbcType=VARCHAR}, 
-      #{shenhzt,jdbcType=VARCHAR}, #{jiaoyzt,jdbcType=VARCHAR}, #{tijr,jdbcType=VARCHAR}, 
-      #{shenhr,jdbcType=VARCHAR}, #{jiaoyr,jdbcType=VARCHAR}, #{tijrId,jdbcType=NUMERIC}, 
-      #{shenhrId,jdbcType=NUMERIC}, #{jiaoyrId,jdbcType=NUMERIC}, #{zhaop,jdbcType=VARCHAR}, 
-      #{shifouyx,jdbcType=INTEGER}, #{youxiaoq,jdbcType=TIMESTAMP}, #{shouj,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{danwId,jdbcType=NUMERIC})
-  </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.User" >
-    insert into XTYH
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="yonghId != null" >
-        YONGH_ID,
-      </if>
-      <if test="denglm != null" >
-        DENGLM,
-      </if>
-      <if test="mim != null" >
-        MIM,
-      </if>
-      <if test="xitmk != null" >
-        XITMK,
-      </if>
-      <if test="renyId != null" >
-        RENY_ID,
-      </if>
-      <if test="jilcjz != null" >
-        JILCJZ,
-      </if>
-      <if test="jilcjsj != null" >
-        JILCJSJ,
-      </if>
-      <if test="jilxgz != null" >
-        JILXGZ,
-      </if>
-      <if test="jilxgsj != null" >
-        JILXGSJ,
-      </if>
-      <if test="boshihId != null" >
-        boshih_id,
-      </if>
-      <if test="yanjiusId != null" >
-        yanjius_id,
-      </if>
-      <if test="linshiryId != null" >
-        linshiry_id,
-      </if>
-      <if test="laowupqryId != null" >
-        laowupqry_id,
-      </if>
-      <if test="shenhezt != null" >
-        shenhezt,
-      </if>
-      <if test="renyLx != null" >
-        reny_lx,
-      </if>
-      <if test="shenfenz != null" >
-        shenfenz,
-      </if>
-      <if test="xingm != null" >
-        xingm,
-      </if>
-      <if test="tijzt != null" >
-        TIJZT,
-      </if>
-      <if test="shenhzt != null" >
-        SHENHZT,
-      </if>
-      <if test="jiaoyzt != null" >
-        JIAOYZT,
-      </if>
-      <if test="tijr != null" >
-        TIJR,
-      </if>
-      <if test="shenhr != null" >
-        SHENHR,
-      </if>
-      <if test="jiaoyr != null" >
-        JIAOYR,
-      </if>
-      <if test="tijrId != null" >
-        TIJR_ID,
-      </if>
-      <if test="shenhrId != null" >
-        SHENHR_ID,
-      </if>
-      <if test="jiaoyrId != null" >
-        JIAOYR_ID,
-      </if>
-      <if test="zhaop != null" >
-        zhaop,
-      </if>
-      <if test="shifouyx != null" >
-        shifouyx,
-      </if>
-      <if test="youxiaoq != null" >
-        youxiaoq,
-      </if>
-      <if test="shouj != null" >
-        shouj,
-      </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="danwId != null" >
-        danw_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="yonghId != null" >
-        #{yonghId,jdbcType=NUMERIC},
-      </if>
-      <if test="denglm != null" >
-        #{denglm,jdbcType=VARCHAR},
-      </if>
-      <if test="mim != null" >
-        #{mim,jdbcType=VARCHAR},
-      </if>
-      <if test="xitmk != null" >
-        #{xitmk,jdbcType=NUMERIC},
-      </if>
-      <if test="renyId != null" >
-        #{renyId,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjz != null" >
-        #{jilcjz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjsj != null" >
-        #{jilcjsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="jilxgz != null" >
-        #{jilxgz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilxgsj != null" >
-        #{jilxgsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="boshihId != null" >
-        #{boshihId,jdbcType=INTEGER},
-      </if>
-      <if test="yanjiusId != null" >
-        #{yanjiusId,jdbcType=INTEGER},
-      </if>
-      <if test="linshiryId != null" >
-        #{linshiryId,jdbcType=INTEGER},
-      </if>
-      <if test="laowupqryId != null" >
-        #{laowupqryId,jdbcType=INTEGER},
-      </if>
-      <if test="shenhezt != null" >
-        #{shenhezt,jdbcType=INTEGER},
-      </if>
-      <if test="renyLx != null" >
-        #{renyLx,jdbcType=INTEGER},
-      </if>
-      <if test="shenfenz != null" >
-        #{shenfenz,jdbcType=VARCHAR},
-      </if>
-      <if test="xingm != null" >
-        #{xingm,jdbcType=VARCHAR},
-      </if>
-      <if test="tijzt != null" >
-        #{tijzt,jdbcType=VARCHAR},
-      </if>
-      <if test="shenhzt != null" >
-        #{shenhzt,jdbcType=VARCHAR},
-      </if>
-      <if test="jiaoyzt != null" >
-        #{jiaoyzt,jdbcType=VARCHAR},
-      </if>
-      <if test="tijr != null" >
-        #{tijr,jdbcType=VARCHAR},
-      </if>
-      <if test="shenhr != null" >
-        #{shenhr,jdbcType=VARCHAR},
-      </if>
-      <if test="jiaoyr != null" >
-        #{jiaoyr,jdbcType=VARCHAR},
-      </if>
-      <if test="tijrId != null" >
-        #{tijrId,jdbcType=NUMERIC},
-      </if>
-      <if test="shenhrId != null" >
-        #{shenhrId,jdbcType=NUMERIC},
-      </if>
-      <if test="jiaoyrId != null" >
-        #{jiaoyrId,jdbcType=NUMERIC},
-      </if>
-      <if test="zhaop != null" >
-        #{zhaop,jdbcType=VARCHAR},
-      </if>
-      <if test="shifouyx != null" >
-        #{shifouyx,jdbcType=INTEGER},
-      </if>
-      <if test="youxiaoq != null" >
-        #{youxiaoq,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shouj != null" >
-        #{shouj,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="danwId != null" >
-        #{danwId,jdbcType=NUMERIC},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.User" >
-    update XTYH
-    <set >
-      <if test="denglm != null" >
-        DENGLM = #{denglm,jdbcType=VARCHAR},
-      </if>
-      <if test="mim != null" >
-        MIM = #{mim,jdbcType=VARCHAR},
-      </if>
-      <if test="xitmk != null" >
-        XITMK = #{xitmk,jdbcType=NUMERIC},
-      </if>
-      <if test="renyId != null" >
-        RENY_ID = #{renyId,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjz != null" >
-        JILCJZ = #{jilcjz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilcjsj != null" >
-        JILCJSJ = #{jilcjsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="jilxgz != null" >
-        JILXGZ = #{jilxgz,jdbcType=NUMERIC},
-      </if>
-      <if test="jilxgsj != null" >
-        JILXGSJ = #{jilxgsj,jdbcType=TIMESTAMP},
-      </if>
-      <if test="boshihId != null" >
-        boshih_id = #{boshihId,jdbcType=INTEGER},
-      </if>
-      <if test="yanjiusId != null" >
-        yanjius_id = #{yanjiusId,jdbcType=INTEGER},
-      </if>
-      <if test="linshiryId != null" >
-        linshiry_id = #{linshiryId,jdbcType=INTEGER},
-      </if>
-      <if test="laowupqryId != null" >
-        laowupqry_id = #{laowupqryId,jdbcType=INTEGER},
-      </if>
-      <if test="shenhezt != null" >
-        shenhezt = #{shenhezt,jdbcType=INTEGER},
-      </if>
-      <if test="renyLx != null" >
-        reny_lx = #{renyLx,jdbcType=INTEGER},
-      </if>
-      <if test="shenfenz != null" >
-        shenfenz = #{shenfenz,jdbcType=VARCHAR},
-      </if>
-      <if test="xingm != null" >
-        xingm = #{xingm,jdbcType=VARCHAR},
-      </if>
-      <if test="tijzt != null" >
-        TIJZT = #{tijzt,jdbcType=VARCHAR},
-      </if>
-      <if test="shenhzt != null" >
-        SHENHZT = #{shenhzt,jdbcType=VARCHAR},
-      </if>
-      <if test="jiaoyzt != null" >
-        JIAOYZT = #{jiaoyzt,jdbcType=VARCHAR},
-      </if>
-      <if test="tijr != null" >
-        TIJR = #{tijr,jdbcType=VARCHAR},
-      </if>
-      <if test="shenhr != null" >
-        SHENHR = #{shenhr,jdbcType=VARCHAR},
-      </if>
-      <if test="jiaoyr != null" >
-        JIAOYR = #{jiaoyr,jdbcType=VARCHAR},
-      </if>
-      <if test="tijrId != null" >
-        TIJR_ID = #{tijrId,jdbcType=NUMERIC},
-      </if>
-      <if test="shenhrId != null" >
-        SHENHR_ID = #{shenhrId,jdbcType=NUMERIC},
-      </if>
-      <if test="jiaoyrId != null" >
-        JIAOYR_ID = #{jiaoyrId,jdbcType=NUMERIC},
-      </if>
-      <if test="zhaop != null" >
-        zhaop = #{zhaop,jdbcType=VARCHAR},
-      </if>
-      <if test="shifouyx != null" >
-        shifouyx = #{shifouyx,jdbcType=INTEGER},
-      </if>
-      <if test="youxiaoq != null" >
-        youxiaoq = #{youxiaoq,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shouj != null" >
-        shouj = #{shouj,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="danwId != null" >
-        danw_id = #{danwId,jdbcType=NUMERIC},
-      </if>
-    </set>
-    where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.User" >
-    update XTYH
-    set DENGLM = #{denglm,jdbcType=VARCHAR},
-      MIM = #{mim,jdbcType=VARCHAR},
-      XITMK = #{xitmk,jdbcType=NUMERIC},
-      RENY_ID = #{renyId,jdbcType=NUMERIC},
-      JILCJZ = #{jilcjz,jdbcType=NUMERIC},
-      JILCJSJ = #{jilcjsj,jdbcType=TIMESTAMP},
-      JILXGZ = #{jilxgz,jdbcType=NUMERIC},
-      JILXGSJ = #{jilxgsj,jdbcType=TIMESTAMP},
-      boshih_id = #{boshihId,jdbcType=INTEGER},
-      yanjius_id = #{yanjiusId,jdbcType=INTEGER},
-      linshiry_id = #{linshiryId,jdbcType=INTEGER},
-      laowupqry_id = #{laowupqryId,jdbcType=INTEGER},
-      shenhezt = #{shenhezt,jdbcType=INTEGER},
-      reny_lx = #{renyLx,jdbcType=INTEGER},
-      shenfenz = #{shenfenz,jdbcType=VARCHAR},
-      xingm = #{xingm,jdbcType=VARCHAR},
-      TIJZT = #{tijzt,jdbcType=VARCHAR},
-      SHENHZT = #{shenhzt,jdbcType=VARCHAR},
-      JIAOYZT = #{jiaoyzt,jdbcType=VARCHAR},
-      TIJR = #{tijr,jdbcType=VARCHAR},
-      SHENHR = #{shenhr,jdbcType=VARCHAR},
-      JIAOYR = #{jiaoyr,jdbcType=VARCHAR},
-      TIJR_ID = #{tijrId,jdbcType=NUMERIC},
-      SHENHR_ID = #{shenhrId,jdbcType=NUMERIC},
-      JIAOYR_ID = #{jiaoyrId,jdbcType=NUMERIC},
-      zhaop = #{zhaop,jdbcType=VARCHAR},
-      shifouyx = #{shifouyx,jdbcType=INTEGER},
-      youxiaoq = #{youxiaoq,jdbcType=TIMESTAMP},
-      shouj = #{shouj,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      danw_id = #{danwId,jdbcType=NUMERIC}
-    where YONGH_ID = #{yonghId,jdbcType=NUMERIC}
-  </update>
 
   <select id="findPasswordByLoginname" resultType="String">
     SELECT MIM FROM XTYH WHERE DENGLM = #{username} AND shifouyx = 1
@@ -417,5 +62,20 @@
 
   <select id="getUserByUsername" resultMap="BaseResultMap">
     SELECT * FROM XTYH WHERE DENGLM = #{username} AND MIM = #{password} AND shifouyx = 1
+  </select>
+
+  <select id="getUserByDepartId" resultMap="listResultMap">
+    SELECT XTYH.YONGH_ID,XTYH.xingm
+    FROM XTYH LEFT OUTER JOIN RYK_RYJBXX ON XTYH.RENY_ID = RYK_RYJBXX.RENY_ID
+    WHERE XTYH.danw_id = #{departId} AND XTYH.shifouyx = 1 AND XTYH.reny_lx = 1
+    ORDER BY RYK_RYJBXX.PAIXH,RYK_RYJBXX.XINGM
+  </select>
+
+  <select id="getUserByDepartIdAndPersonType" resultMap="listResultMap">
+    SELECT YONGH_ID,xingm  FROM XTYH WHERE danw_id = #{departId} AND shifouyx = 1 AND reny_lx = #{personType} ORDER BY xingm
+  </select>
+
+  <select id="getOneColumnById" resultType="String">
+    SELECT ${columnName} FROM XTYH where ${columnKeyName} = #{id}
   </select>
 </mapper>

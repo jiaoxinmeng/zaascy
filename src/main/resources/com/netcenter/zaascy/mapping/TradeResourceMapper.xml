@@ -102,4 +102,8 @@
     WHERE     type = 'projectType'
     GROUP BY SUBSTRING([key], 1, 1)
   </select>
+
+  <select id="getMessageContentByType" resultType="String">
+    SELECT value FROM CY_CGZHJY_ZYB WHERE [key] = #{type} AND type = 'messageContent'
+  </select>
 </mapper>

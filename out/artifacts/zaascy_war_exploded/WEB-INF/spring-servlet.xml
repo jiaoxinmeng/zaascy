@@ -88,20 +88,21 @@
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="java.lang.Exception">errors/error</prop>
-                <prop key="java.lang.Throwable">errors/err</prop>
+                <prop key="java.lang.Exception">errors/500</prop>
+                <prop key="java.lang.Throwable">login</prop>
             </props>
         </property>
         <property name="statusCodes">
             <props>
-                <prop key="errors/error">500</prop>
+                <prop key="errors/500">500</prop>
+                <prop key="errors/404">400</prop>
                 <prop key="errors/404">404</prop>
             </props>
         </property>
         <!-- 设置日志输出级别，不定义则默认不输出警告等错误日志信息 -->
         <property name="warnLogCategory" value="WARN"/>
         <!-- 默认错误页面，当找不到上面mappings中指定的异常对应视图时，使用本默认配置 -->
-        <property name="defaultErrorView" value="errors/error"/>
+        <property name="defaultErrorView" value="/errors/500"/>
         <!-- 默认HTTP状态码 -->
         <property name="defaultStatusCode" value="500"/>
     </bean>
@@ -136,15 +137,32 @@
             <!-- 需拦截的地址 -->
             <!-- 一级目录 -->
             <mvc:mapping path="/trade.do" />
+            <mvc:mapping path="/member.do" />
+            <mvc:mapping path="/funds.do" />
+            <mvc:mapping path="/workFlow.do" />
             <!-- 二级目录 -->
             <mvc:mapping path="/trade/*.do" />
-            <mvc:exclude-mapping path="/trade/getDepartFullName.do"/>
-            <mvc:exclude-mapping path="/trade/getProjectNum.do"/>
-            <mvc:exclude-mapping path="/trade/getZaasCodeList.do"/>
-            <mvc:exclude-mapping path="/trade/getTechName.do"/>
-            <mvc:exclude-mapping path="/trade/childImport.do"/>
-            <mvc:exclude-mapping path="/trade/checkChildExist.do"/>
+            <mvc:mapping path="/member/*.do" />
+            <mvc:mapping path="/funds/*.do" />
+            <mvc:mapping path="/workFlow/*.do" />
+
             <bean class="com.netcenter.zaascy.interceptor.TradeInterceptor" abstract="true"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!-- spring thread pool executor -->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 线程池维护线程的最少数量 -->
+        <property name="corePoolSize" value="5" />
+        <!-- 允许的空闲时间 -->
+        <property name="keepAliveSeconds" value="200" />
+        <!-- 线程池维护线程的最大数量 -->
+        <property name="maxPoolSize" value="10" />
+        <!-- 缓存队列 -->
+        <property name="queueCapacity" value="20" />
+        <!-- 对拒绝task的处理策略 -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
 </beans>

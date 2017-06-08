@@ -74,7 +74,7 @@
                 <ul class="dropdown-menu dropdown-user">
 
                     <li>
-                        <a href="loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
+                        <a href="/user/loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -88,29 +88,29 @@
                 <ul class="nav" id="side-menu">
 
                     <li >
-                        <a href="/trade/newFirst.do">
-                            <i class="fa fa-home"></i>&nbsp;&nbsp;录入项目</a>
+                        <a href="/index.do">
+                            <i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;技术转让<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;成果转化<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;专利权</a>
+                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;技术转让-专利权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;专利申请权</a>
+                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;技术转让-专利申请权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;专利实施许可</a>
+                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;技术转让-专利实施许可</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术秘密</a>
+                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术转让-技术秘密</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li>
@@ -122,20 +122,17 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/trade/list.do?codeType=F1"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
-                    </li>
-                    <li>
-                        <a href="/trade/list.do?codeType=J"><i class="fa fa-flask"></i>&nbsp;&nbsp;&nbsp;检测服务</a>
-
+                        <a href="javascript:void(0);"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测项目</a>
+                                <a href="/trade/list.do?codeType=F1">&nbsp;&nbsp;技术服务（非检测）</a>
                             </li>
                             <li>
-                                <a href="/trade/goChildImport.do">&nbsp;&nbsp;零散检测单导入</a>
+                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测服务</a>
                             </li>
                         </ul>
                     </li>
+
                     <li>
                         <a href="/trade/list.do?codeType=Z1"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
                     </li>
@@ -152,7 +149,9 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header">人员排名</h3>
+                <h3 class="page-header">
+                    <input class="btn btn-primary" type="button" value="返回列表" onclick="doList()"/>
+                </h3>
 
                 <!-- /input-group -->
             </div>
@@ -163,29 +162,39 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        新增
+                        ${projectName}&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;人员排名
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1">
-                                <form class="form-horizontal">
+                                <form id="memberForm" action="/member/save.do" class="form-horizontal">
+
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">项目编号</label>&nbsp;&nbsp;${projectNum}
+                                        <c:choose>
+                                            <c:when test="${member!=null&&member.id!=null}">
+                                                <input type="hidden" name="id" value="${member.id}"/>
+                                                <input type="hidden" name="projectId" value="${member.projectId}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="hidden" name="projectId" value="${projectId}"/>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-lg-5 col-sm-6">
-                                                <label for="exampleInputName2">现工作部门</label>
+                                                <label for="exampleInputName2">人员类型</label>
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" name="personType" id="optionsRadios1" value="本院在职职工">本院在职职工
+                                                    <input type="radio" name="isStaff" id="optionsRadios1" checked="checked" value="1">本院在职职工
                                                 </label>
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" name="personType" id="optionsRadios2" value="本院非在职职工" >本院非在职职工
+                                                    <input type="radio" name="isStaff" id="optionsRadios2" value="2" >本院非在职职工
                                                 </label>
                                                 <label class="checkbox-inline">
-                                                    <input type="radio" name="personType" id="optionsRadios3" value="其他人员">其他人员
+                                                    <input type="radio" name="isStaff" id="optionsRadios3" value="0">其他人员
                                                 </label>
                                             </div>
                                         </div>
@@ -200,6 +209,7 @@
                                                     </c:forEach>
                                                 </select>
                                                 <input type="hidden" id="depart_name" name="depart" value=""/>
+                                                <input type="text" name="depart" class="form-control" id="depart_input">
                                             </div>
                                         </div>
                                     </div>
@@ -208,8 +218,9 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-sm-6">
                                                 <label for="exampleInputName2">课题成员名称</label>
-                                                <select id="person_select" class="form-control" name="personId"></select>
-                                                <input type="hidden" id="person_name" name="personName" value=""/>
+                                                <select id="person_select" class="form-control" name="userId" onchange="changePerson(this)"></select>
+                                                <input type="hidden" id="person_name" name="name" value=""/>
+                                                <input type="text" name="name" class="form-control" id="person_input">
                                             </div>
                                         </div>
                                     </div>
@@ -218,9 +229,9 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-sm-6">
                                                 <label for="exampleInputName2">角色</label>
-                                                <select name="role" class="form-control">
-                                                    <option>项目参加</option>
-                                                    <option>项目主持</option>
+                                                <select id="role" name="role" class="form-control">
+                                                    <option value="项目参加">项目参加</option>
+                                                    <option value="项目主持">项目主持</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -230,7 +241,7 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-sm-6">
                                                 <label for="exampleInputEmail2">成员排名</label>
-                                                <input type="text" name="rankNumber" class="form-control" value="">
+                                                <input type="text" name="rankNumber" class="form-control" value="${member.rankNumber}">
                                             </div>
                                         </div>
                                     </div>
@@ -239,8 +250,8 @@
                         </div>
                         <div class="row ">
                             <div class="col-lg-offset-5 col-md-offset-6  col-sm-offset-6">
-                                <button type="button" class="btn btn-default">关闭</button>
-                                <a href="tech-trans-patent-detail.html" class="btn btn-primary">保存</a>
+                                <input class="btn btn-primary" type="button" value="返回" onclick="doList()"/>&nbsp;&nbsp;
+                                <input type="button" class="btn btn-primary" value="保存" id="submitBt"/>
                             </div>
                         </div>
                     </div>
@@ -278,48 +289,176 @@
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
 <script>
     $(function() {
+        if(${member==null&&member.id==null}){
+            $("#person_input").hide();
+            $("#people_input").attr("disabled",true);
+            $("#depart_input").hide();
+            $("#depart_input").attr("disabled",true);
+            $("#depart_select").val(${projectDepartId});
+            $("#optionsRadios1").click();
+        }else if(${member.isStaff==1}){
+            //alert(111111);
+            $("#depart_select").val(${member.departId});
+            $("#optionsRadios1").click();
+            //不知道为什么  停顿一下就能执行  不然人员选择框赋值无效
+            setTimeout(function () {
+                $("#person_select").val(${member.userId});
+                $("#person_select").change();
+                $("#role").val("${member.role}");
+            }, 100);
 
-        $("#peopleInput").hide();
-        $("#departInput").hide();
 
-        $('#datetimepicker1').datetimepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd', //显示格式
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            initialDate: new Date(), //初始化当前日期
-        });
-        $('#datetimepicker2').datetimepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd', //显示格式
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            initialDate: new Date(), //初始化当前日期
-        });
+        }else if(${member.isStaff==2}){
+            alert(2222);
+            $("#depart_select").val(${member.departId});
+            $("#optionsRadios2").click();
+
+            //不知道为什么  停顿一下就能执行  不然人员选择框赋值无效
+            setTimeout(function () {
+                $("#person_select").val(${member.userId});
+                $("#person_select").change();
+                $("#role").val("${member.role}");
+            }, 100);
+
+        }else if(${member.isStaff==0}){
+            //alert(0000);
+            $("#optionsRadios3").click();
+            $("#depart_input").val("${member.depart}");
+            $("#person_input").val("${member.name}");
+            $("#role").val("${member.role}");
+        }
+
+
+    });
+
+    $("#optionsRadios1").click(function() {
+
+        $("#depart_select").change();
+
+        $("#person_select").show();
+        $("#person_select").removeAttr("disabled",true);
+        $("#person_name").removeAttr("disabled",true);
+
+        $("#person_input").hide();
+        $("#person_input").attr("disabled",true);
+
+        $("#depart_select").show();
+        $("#depart_select").removeAttr("disabled",true);
+        $("#depart_name").removeAttr("disabled",true);
+
+        $("#depart_input").hide();
+        $("#depart_input").attr("disabled",true);
+    });
+
+    $("#optionsRadios2").click(function() {
+
+        $("#depart_select").change();
+
+        $("#person_select").show();
+        $("#person_select").removeAttr("disabled",true);
+        $("#person_name").removeAttr("disabled",true);
+
+        $("#person_input").hide();
+        $("#person_input").attr("disabled",true);
+
+        $("#depart_select").show();
+        $("#depart_select").removeAttr("disabled",true);
+        $("#depart_name").removeAttr("disabled",true);
+
+        $("#depart_input").hide();
+        $("#depart_input").attr("disabled",true);
     });
 
     $("#optionsRadios3").click(function() {
 
-        $("#peopleSelect").hide();
-        $('#peopleSelect').attr("disabled",true);
-        $("#peopleInput").show();
-        $('#peopleInput').attr("disabled",false);
+        $("#person_select").hide();
+        $("#person_select").attr("disabled",true);
+        $("#person_name").attr("disabled",true);
 
-        $("#departSelect").hide();
-        $('#departSelect').attr("disabled",true);
-        $("#departInput").show();
-        $('#departInput').attr("disabled",false);
-    })
+        $("#person_input").show();
+        $("#person_input").removeAttr("disabled",true);
+
+        $("#depart_select").hide();
+        $("#depart_select").attr("disabled",true);
+        $("#depart_name").attr("disabled",true);
+
+        $("#depart_input").show();
+        $("#depart_input").removeAttr("disabled",true);
+    });
+
+    $("#depart_select").change(function () {
+        $("#person_select").empty();
+
+
+        $("#depart_name").val($("#depart_select").find("option:selected").text());
+
+        $.post("getPersonList.do",{departId:$("#depart_select").val(),isStaff:$("input[name='isStaff']:checked").val()},function(date){
+            if(date.stateCode==1){
+                $.each(date.staffList, function(i, item) {
+                    var personArray =  item.split("|");
+                    $("#person_select").append("<option value='" + personArray[0] + "'>" + personArray[1] + "</option>");
+                });
+            }else if(date.stateCode==2){
+                if(date.doctorCount>0){
+                    $("#person_select").append("<optgroup label='博士后'>");
+                    $.each(date.doctorList, function(i, item) {
+                        var personArray =  item.split("|");
+                        $("#person_select").append("<option value='" + personArray[0] + "'>" + personArray[1] + "</option>");
+                    });
+                    $("#person_select").append("</optgroup>");
+                }
+                if(date.dispatchCount>0){
+                    $("#person_select").append("<optgroup label='派遣人员'>");
+                    $.each(date.dispatchList, function(i, item) {
+                        var personArray =  item.split("|");
+                        $("#person_select").append("<option value='" + personArray[0] + "'>" + personArray[1] + "</option>");
+                    });
+                    $("#person_select").append("</optgroup>");
+                }
+                if(date.studentCount>0){
+                    $("#person_select").append("<optgroup label='一导研究生'>");
+                    $.each(date.studentList, function(i, item) {
+                        var personArray =  item.split("|");
+                        $("#person_select").append("<option value='" + personArray[0] + "'>" + personArray[1] + "</option>");
+                    });
+                    $("#person_select").append("</optgroup>");
+                }
+                if(date.otherPersonCount>0){
+                    $("#person_select").append("<optgroup label='其他人员'>");
+                    $.each(date.otherPersonList, function(i, item) {
+                        var personArray =  item.split("|");
+                        $("#person_select").append("<option value='" + personArray[0] + "'>" + personArray[1] + "</option>");
+                    });
+                    $("#person_select").append("</optgroup>");
+                }
+                if(date.retiredStaffCount>0){
+                    $("#person_select").append("<optgroup label='退休人员'>");
+                    $.each(date.retiredStaffList, function(i, item) {
+                        var personArray =  item.split("|");
+                        $("#person_select").append("<option value='" + personArray[0] + "'>" + personArray[1] + "</option>");
+                    });
+                    $("#person_select").append("</optgroup>");
+                }
+            }
+            $("#person_select").change();
+        },"json");
+    });
+
+
+    
+    $("#submitBt").click(function () {
+        $("#memberForm").submit();
+    });
+
+    function changePerson(e){
+        document.getElementById("person_name").value = e.options[e.selectedIndex].text;
+
+    }
+
+    function doList(){
+        window.location.href = "list.do?projectId="+${projectId};
+    }
+
 </script>
 
 </body>

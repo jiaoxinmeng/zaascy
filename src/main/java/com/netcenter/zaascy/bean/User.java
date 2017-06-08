@@ -102,6 +102,11 @@ public class User {
         this.danwId = danwId;
     }
 
+    public User(Long yonghId, String xingm){
+        this.yonghId = yonghId;
+        this.xingm = xingm;
+    }
+
     @Override
     public String toString() {
         return "User{" +

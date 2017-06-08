@@ -2,6 +2,7 @@ package com.netcenter.zaascy.service;
 
 import com.netcenter.zaascy.bean.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -41,7 +42,7 @@ public interface TradeService {
 
     void delChild(String year, String quarter);
 
-    int addTradeByChild(Integer year, String quarter,String remarks,Long userId,String username);
+    Long addTradeByChild(Integer year, String quarter,String remarks,Long userId,String username);
 
     Integer getChildCount(Integer year, String quarter);
 
@@ -53,11 +54,11 @@ public interface TradeService {
 
     Integer getTradeCountByType(String typeCode);
 
-    List<Trade> getListByType(String codeType);
+    List<Trade> getListByType(String codeType, Long userId);
 
     void delMemberById(Long id);
 
-    void saveTradeMember(TradeMember member);
+    void saveTradeMember(TradeMember member, Long yonghId, String xingm);
 
     List<TradeFunds> getFunds(Long projectId);
 
@@ -65,7 +66,7 @@ public interface TradeService {
 
     void delFundsById(Long id);
 
-    void saveFunds(TradeFunds funds);
+    void saveFunds(TradeFunds funds, Long yonghId, String xingm);
 
     void access(Long id, Long userId, String username);
 
@@ -73,8 +74,29 @@ public interface TradeService {
 
     Integer getFundsCountByProjectId(Long id);
 
-    Integer getMembersCountByProjectId(Long id);
+    Integer getMembersCountByProjectId(Long projectId);
 
-    Integer getSubsidiaryCountByProjectId(Long id);
+    Integer getSubsidiaryCountByProjectId(Long projectId);
 
+    List<TradeSubsidiary> getOtherZaasCodes(Long projectId);
+
+    void saveTradeSubsidiary(TradeSubsidiary subsidiary, Long userId, String username);
+
+    void delSubsidiaryById(Long id);
+
+    void delFundsByProjectId(Long projectId);
+
+    void delMemberByProjectId(Long projectId);
+
+    void delSubsidiaryByProjectId(Long projectId);
+
+    void delChildByProjectId(Long id);
+
+    void back(Long id, Long userId, String username);
+
+    void notAccess(Long id, Long userId, String username);
+
+    List<HashMap<String,Integer>> getCharts(String columName, Boolean whereMark, String colunNameWhere, String nameWhere);
+
+    Integer getProjectCountByUserId(Long userId);
 }

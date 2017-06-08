@@ -127,10 +127,11 @@ public class SecurityUtil {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
 //        try {
-//          String pwd = SecurityUtil.encryptMessage("11111111");
-//          System.out.println(pwd);
+////          String pwd = SecurityUtil.encryptMessage("11111111");
+////          System.out.println(pwd);
         try {
-            String rs = SecurityUtil.decryptMessage("rC4Lp5XB2DFjKZCsH+pdhQ==");//oou16do5
+            String rs = SecurityUtil.decryptMessage("qzdNE4mIngKstMFKYiuKog==");//oou16do5
+            //String pwd = SecurityUtil.encryptMessage("meng");
             System.out.println(rs);
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +141,7 @@ public class SecurityUtil {
 //            System.out.println("生成的随机令牌为:" + pwd);
 //            String token = SecurityUtil.encryptMessage(pwd);
 //            System.out.println("加密的随机令牌为:" + token + "长度为:" + token.length());
-//            String username = "pengyh";
+//            String username = "zhull";
 //            String last_token_2 = SecurityUtil.encryptMessage(username + "&" + token);
 //            System.out.println("最终传递的令牌为:" + last_token_2 + "长度为:" + last_token_2.length());
 //            String last_token_de = SecurityUtil.decryptMessage(last_token_2);

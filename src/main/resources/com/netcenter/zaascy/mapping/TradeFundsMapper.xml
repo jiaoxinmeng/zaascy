@@ -6,8 +6,8 @@
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
       <arg column="project_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="year" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="date" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="depart" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="depart" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="funds" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
       <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -20,8 +20,8 @@
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
       <arg column="project_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="year" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="date" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
-      <arg column="depart" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
+      <arg column="date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="depart" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="funds" jdbcType="NUMERIC" javaType="java.math.BigDecimal" />
       <arg column="operator_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -48,17 +48,17 @@
     delete from CY_CGZHJY_JFB
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeFunds" keyProperty="id" useGeneratedKeys="true">
     insert into CY_CGZHJY_JFB (project_id, year, date,
       depart, funds, operator_id, 
       operator, create_date, modify_date, 
       remarks)
-    values (#{projectId,jdbcType=NUMERIC}, #{year,jdbcType=INTEGER}, #{date,jdbcType=NUMERIC}, 
-      #{depart,jdbcType=NUMERIC}, #{funds,jdbcType=NUMERIC}, #{operatorId,jdbcType=NUMERIC}, 
+    values (#{projectId,jdbcType=NUMERIC}, #{year,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP},
+      #{depart,jdbcType=VARCHAR}, #{funds,jdbcType=NUMERIC}, #{operatorId,jdbcType=NUMERIC},
       #{operator,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
       #{remarks,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeFunds" >
+  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeFunds" keyProperty="id" useGeneratedKeys="true">
     insert into CY_CGZHJY_JFB
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectId != null" >
@@ -100,10 +100,10 @@
         #{year,jdbcType=INTEGER},
       </if>
       <if test="date != null" >
-        #{date,jdbcType=NUMERIC},
+        #{date,jdbcType=TIMESTAMP},
       </if>
       <if test="depart != null" >
-        #{depart,jdbcType=NUMERIC},
+        #{depart,jdbcType=VARCHAR},
       </if>
       <if test="funds != null" >
         #{funds,jdbcType=NUMERIC},
@@ -135,10 +135,10 @@
         year = #{year,jdbcType=INTEGER},
       </if>
       <if test="date != null" >
-        date = #{date,jdbcType=NUMERIC},
+        date = #{date,jdbcType=TIMESTAMP},
       </if>
       <if test="depart != null" >
-        depart = #{depart,jdbcType=NUMERIC},
+        depart = #{depart,jdbcType=VARCHAR},
       </if>
       <if test="funds != null" >
         funds = #{funds,jdbcType=NUMERIC},
@@ -165,8 +165,8 @@
     update CY_CGZHJY_JFB
     set project_id = #{projectId,jdbcType=NUMERIC},
       year = #{year,jdbcType=INTEGER},
-      date = #{date,jdbcType=NUMERIC},
-      depart = #{depart,jdbcType=NUMERIC},
+      date = #{date,jdbcType=TIMESTAMP},
+      depart = #{depart,jdbcType=VARCHAR},
       funds = #{funds,jdbcType=NUMERIC},
       operator_id = #{operatorId,jdbcType=NUMERIC},
       operator = #{operator,jdbcType=VARCHAR},
@@ -179,8 +179,8 @@
     update CY_CGZHJY_JFB
     set project_id = #{projectId,jdbcType=NUMERIC},
       year = #{year,jdbcType=INTEGER},
-      date = #{date,jdbcType=NUMERIC},
-      depart = #{depart,jdbcType=NUMERIC},
+      date = #{date,jdbcType=TIMESTAMP},
+      depart = #{depart,jdbcType=VARCHAR},
       funds = #{funds,jdbcType=NUMERIC},
       operator_id = #{operatorId,jdbcType=NUMERIC},
       operator = #{operator,jdbcType=VARCHAR},
@@ -194,8 +194,13 @@
     WHERE project_id = #{projectId}
   </select>
 
-  <delete id="delFundsByProjectId" >
+  <delete id="deleteByProjectId" >
     DELETE FROM CY_CGZHJY_JFB
     WHERE project_id = #{projectId}
   </delete>
+
+  <select id="getCountByProjectId" resultType="Integer">
+    SELECT COUNT(*) FROM CY_CGZHJY_JFB
+    WHERE project_id = #{projectId}
+  </select>
 </mapper>

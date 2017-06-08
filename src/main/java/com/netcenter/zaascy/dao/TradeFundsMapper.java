@@ -23,7 +23,7 @@ public interface TradeFundsMapper {
 
     List<TradeFunds> selectFundsByProjectId(Long projectId);
 
-    int delFundsByProjectId(Long projectId);
-
     Integer getCountByProjectId(Long projectId);
+
+    void deleteByProjectId(Long projectId);
 }

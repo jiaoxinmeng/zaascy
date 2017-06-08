@@ -7,7 +7,15 @@ public class TradeMember {
 
     private Long projectId;
 
+    private Long departId;
+
+    private String depart;
+
+    private Integer isStaff;
+
     private Integer rankNumber;
+
+    private String role;
 
     private Long userId;
 
@@ -21,10 +29,14 @@ public class TradeMember {
 
     private String operator;
 
-    public TradeMember(Long id, Long projectId, Integer rankNumber, Long userId, String name, Date createDate, Date modifyDate, Long operatorId, String operator) {
+    public TradeMember(Long id, Long projectId, Long departId, String depart, Integer isStaff, Integer rankNumber, String role, Long userId, String name, Date createDate, Date modifyDate, Long operatorId, String operator) {
         this.id = id;
         this.projectId = projectId;
+        this.departId = departId;
+        this.depart = depart;
+        this.isStaff = isStaff;
         this.rankNumber = rankNumber;
+        this.role = role;
         this.userId = userId;
         this.name = name;
         this.createDate = createDate;
@@ -53,12 +65,44 @@ public class TradeMember {
         this.projectId = projectId;
     }
 
+    public Long getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Long departId) {
+        this.departId = departId;
+    }
+
+    public String getDepart() {
+        return depart;
+    }
+
+    public void setDepart(String depart) {
+        this.depart = depart == null ? null : depart.trim();
+    }
+
+    public Integer getIsStaff() {
+        return isStaff;
+    }
+
+    public void setIsStaff(Integer isStaff) {
+        this.isStaff = isStaff;
+    }
+
     public Integer getRankNumber() {
         return rankNumber;
     }
 
     public void setRankNumber(Integer rankNumber) {
         this.rankNumber = rankNumber;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role == null ? null : role.trim();
     }
 
     public Long getUserId() {

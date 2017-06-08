@@ -1,5 +1,6 @@
 package com.netcenter.zaascy.interceptor;
 
+import com.netcenter.zaascy.bean.User;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -18,9 +19,9 @@ public class BaseInterceptor extends HandlerInterceptorAdapter {
         System.out.println("---------->拦截器在此-----------");
         HttpSession session = request.getSession(true);
         // 从session 里面获取用户名的信息
-        Object obj = session.getAttribute("user");
+        User user = (User)session.getAttribute("user");
         // 判断如果没有取到用户信息，就跳转到登陆页面，提示用户进行登陆
-        if (obj == null || "".equals(obj.toString())) {
+        if (user == null || "".equals(user.getYonghId().toString())) {
             response.sendRedirect(LOGIN_URL);
         }
         return true;

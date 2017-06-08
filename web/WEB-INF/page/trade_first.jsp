@@ -43,6 +43,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
 </head>
 <body>
 
@@ -76,7 +77,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a href="/user/loginOut"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -89,51 +90,57 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
 
-                    <li class="active">
-                        <a href="index.html">
-                            <i class="fa fa-home"></i>&nbsp;&nbsp;首页</a>
+                    <li >
+                        <a href="/index.do">
+                            <i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;技术转让<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;成果转化<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="tech-trans-patent.html">&nbsp;&nbsp;专利权</a>
+                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;技术转让-专利权</a>
                             </li>
                             <li>
-                                <a href="morris.html">&nbsp;&nbsp;专利申请权</a>
+                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;技术转让-专利申请权</a>
                             </li>
                             <li>
-                                <a href="morris.html">&nbsp;&nbsp;专利实施许可</a>
+                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;技术转让-专利实施许可</a>
                             </li>
                             <li>
-                                <a href="morris.html">&nbsp;&nbsp;技术秘密</a>
+                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术转让-技术秘密</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">&nbsp;&nbsp;合作开发</a>
+                                <a href="/trade/list.do?codeType=K1">&nbsp;&nbsp;合作开发</a>
                             </li>
                             <li>
-                                <a href="buttons.html">&nbsp;&nbsp;委托开发</a>
+                                <a href="/trade/list.do?codeType=K2">&nbsp;&nbsp;委托开发</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
+                        <a href="javascript:void(0);"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/trade/list.do?codeType=F1">&nbsp;&nbsp;技术服务（非检测）</a>
+                            </li>
+                            <li>
+                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测服务</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/trade/list.do?codeType=Z1"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-flask"></i>&nbsp;&nbsp;&nbsp;检测服务</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-group"></i>&nbsp;&nbsp;技术培训</a>
+                        <a href="/trade/list.do?codeType=P1"><i class="fa fa-group"></i>&nbsp;&nbsp;技术培训</a>
                     </li>
                 </ul>
             </div>
@@ -146,7 +153,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">
-
+                    <c:if test="${codeType=='A'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='A1'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利权</a></c:if>
+                    <c:if test="${codeType=='A2'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利申请权</a></c:if>
+                    <c:if test="${codeType=='A3'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利实施许可</a></c:if>
+                    <c:if test="${codeType=='A4'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">技术秘密</a></c:if>
+                    <c:if test="${codeType=='K'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='K1'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">合作</a></c:if>
+                    <c:if test="${codeType=='K2'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">委托</a></c:if>
+                    <c:if test="${codeType=='F1'}"><a href="/trade/list.do?codeType=${codeType}">技术服务</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='J1'}"><a href="/trade/list.do?codeType=${codeType}">检测服务</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='Z1'}"><a href="/trade/list.do?codeType=${codeType}">技术咨询</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='P1'}"><a href="/trade/list.do?codeType=${codeType}">技术培训</a>&nbsp;</c:if>
                 </h3>
 
                 <!-- /input-group -->
@@ -162,6 +180,7 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <form id="firstForm" action="/trade/newNext.do" class="form-horizontal" method="post">
                         <div class="row">
                             <div class="col-lg-12">
                                 请选择本次转化交易标的相关的院成果技术编码（尚未取得编码的请先完成成果填报工作）
@@ -169,9 +188,10 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-2">
+
                                 <div class="form-group">
                                     <%--@declare id="exampleinputname2"--%><label for="exampleInputName2">成果技术类型</label>
-                                    <select id="zaasTechType_select" class="form-control">
+                                    <select id="zaasTechType_select" name="zaasTechType" class="form-control">
                                         <c:forEach items="${zaasTechTypeList}" var="re">
                                             <option value="<c:out value="${re.key}"/>"><c:out value="${re.value}"/></option>
                                         </c:forEach>
@@ -206,7 +226,7 @@
                             <div class="col-lg-2">
                                 <div class="form-group">
                                     <label for="exampleInputName2">成果技术编码</label>
-                                    <select id="zaasCode_select" class="form-control"></select>
+                                    <select id="zaasCode_select" name="zaasCode" class="form-control"></select>
                                 </div>
                             </div>
                         </div>
@@ -229,11 +249,13 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <input type="button" class="btn btn-default" value="返回"/>
+                                <input type="hidden" name="codeType" value="${codeType}">
+                                <input type="button" class="btn btn-default" onclick="doList();" value="返回"/>&nbsp;&nbsp;
                                 <input id="bt_next" type="button" class="btn btn-default" value="下一步"/>
 
                             </div>
                         </div>
+                        </form>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -417,7 +439,8 @@
     });
 
     $("#bt_next").click(function () {
-       window.location.href = "newNext.do?zaasCode="+$("#zaasCode_select").val()+"&zaasTechType="+$("#zaasTechType_select").val();
+       //window.location.href = "newNext.do?codeType=${codeType}&zaasCode="+$("#zaasCode_select").val()+"&zaasTechType="+$("#zaasTechType_select").val();
+        $("#firstForm").submit();
     });
 
     function addYearSelect(){
@@ -428,6 +451,10 @@
                 "<option value='" + i + "'>" + i + "</option>");
         }
         $("#year_select").val((nowYear-1));
+    }
+
+    function doList() {
+        window.location.href = "list.do?codeType=${codeType}";
     }
 </script>
 

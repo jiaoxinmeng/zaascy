@@ -22,6 +22,8 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../resources/vendor/bootstrap/css/bootstrap-multiselect.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/vendor/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -29,8 +31,6 @@
 
     <!-- Custom CSS -->
     <link href="../../resources/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="../../resources/css/bootstrap-multiselect.css" type="text/css"/>
 
     <!-- DataTables CSS -->
     <link href="../../resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
@@ -81,7 +81,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a href="/user/loginOut.do"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -94,51 +94,57 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
 
-                    <li class="active">
-                        <a href="index.html">
-                            <i class="fa fa-home"></i>&nbsp;&nbsp;首页</a>
+                    <li >
+                        <a href="/index.do">
+                            <i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;技术转让<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;成果转化<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="tech-trans-patent.html">&nbsp;&nbsp;专利权</a>
+                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;技术转让-专利权</a>
                             </li>
                             <li>
-                                <a href="morris.html">&nbsp;&nbsp;专利申请权</a>
+                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;技术转让-专利申请权</a>
                             </li>
                             <li>
-                                <a href="morris.html">&nbsp;&nbsp;专利实施许可</a>
+                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;技术转让-专利实施许可</a>
                             </li>
                             <li>
-                                <a href="morris.html">&nbsp;&nbsp;技术秘密</a>
+                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术转让-技术秘密</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">&nbsp;&nbsp;合作开发</a>
+                                <a href="/trade/list.do?codeType=K1">&nbsp;&nbsp;合作开发</a>
                             </li>
                             <li>
-                                <a href="buttons.html">&nbsp;&nbsp;委托开发</a>
+                                <a href="/trade/list.do?codeType=K2">&nbsp;&nbsp;委托开发</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
+                        <a href="javascript:void(0);"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="/trade/list.do?codeType=F1">&nbsp;&nbsp;技术服务（非检测）</a>
+                            </li>
+                            <li>
+                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测服务</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="/trade/list.do?codeType=Z1"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-flask"></i>&nbsp;&nbsp;&nbsp;检测服务</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-group"></i>&nbsp;&nbsp;技术培训</a>
+                        <a href="/trade/list.do?codeType=P1"><i class="fa fa-group"></i>&nbsp;&nbsp;技术培训</a>
                     </li>
                 </ul>
             </div>
@@ -151,7 +157,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">
-
+                    <c:if test="${codeType=='A'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='A1'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利权</a></c:if>
+                    <c:if test="${codeType=='A2'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利申请权</a></c:if>
+                    <c:if test="${codeType=='A3'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利实施许可</a></c:if>
+                    <c:if test="${codeType=='A4'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">技术秘密</a></c:if>
+                    <c:if test="${codeType=='K'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='K1'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">合作</a></c:if>
+                    <c:if test="${codeType=='K2'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">委托</a></c:if>
+                    <c:if test="${codeType=='F1'}"><a href="/trade/list.do?codeType=${codeType}">技术服务</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='J1'}"><a href="/trade/list.do?codeType=${codeType}">检测服务</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='Z1'}"><a href="/trade/list.do?codeType=${codeType}">技术咨询</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='P1'}"><a href="/trade/list.do?codeType=${codeType}">技术培训</a>&nbsp;</c:if>
                 </h3>
 
                 <!-- /input-group -->
@@ -169,16 +186,15 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1">
-                                <form action="save.do" class="form-horizontal" method="post">
+                                <form id="tradeForm" action="/trade/save.do" class="form-horizontal" method="post">
                                     <div class="form-group">
                                         <%--@declare id="exampleinputemail2"--%><label for="exampleInputEmail2">项目编号</label>&nbsp;&nbsp;
                                         <input type="email" class="form-control" name="projectNum"  disabled="disabled" placeholder="将在审核后自动生成">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">院成果技术编码</label>&nbsp;&nbsp;${zaasCode}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail2">添加其他相关成果技术编码</label>&nbsp;<a href="#" data-toggle="modal" data-target=".edit"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                                        <input type="hidden" name="zaasCode" value="${zaasCode}"/>
+                                        <input type="hidden" name="zaasTechType" value="${zaasTechType}"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">项目名称</label>
@@ -226,7 +242,7 @@
                                         <div class="row">
                                             <div class="col-lg-4 col-sm-6">
                                                 <label for="exampleInputName2">让与/承担单位</label>
-                                                <select id="departFullName" class="form-control" name="departFullName" multiple="multiple">
+                                                <select id="departFullName_select" class="form-control" name="departFullName" multiple="multiple">
                                                     <option value="浙江省农业科学院">浙江省农业科学院</option>
                                                     <c:forEach items="${departList}" var="depart">
                                                         <option value="<c:out value="${depart.danwmc}"/>"><c:out value="${depart.danwmc}"/></option>
@@ -289,7 +305,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">意向总金额与付款方式说明</label>
-                                        <textarea class="form-control" name="intentionAmountExplain" name="remarks" rows="8"></textarea>
+                                        <textarea class="form-control" name="intentionAmountExplain" rows="8"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">备注</label>
@@ -300,8 +316,8 @@
                         </div>
                         <div class="row ">
                             <div class="col-lg-offset-5 col-md-offset-6  col-sm-offset-6">
-                                <button type="button" class="btn btn-default" >关闭</button>
-                                <a href="tech-trans-patent-detail.html" class="btn btn-primary">保存</a>
+                                <button type="button" class="btn btn-default" id="quitBt">关闭</button>&nbsp;&nbsp;
+                                <input type="button" class="btn btn-primary" id="submitBt" value="保存"/>
                             </div>
                         </div>
                     </div>
@@ -318,12 +334,12 @@
 <!-- /#wrapper -->
 
 <!-- jQuery -->
-<script src="../../resources/js/jquery-2.1.3.min.js"></script>
+<script src="../../resources/vendor/jquery/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="../../resources/vendor/bootstrap/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="../../resources/js/bootstrap-multiselect.js"></script>
+<script src="../../resources/vendor/bootstrap/js/bootstrap-multiselect.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../../resources/vendor/metisMenu/metisMenu.min.js"></script>
@@ -339,6 +355,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="../../resources/dist/js/sb-admin-2.js"></script>
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
 
 
 </body>
@@ -381,16 +398,23 @@
 
             //给单位赋初值
             $("#depart_select").val(${departId});
-            $("#depart_select_2").val(${departId});
 
             $("#zaasTechType_select").val("${zaasTechType}");
 
+
+
             //触发生成单位名称与全称
             $("#depart_select").change();
-            //触发项目生成项目类别ID
+
+            //如果不是从首页点如，则可赋值
+            if("A"!="${codeType}"&&"K"!="${codeType}"){
+                $("#projectType_select").val("${codeType}");
+            }
+
+            //触发项目生成项目类别
             $("#projectType_select").change();
-            //触发查询
-            $("#zaasTechType_select").change();
+
+
 
         }
     );
@@ -398,11 +422,16 @@
 
     $("#depart_select").change(function () {
         $("#depart_name").val($("#depart_select").find("option:selected").text());
-        $.post("getDepartFullName.do",{departId:$("#depart_select").val()},function(date){
-            $("#departFullName_select").find("option:selected").removeAttr("selected", true);
-            $("#departFullName_select  option[value='" + date.departFullName + "'] ").attr("selected", true);
+        if(${trade==null and 'A,A1,A2,A3,A4'.contains(codeType) }){
+            $("#departFullName_select  option[value='浙江省农业科学院'] ").attr("selected", true);
             $("#departFullName_select").multiselect("refresh");
-        },"json");
+        }else{
+            $.post("getDepartFullName.do",{departId:$("#depart_select").val()},function(date){
+                $("#departFullName_select").find("option:selected").removeAttr("selected", true);
+                $("#departFullName_select  option[value='" + date.departFullName + "'] ").attr("selected", true);
+                $("#departFullName_select").multiselect("refresh");
+            },"json");
+        }
     });
 
     $("#projectType_select").change(function () {
@@ -419,121 +448,23 @@
         $("#signAmount").attr("title",intentionAmount_cn);
     });
 
-    //当成果技术类型改变时触发查询
-    $("#zaasTechType_select").change(function () {
-        //清空成果编码
-        $("#zaasCode_select").empty();
-        //清空提示信息
-        $("#span_text").hide();
-
-        var year = $("#year_select_2").val();
-        var departId = $("#depart_select_2").val();
-        var zaasTechType = $("#zaasTechType_select").val();
-
-        //当技术类型为“软件著作权”、“颁布标准”时，查询不带单位id，因为mis库中这两个表没有单位id
-        if(zaasTechType=="软件著作权"||zaasTechType=="颁布标准"){
-            //下拉框赋值全院
-            $("#depart_select_2").val(0);
-            //提交参数改为全员
-            departId = 0;
-            //锁定单位选择框
-            $("#depart_select_2").attr("disabled",true);
-
-        }else{
-            //解除单位选择框锁定
-            $("#depart_select_2").removeAttr("disabled",true);
-        }
-
-        //ajax提交访问  参数：技术类型、单位id、年份
-        $.post("getZaasCodeList.do",{zaasTechType:zaasTechType,departId:departId,year:year},function(date){
-            //date 为返回值 json对象 size list为自定义的两个属性 size为list长度 list为返回的成果编码列表
-            if(date.size!=0){
-                $.each(date.list, function(i, item) {
-                    $("#zaasCode_select").append(
-                        "<option value='" + item + "'>" + item + "</option>");
-                });
-            }else{
-                //未搜索到结果提示信息
-                $("#span_text").show();
-            }
-
-            $("#zaasCode_select").change();
-        },"json");
-
-
-    });
-
-    //当单位改变时触发查询
-    $("#depart_select_2").change(function () {
-        $("#zaasCode_select").empty();
-        $("#span_text").hide();
-        var year = $("#year_select_2").val();
-        var departId = $("#depart_select_2").val();
-        var zaasTechType = $("#zaasTechType_select").val();
-        $.post("getZaasCodeList.do",{zaasTechType:zaasTechType,departId:departId,year:year},function(date){
-            if(date.size!=0){
-                $.each(date.list, function(i, item) {
-                    $("#zaasCode_select").append(
-                        "<option value='" + item + "'>" + item + "</option>");
-                });
-            }else{
-                $("#span_text").show();
-            }
-            $("#zaasCode_select").change();
-        },"json");
-    });
-
-    //当年份改变时触发查询
-    $("#year_select_2").change(function () {
-        $("#zaasCode_select").empty();
-        $("#span_text").hide();
-        var year = $("#year_select_2").val();
-        var departId = $("#depart_select_2").val();
-        var zaasTechType = $("#zaasTechType_select").val();
-        //$("#span_text").html(zaasTechType+"--"+departId+"--"+year);
-        $.post("getZaasCodeList.do",{zaasTechType:zaasTechType,departId:departId,year:year},function(date){
-            if(date.size!=0){
-                $.each(date.list, function(i, item) {
-                    $("#zaasCode_select").append(
-                        "<option value='" + item + "'>" + item + "</option>");
-                });
-
-
-            }else{
-                $("#span_text").show();
-            }
-            $("#zaasCode_select").change();
-        },"json");
-    });
-
-    //当成果编码改变时触发查询
-    $("#zaasCode_select").change(function () {
-        //清空标题栏与提示栏信息
-        $("#zaastechName").html("");
-
-        var zaasCode = $("#zaasCode_select").val();
-        //不合法的code初步判断  长度为4因为2015年（包括2015）前后两种验证规则，后台需先取出前4位判断
-        if(zaasCode.length<4){return false;}
-        //根据成果编码获取标题 并依此判断其在两个库存在情况
-        $.post("getTechName.do",{zaasCode:zaasCode},function(date){
-            if(data.name_njy!=''){
-                $("#zaastechName").html(data.name_njy);
-            }else{
-                $("#zaastechName").html(data.name_mis);
-            }
-        },"json");
-    });
-
     function addYearSelect(){
         var nowDate = new Date();
         var nowYear = nowDate.getFullYear();
         for(var i = nowYear;i>2010;i--){
             $("#year_select").append("<option value='" + i + "'>" + i + "</option>");
-            $("#year_select_2").append("<option value='" + i + "'>" + i + "</option>");
         }
-        $("#year_select_2").val((nowYear-1));
     }
+    
+    $("#submitBt").click(function () {
+        $("#tradeForm").submit();
+    });
 
+    $("#quitBt").click(function () {
+        if(confirm("此时退出信息将不会保存，是否确认退出.")){
+            window.location.href = "list.do?codeType=${codeType}"
+        }
+    });
 
     function Arabia_to_Chinese(Num) {
         for (i = Num.length - 1; i >= 0; i--) {
@@ -624,84 +555,5 @@
 
 </script>
 
-<div class="modal fade edit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">其他相关成果技术编码</h4>
-            </div>
-            <div class="modal-body ">
-                <div class="row">
-                    <div class="col-lg-10 col-lg-offset-1">
-                        <form class="form-horizontal">
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="exampleInputName2">成果技术类型</label>
-                                        <select id="zaasTechType_select" class="form-control">
-                                            <c:forEach items="${zaasTechTypeList}" var="re">
-                                                <option value="<c:out value="${re.key}"/>"><c:out value="${re.value}"/></option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="exampleInputName2">年份</label>
-                                        <select id="year_select_2" class="form-control">
-                                            <option value="0">全部</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="form-group">
-                                        <label for="exampleInputName2">单位</label>
-
-                                        <select id="depart_select_2" class="form-control">
-                                            <option value="0">全院</option>
-                                            <c:forEach items="${departList}" var="depart">
-                                                <option value="<c:out value="${depart.danwId}"/>"><c:out value="${depart.danwjc}"/></option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label for="exampleInputName2">成果技术编码</label>
-                                        <select id="zaasCode_select" class="form-control"></select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputName2">成果技术名称</label>
-                                        <div><span id="zaastechName"></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div id="span_text" class="alert alert-warning" role="alert">搜索完毕，没有找到相关记录。</div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">确定 </button>
-            </div>
-        </div>
-    </div>
-</div>
 
 </html>

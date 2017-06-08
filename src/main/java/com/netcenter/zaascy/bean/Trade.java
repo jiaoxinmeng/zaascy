@@ -10,7 +10,7 @@ public class Trade {
 
     private Integer projectYear;
 
-    private String departId;
+    private Long departId;
 
     private String depart;
 
@@ -58,7 +58,7 @@ public class Trade {
 
     private Integer assessState;
 
-    private Integer downloadState;
+    private Date downloadState;
 
     private Integer joinState;
 
@@ -72,7 +72,15 @@ public class Trade {
 
     private String otherZaasCode;
 
-    public Trade(Long id, String projectNum, Integer projectYear, String departId, String depart, String projectType, String projectTypeCode, String projectName, String zaasTechType, String zaasCode, String customerDepart, String otherCustomerDepart,String departFullName, String projectPerson, Date startDate, Date endDate, String projectSummary, BigDecimal intentionAmount, String intentionAmountExplain, BigDecimal signAmount, String remarks, Long submiterId, String submiter, Long assessorId, String assessor, Integer submitState, Integer assessState, Integer downloadState, Integer joinState, Long operatorId, String operator, Date createDate, Date modifyDate) {
+    private String oneCode;
+
+    private String attachment;
+
+    private BigDecimal receivedAmount;
+
+    private String attachmentTable;
+
+    public Trade(Long id, String projectNum, Integer projectYear, Long departId, String depart, String projectType, String projectTypeCode, String projectName, String zaasTechType, String zaasCode, String customerDepart, String otherCustomerDepart,String departFullName, String projectPerson, Date startDate, Date endDate, String projectSummary, BigDecimal intentionAmount, String intentionAmountExplain, BigDecimal signAmount, String remarks, Long submiterId, String submiter, Long assessorId, String assessor, Integer submitState, Integer assessState, Date downloadState, Integer joinState, Long operatorId, String operator, Date createDate, Date modifyDate,String oneCode,String attachment,BigDecimal receivedAmount,String attachmentTable) {
         this.id = id;
         this.projectNum = projectNum;
         this.projectYear = projectYear;
@@ -106,6 +114,10 @@ public class Trade {
         this.operator = operator;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
+        this.oneCode = oneCode;
+        this.attachment = attachment;
+        this.receivedAmount = receivedAmount;
+        this.attachmentTable = attachmentTable;
     }
 
     public Trade(Long id,String projectName,String zaasCode){
@@ -176,12 +188,12 @@ public class Trade {
         this.projectYear = projectYear;
     }
 
-    public String getDepartId() {
+    public Long getDepartId() {
         return departId;
     }
 
-    public void setDepartId(String departId) {
-        this.departId = departId == null ? null : departId.trim();
+    public void setDepartId(Long departId) {
+        this.departId = departId;
     }
 
     public String getDepart() {
@@ -360,11 +372,11 @@ public class Trade {
         this.assessState = assessState;
     }
 
-    public Integer getDownloadState() {
+    public Date getDownloadState() {
         return downloadState;
     }
 
-    public void setDownloadState(Integer downloadState) {
+    public void setDownloadState(Date downloadState) {
         this.downloadState = downloadState;
     }
 
@@ -422,5 +434,37 @@ public class Trade {
 
     public void setOtherZaasCode(String otherZaasCode) {
         this.otherZaasCode = otherZaasCode;
+    }
+
+    public String getOneCode() {
+        return oneCode;
+    }
+
+    public void setOneCode(String oneCode) {
+        this.oneCode = oneCode;
+    }
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
+    public BigDecimal getReceivedAmount() {
+        return receivedAmount;
+    }
+
+    public void setReceivedAmount(BigDecimal receivedAmount) {
+        this.receivedAmount = receivedAmount;
+    }
+
+    public String getAttachmentTable() {
+        return attachmentTable;
+    }
+
+    public void setAttachmentTable(String attachmentTable) {
+        this.attachmentTable = attachmentTable;
     }
 }

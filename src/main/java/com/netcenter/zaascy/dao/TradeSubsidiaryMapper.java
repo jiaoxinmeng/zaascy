@@ -22,4 +22,6 @@ public interface TradeSubsidiaryMapper {
     List<TradeSubsidiary> getSubsidiaryListByProjectId(Long projectId);
 
     void delSubsidiaryByProjectId(Long projectId);
+
+    Integer getSubsidiaryCountByProjectId(Long projectId);
 }

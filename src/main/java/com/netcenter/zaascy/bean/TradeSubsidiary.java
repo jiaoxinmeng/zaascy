@@ -9,6 +9,8 @@ public class TradeSubsidiary {
 
     private String zaasTechType;
 
+    private String zaasTechTitle;
+
     private String zaasCode;
 
     private String operator;
@@ -19,7 +21,7 @@ public class TradeSubsidiary {
 
     private Date modifyDate;
 
-    public TradeSubsidiary(Long id, Long projectId, String zaasTechType, String zaasCode, String operator, Long operatorId, Date createDate, Date modifyDate) {
+    public TradeSubsidiary(Long id, Long projectId, String zaasTechType, String zaasTechTitle, String zaasCode, String operator, Long operatorId, Date createDate, Date modifyDate) {
         this.id = id;
         this.projectId = projectId;
         this.zaasTechType = zaasTechType;
@@ -28,6 +30,7 @@ public class TradeSubsidiary {
         this.operatorId = operatorId;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
+        this.zaasTechTitle = zaasTechTitle;
     }
 
     public TradeSubsidiary() {
@@ -96,5 +99,13 @@ public class TradeSubsidiary {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    public String getZaasTechTitle() {
+        return zaasTechTitle;
+    }
+
+    public void setZaasTechTitle(String zaasTechTitle) {
+        this.zaasTechTitle = this.zaasTechTitle = zaasTechTitle == null ? null : zaasTechTitle.trim();
     }
 }

@@ -153,6 +153,7 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.1" />
           <element id="library" level="project" name="Maven: net.sourceforge.jtds:jtds:1.2.8" />
+          <element id="library" level="project" name="Maven: org.jbarcode:jbarcode:0.2.8" />
         </element>
       </element>
     </root>

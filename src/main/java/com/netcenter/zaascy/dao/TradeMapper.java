@@ -1,11 +1,14 @@
 package com.netcenter.zaascy.dao;
 
+import com.netcenter.zaascy.bean.ChartsDemo;
 import com.netcenter.zaascy.bean.Trade;
+import com.netcenter.zaascy.bean.TradeMember;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository("tradeDao")
@@ -30,15 +33,23 @@ public interface TradeMapper {
 
     String getProjectNumByMark(@Param("mark")String mark);
 
-    void submit(@Param("id")Long id, @Param("userId")Long userId, @Param("name")String name, @Param("submitState")int submitState, @Param("date")Date date);
-
     Trade selectByProjectNum(String projectNum);
 
     Integer getCount(String projectNum);
 
-    Integer getCountByType(String typeCode);
+    Integer getCountByType(String codeType);
 
     List<Trade> selectByType(String codeType);
 
-    void access(@Param("id")Long id, @Param("userId")Long userId, @Param("username")String username, @Param("accessState")int accessState, @Param("date")Date date);
+    List<Trade> selectByTypeAndDepartId(@Param("codeType")String codeType,@Param("departId")String departId);
+
+    List<Trade> selectByTypeAndUserId(@Param("codeType")String codeType, @Param("userId")Long userId);
+
+    Trade getProjectNumById(Long projectId);
+
+    void workflow(@Param("id")Long id, @Param("userId")Long userId, @Param("name")String name, @Param("submitState")int submitState, @Param("accessState")int accessState,@Param("date")Date date);
+
+    List<HashMap<String,Integer>> getCharts(@Param("columName")String columName, @Param("whereMark")Boolean whereMark, @Param("colunNameWhere")String colunNameWhere, @Param("nameWhere")String nameWhere);
+
+
 }

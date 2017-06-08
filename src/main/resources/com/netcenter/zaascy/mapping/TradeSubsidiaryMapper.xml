@@ -6,6 +6,7 @@
       <idArg column="id" javaType="java.lang.Long" jdbcType="INTEGER" />
       <arg column="project_id" javaType="java.lang.Long" jdbcType="NUMERIC" />
       <arg column="zaas_tech_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="zaas_tech_title" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="zaas_code" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="operator" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="operator_id" javaType="java.lang.Long" jdbcType="NUMERIC" />
@@ -14,9 +15,9 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, project_id, zaas_tech_type, zaas_code, operator, operator_id, create_date, modify_date
+    id, project_id, zaas_tech_type, zaas_tech_title, zaas_code, operator, operator_id, create_date, modify_date
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from CY_CGZHJY_CB
@@ -26,21 +27,15 @@
     delete from CY_CGZHJY_CB
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeSubsidiary">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into CY_CGZHJY_CB (project_id, zaas_tech_type, zaas_code, 
+  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeSubsidiary" keyProperty="id" useGeneratedKeys="true">
+    insert into CY_CGZHJY_CB (project_id, zaas_tech_type,zaas_tech_title, zaas_code,
       operator, operator_id, create_date, 
       modify_date)
-    values (#{projectId,jdbcType=NUMERIC}, #{zaasTechType,jdbcType=VARCHAR}, #{zaasCode,jdbcType=VARCHAR}, 
+    values (#{projectId,jdbcType=NUMERIC}, #{zaasTechType,jdbcType=VARCHAR},#{zaasTechTitle,jdbcType=VARCHAR}, #{zaasCode,jdbcType=VARCHAR},
       #{operator,jdbcType=VARCHAR}, #{operatorId,jdbcType=NUMERIC}, #{createDate,jdbcType=TIMESTAMP}, 
       #{modifyDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeSubsidiary">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeSubsidiary" keyProperty="id" useGeneratedKeys="true">
     insert into CY_CGZHJY_CB
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="projectId != null">
@@ -48,6 +43,9 @@
       </if>
       <if test="zaasTechType != null">
         zaas_tech_type,
+      </if>
+      <if test="zaasTechTitle != null">
+        zaas_tech_title,
       </if>
       <if test="zaasCode != null">
         zaas_code,
@@ -71,6 +69,9 @@
       </if>
       <if test="zaasTechType != null">
         #{zaasTechType,jdbcType=VARCHAR},
+      </if>
+      <if test="zaasTechTitle != null">
+        #{zaasTechTitle,jdbcType=VARCHAR},
       </if>
       <if test="zaasCode != null">
         #{zaasCode,jdbcType=VARCHAR},
@@ -98,6 +99,9 @@
       <if test="zaasTechType != null">
         zaas_tech_type = #{zaasTechType,jdbcType=VARCHAR},
       </if>
+      <if test="zaasTechType != null">
+        zaas_tech_title = #{zaasTechTitle,jdbcType=VARCHAR},
+      </if>
       <if test="zaasCode != null">
         zaas_code = #{zaasCode,jdbcType=VARCHAR},
       </if>
@@ -116,10 +120,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.TradeSubsidiary">
+  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.TradeSubsidiary" >
     update CY_CGZHJY_CB
     set project_id = #{projectId,jdbcType=NUMERIC},
       zaas_tech_type = #{zaasTechType,jdbcType=VARCHAR},
+      zaas_tech_title = #{zaasTechTitle,jdbcType=VARCHAR},
       zaas_code = #{zaasCode,jdbcType=VARCHAR},
       operator = #{operator,jdbcType=VARCHAR},
       operator_id = #{operatorId,jdbcType=NUMERIC},
@@ -135,4 +140,9 @@
   <delete id="delSubsidiaryByProjectId">
     DELETE FROM CY_CGZHJY_CB WHERE project_id = #{projectId}
   </delete>
+
+  <select id="getSubsidiaryCountByProjectId" resultType="Integer">
+    SELECT COUNT(*) FROM CY_CGZHJY_CB
+    WHERE project_id = #{projectId}
+  </select>
 </mapper>

@@ -74,7 +74,7 @@
                 <ul class="dropdown-menu dropdown-user">
 
                     <li>
-                        <a href="loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
+                        <a href="/user/loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -88,29 +88,29 @@
                 <ul class="nav" id="side-menu">
 
                     <li >
-                        <a href="/trade/newFirst.do">
-                            <i class="fa fa-home"></i>&nbsp;&nbsp;录入项目</a>
+                        <a href="/index.do">
+                            <i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;技术转让<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;成果转化<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;专利权</a>
+                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;技术转让-专利权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;专利申请权</a>
+                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;技术转让-专利申请权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;专利实施许可</a>
+                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;技术转让-专利实施许可</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术秘密</a>
+                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术转让-技术秘密</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li>
@@ -122,20 +122,17 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/trade/list.do?codeType=F1"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
-                    </li>
-                    <li>
-                        <a href="/trade/list.do?codeType=J"><i class="fa fa-flask"></i>&nbsp;&nbsp;&nbsp;检测服务</a>
-
+                        <a href="javascript:void(0);"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测项目</a>
+                                <a href="/trade/list.do?codeType=F1">&nbsp;&nbsp;技术服务（非检测）</a>
                             </li>
                             <li>
-                                <a href="/trade/goChildImport.do">&nbsp;&nbsp;零散检测单导入</a>
+                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测服务</a>
                             </li>
                         </ul>
                     </li>
+
                     <li>
                         <a href="/trade/list.do?codeType=Z1"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
                     </li>
@@ -153,7 +150,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">
-                    <input class="btn btn-primary" type="button" value="返回列表" onclick="doList()"/>
+                    <c:if test="${codeType=='A'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='A1'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利权</a><i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='A2'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利申请权</a><i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='A3'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利实施许可</a><i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='A4'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">技术秘密</a><i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='K'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='K1'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">合作</a><i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='K2'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">委托</a><i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='F1'}"><a href="/trade/list.do?codeType=${codeType}">技术服务</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='J1'}"><a href="/trade/list.do?codeType=${codeType}">检测服务</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='Z1'}"><a href="/trade/list.do?codeType=${codeType}">技术咨询</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
+                    <c:if test="${codeType=='P1'}"><a href="/trade/list.do?codeType=${codeType}">技术培训</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;${trade.projectName}</c:if>
                 </h3>
 
                 <!-- /input-group -->
@@ -173,15 +181,15 @@
                             <div class="col-lg-10 col-lg-offset-1">
                                 <form class="form-horizontal">
                                     <div class="form-group">
-                                        <%--@declare id="exampleinputemail2"--%><label for="exampleInputEmail2">项目编号</label>&nbsp;&nbsp;${trade.projectNum}
+                                        <%--@declare id="exampleinputemail2"--%><label for="exampleInputEmail2">项目编号</label>&nbsp;&nbsp;${trade.projectNum==null?暂无:trade.projectNum}
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail2">院成果技术编码</label>&nbsp;&nbsp;${trade.zaasCode}
+                                        <label for="exampleInputEmail2">院成果技术编码</label>&nbsp;&nbsp;<a id="zaas_code" target="_blank">${trade.zaasCode}</a>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">其他相关成果技术编码</label>&nbsp;
-                                        <c:forEach items="${otherZaasCodes}" var="tradeSubsidiary" >
-                                            ${tradeSubsidiary.zaasCode}&nbsp;&nbsp;
+                                        <c:forEach items="${otherZaasCodes}" var="tradeSubsidiary" varStatus="otherCode">
+                                            <a id="zaas_code${otherCode.index+1}" target="_blank">${tradeSubsidiary.zaasTechTitle}(${tradeSubsidiary.zaasCode})</a>&nbsp;&nbsp;
                                         </c:forEach>
                                     </div>
                                     <div class="form-group">
@@ -228,7 +236,7 @@
                                             </div>
                                             <div class="col-lg-4 col-sm-6">
                                                 <label for="exampleInputName2">其他合作单位</label>
-                                                <div>${trade.customerDepart}</div>
+                                                <div>${trade.otherCustomerDepart=='NULL'?暂无:trade.otherCustomerDepart}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -254,7 +262,7 @@
                                             </div>
                                             <div class="col-lg-4 col-sm-6">
                                                 <label for="exampleInputEmail2">签约总金额（元）</label>
-                                                <div>${trade.signAmount}</div>
+                                                <div>${trade.signAmount==null?暂无:trade.signAmount}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -262,39 +270,48 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">项目基本情况介绍（委托/受让单位、项目内容等，可公开，限200字）</label>
                                         <div>
-                                            ${trade.projectSummary}
+                                            ${trade.projectSummary==""?暂无:trade.projectSummary}
                                         </div>
                                     </div>
                                     <hr />
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">意向总金额与付款方式说明</label>
                                         <div>
-                                            ${trade.intentionAmountExplain}
+                                            ${trade.intentionAmountExplain==""?暂无:trade.intentionAmountExplain}
                                         </div>
                                     </div>
                                     <hr />
                                     <div class="form-group">
                                         <label for="exampleInputEmail2">备注</label>
                                         <div>
-                                            ${trade.remarks}
+                                            ${trade.remarks=='NULL'?暂无:trade.remarks}
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                         <div class="row ">
                             <div class="col-lg-offset-5 col-md-offset-6  col-sm-offset-6">
+                                <c:if test="${trade.attachmentTable!=null}">
+                                    <a class="btn btn-default" href="../table/${trade.projectYear}/${trade.attachmentTable}"  target="_blank" >查看审批表</a>
+                                </c:if>
+                                <c:if test="${trade.attachment!=null}">
+                                    <a class="btn btn-default" href="../contract/${trade.projectYear}/${trade.attachment}"  target="_blank" >查看合同</a>
+                                </c:if>
 
                                 <input class="btn btn-primary" type="button" value="返回列表" onclick="doList()"/>
 
-                                <c:if test="${isSubmitor and (editEnable or (departEditEnable and (adminDepartId==adminDepartId)))}">
+                                <c:if test="${trade.submitState==0 and isSubmitor and (editEnable or (departEditEnable and (trade.departId==adminDepartId)))}">
                                     <input class="btn btn-primary" type="button" value="提交" id="submitBt" title="submit to editor"onclick="doSubmit(<c:out value="${trade.id}"/>)"/>
                                 </c:if>
-                                <c:if test="${isAssessor and (editEnable or (departEditEnable and (adminDepartId==adminDepartId)))}">
+                                <c:if test="${trade.submitState==1 and trade.assessState==0 and isAssessor and (editEnable or (departEditEnable and (trade.departId==adminDepartId)))}">
                                     <input class="btn btn-primary" type="button" value="审核通过" id="accessBt" title="submit to editor"onclick="doAccess(<c:out value="${trade.id}"/>)"/>
                                     <input class="btn btn-primary" type="button" value="退回" id="backBt" title="submit to editor"onclick="doBack(<c:out value="${trade.id}"/>)"/>
                                 </c:if>
-
+                                <c:if test="${trade.submitState==1 and trade.assessState==1 and isAssessor and (editEnable or (departEditEnable and (trade.departId==adminDepartId)))}">
+                                    <input class="btn btn-primary" type="button" value="解除审核" id="accessBt" title="submit to editor"onclick="doNotAccess(<c:out value="${trade.id}"/>)"/>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -334,18 +351,78 @@
 
 </body>
 <script>
+    $(document).ready(
+        function() {
+            //zaasCode  增加链接
+            doChangeZaasCode();
+            changeZaasCode("zaas_code");
+        });
+
     function doList() {
-        window.location.href = "list.do?codeType=" + ${codeType};
+        window.location.href = "list.do?codeType=${codeType}";
     }
 
     function doSubmit(id){
-
+        $.post("/workFlow/submit.do",{id:id},function(data){
+            alert(data.msg);
+            window.location.href = "detail.do?codeType=${codeType}&id="+id;
+        },"json");
     }
+
     function doAccess(id){
-
+        $.post("/workFlow/access.do",{id:id},function(data){
+            alert(data.msg);
+            window.location.href = "detail.do?codeType=${codeType}&id="+id;
+        },"json");
     }
-    function doBack(id){
 
+    function doNotAccess(id){
+        $.post("/workFlow/notAccess.do",{id:id},function(data){
+            alert(data.msg);
+            window.location.href = "detail.do?codeType=${codeType}&id="+id;
+        },"json");
+    }
+
+    function doBack(id){
+        $.post("/workFlow/back.do",{id:id},function(data){
+            alert(data.msg);
+            window.location.href = "detail.do?codeType=${codeType}&id="+id;
+        },"json");
+    }
+
+    function doChangeZaasCode() {
+        changeZaasCode("zaas_code");
+        for(var i=1;i<=${otherZaasCodes.size()};i++){
+            (function(i){
+                changeZaasCode("zaas_code"+i);
+            })(i);
+        }
+    }
+
+    function changeZaasCode(id) {
+        $.ajax({
+            async:true,
+            url: "http://www.51nyjs.com/detailURL.do",
+            type: "GET",
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            data: {zaasCode:$("#"+id).html()},
+            timeout: 5000,
+            success: function(data){
+                //alert("1111111");
+                //alert(data=='illegalCode');
+                //alert(data=='none');
+                if(data=='illegalCode'){
+                    //alert(data);
+                }else if(data=='none'){
+                    //alert(data);
+                }else{
+                    $("#"+id).attr("href",data);
+                    $("#"+id).html($("#"+id).html());
+                }
+
+            }
+        });
     }
 </script>
 

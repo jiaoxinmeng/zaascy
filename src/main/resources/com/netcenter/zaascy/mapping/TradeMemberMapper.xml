@@ -3,9 +3,13 @@
 <mapper namespace="com.netcenter.zaascy.dao.TradeMemberMapper" >
   <resultMap id="BaseResultMap" type="com.netcenter.zaascy.bean.TradeMember" >
     <constructor >
-      <arg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Long" />
       <arg column="project_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="depart_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
+      <arg column="depart" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_staff" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="rank_number" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="role" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="user_id" jdbcType="NUMERIC" javaType="java.lang.Long" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -14,22 +18,52 @@
       <arg column="operator" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
-  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeMember" >
-    insert into CY_CGZHJY_CYB (project_id, rank_number, user_id,
-      name, create_date, modify_date, 
-      operator_id, operator)
-    values (#{projectId,jdbcType=INTEGER}, #{rankNumber,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}, 
-      #{operatorId,jdbcType=INTEGER}, #{operator,jdbcType=VARCHAR})
+  <sql id="Base_Column_List" >
+    id, project_id, depart_id, depart, is_staff, rank_number, role, user_id, name, create_date,
+    modify_date, operator_id, operator
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from CY_CGZHJY_CYB
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from CY_CGZHJY_CYB
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.netcenter.zaascy.bean.TradeMember" keyProperty="id" useGeneratedKeys="true">
+    insert into CY_CGZHJY_CYB (project_id, depart_id, depart,
+    is_staff, rank_number, role,
+      user_id, name, create_date, 
+      modify_date, operator_id, operator
+      )
+    values (#{projectId,jdbcType=NUMERIC}, #{departId,jdbcType=NUMERIC}, #{depart,jdbcType=VARCHAR}, 
+      #{isStaff,jdbcType=INTEGER}, #{rankNumber,jdbcType=INTEGER}, #{role,jdbcType=VARCHAR},
+      #{userId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=NUMERIC}, #{operator,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeMember" >
+  <insert id="insertSelective" parameterType="com.netcenter.zaascy.bean.TradeMember" keyProperty="id" useGeneratedKeys="true">
     insert into CY_CGZHJY_CYB
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectId != null" >
         project_id,
       </if>
+      <if test="departId != null" >
+        depart_id,
+      </if>
+      <if test="depart != null" >
+        depart,
+      </if>
+      <if test="isStaff != null" >
+        is_staff,
+      </if>
       <if test="rankNumber != null" >
         rank_number,
+      </if>
+      <if test="role != null" >
+        role,
       </if>
       <if test="userId != null" >
         user_id,
@@ -52,13 +86,25 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectId != null" >
-        #{projectId,jdbcType=INTEGER},
+        #{projectId,jdbcType=NUMERIC},
+      </if>
+      <if test="departId != null" >
+        #{departId,jdbcType=NUMERIC},
+      </if>
+      <if test="depart != null" >
+        #{depart,jdbcType=VARCHAR},
+      </if>
+      <if test="isStaff != null" >
+        #{isStaff,jdbcType=INTEGER},
       </if>
       <if test="rankNumber != null" >
         #{rankNumber,jdbcType=INTEGER},
       </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=NUMERIC},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -70,21 +116,33 @@
         #{modifyDate,jdbcType=TIMESTAMP},
       </if>
       <if test="operatorId != null" >
-        #{operatorId,jdbcType=INTEGER},
+        #{operatorId,jdbcType=NUMERIC},
       </if>
       <if test="operator != null" >
         #{operator,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateSelective" parameterType="com.netcenter.zaascy.bean.TradeMember">
-    UPDATE CY_CGZHJY_CYB
+  <update id="updateByPrimaryKeySelective" parameterType="com.netcenter.zaascy.bean.TradeMember" >
+    update CY_CGZHJY_CYB
     <set >
       <if test="projectId != null" >
         project_id = #{projectId,jdbcType=NUMERIC},
       </if>
+      <if test="departId != null" >
+        depart_id = #{departId,jdbcType=NUMERIC},
+      </if>
+      <if test="depart != null" >
+        depart = #{depart,jdbcType=VARCHAR},
+      </if>
+      <if test="isStaff != null" >
+        is_staff = #{isStaff,jdbcType=INTEGER},
+      </if>
       <if test="rankNumber != null" >
         rank_number = #{rankNumber,jdbcType=INTEGER},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=NUMERIC},
@@ -101,22 +159,47 @@
       <if test="operatorId != null" >
         operator_id = #{operatorId,jdbcType=NUMERIC},
       </if>
-      <if test="projectType != null" >
+      <if test="operator != null" >
         operator = #{operator,jdbcType=VARCHAR},
       </if>
     </set>
-    WHERE id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectById" resultType="com.netcenter.zaascy.bean.TradeMember">
-    SELECT * FROM CY_CGZHJY_CYB WHERE id = #{id}
-  </select>
-  <select id="selectByProjectId" resultType="com.netcenter.zaascy.bean.TradeMember">
-    SELECT * FROM CY_CGZHJY_CYB WHERE project_id = #{projectId}
+  <update id="updateByPrimaryKey" parameterType="com.netcenter.zaascy.bean.TradeMember" >
+    update CY_CGZHJY_CYB
+    set project_id = #{projectId,jdbcType=NUMERIC},
+      depart_id = #{departId,jdbcType=NUMERIC},
+      depart = #{depart,jdbcType=VARCHAR},
+      is_staff = #{isStaff,jdbcType=INTEGER},
+      rank_number = #{rankNumber,jdbcType=INTEGER},
+      role = #{role,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=NUMERIC},
+      name = #{name,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      operator_id = #{operatorId,jdbcType=NUMERIC},
+      operator = #{operator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByProjectId" resultMap="BaseResultMap">
+    SELECT * FROM CY_CGZHJY_CYB WHERE project_id = #{projectId} ORDER BY rank_number
   </select>
   <delete id="deleteByProjectId">
     DELETE FROM CY_CGZHJY_CYB WHERE project_id = #{projectId}
   </delete>
-  <delete id="deleteById" >
-    DELETE FROM CY_CGZHJY_CYB WHERE id = #{id}
-  </delete>
+
+  <select id="getProjectNumById" resultType="String">
+    SELECT CY_CGZHJY.project_num FROM CY_CGZHJY_CYB LEFT OUTER JOIN CY_CGZHJY ON CY_CGZHJY.id = CY_CGZHJY_CYB.project_id
+    WHERE CY_CGZHJY_CYB.id = #{id}
+  </select>
+
+  <select id="getMembersCountByProjectId" resultType="Integer">
+    SELECT COUNT(*) FROM CY_CGZHJY_CYB
+    WHERE project_id = #{projectId}
+  </select>
+
+  <select id="getProjectCountByUserId" resultType="Integer">
+    SELECT count(project_id) FROM CY_CGZHJY_CYB WHERE user_id = #{userId}
+  </select>
 </mapper>

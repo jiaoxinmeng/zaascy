@@ -48,6 +48,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+
 </head>
 
 <body>
@@ -76,7 +78,7 @@
                 <ul class="dropdown-menu dropdown-user">
 
                     <li>
-                        <a href="loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
+                        <a href="/user/loginOut.do"><i class="fa fa-sign-out fa-fw"></i>登出</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -90,29 +92,29 @@
                 <ul class="nav" id="side-menu">
 
                     <li >
-                        <a href="/trade/newFirst.do">
-                            <i class="fa fa-home"></i>&nbsp;&nbsp;录入项目</a>
+                        <a href="/index.do">
+                            <i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;技术转让<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;成果转化<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;专利权</a>
+                                <a href="/trade/list.do?codeType=A1">&nbsp;&nbsp;技术转让-专利权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;专利申请权</a>
+                                <a href="/trade/list.do?codeType=A2">&nbsp;&nbsp;技术转让-专利申请权</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;专利实施许可</a>
+                                <a href="/trade/list.do?codeType=A3">&nbsp;&nbsp;技术转让-专利实施许可</a>
                             </li>
                             <li>
-                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术秘密</a>
+                                <a href="/trade/list.do?codeType=A4">&nbsp;&nbsp;技术转让-技术秘密</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
+                        <a href="javascript:void(0);"><i class="fa fa-bar-chart-o fa-fw"></i>&nbsp;&nbsp;技术开发<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level">
                             <li>
@@ -124,20 +126,17 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/trade/list.do?codeType=F1"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
-                    </li>
-                    <li>
-                        <a href="/trade/list.do?codeType=J"><i class="fa fa-flask"></i>&nbsp;&nbsp;&nbsp;检测服务</a>
-
+                        <a href="javascript:void(0);"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;技术服务</a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测项目</a>
+                                <a href="/trade/list.do?codeType=F1">&nbsp;&nbsp;技术服务（非检测）</a>
                             </li>
                             <li>
-                                <a href="/trade/goChildImport.do">&nbsp;&nbsp;零散检测单导入</a>
+                                <a href="/trade/list.do?codeType=J1">&nbsp;&nbsp;检测服务</a>
                             </li>
                         </ul>
                     </li>
+
                     <li>
                         <a href="/trade/list.do?codeType=Z1"><i class="fa fa-comment-o"></i>&nbsp;&nbsp;技术咨询</a>
                     </li>
@@ -155,18 +154,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="page-header">
-                    <c:if test="${codeType=='A'}">技术转让&nbsp;</c:if>
-                    <c:if test="${codeType=='A1'}">技术转让&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;专利权</c:if>
-                    <c:if test="${codeType=='A2'}">技术转让&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;专利申请权</c:if>
-                    <c:if test="${codeType=='A3'}">技术转让&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;专利实施许可</c:if>
-                    <c:if test="${codeType=='A4'}">技术转让&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;技术秘密</c:if>
-                    <c:if test="${codeType=='K'}">技术开发&nbsp;</c:if>
-                    <c:if test="${codeType=='K1'}">技术开发&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;合作</c:if>
-                    <c:if test="${codeType=='K2'}">技术开发&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;委托</c:if>
-                    <c:if test="${codeType=='F1'}">技术服务&nbsp;</c:if>
-                    <c:if test="${codeType=='J1'}">检测服务&nbsp;</c:if>
-                    <c:if test="${codeType=='Z1'}">技术咨询&nbsp;</c:if>
-                    <c:if test="${codeType=='P1'}">技术培训&nbsp;</c:if>
+                    <c:if test="${codeType=='A'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='A1'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利权</a></c:if>
+                    <c:if test="${codeType=='A2'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利申请权</a></c:if>
+                    <c:if test="${codeType=='A3'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">专利实施许可</a></c:if>
+                    <c:if test="${codeType=='A4'}"><a href="/trade/list.do?codeType=${codeType}">技术转让</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">技术秘密</a></c:if>
+                    <c:if test="${codeType=='K'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='K1'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">合作</a></c:if>
+                    <c:if test="${codeType=='K2'}"><a href="/trade/list.do?codeType=${codeType}">技术开发</a>&nbsp;<i class="fa fa-angle-double-right"></i>&nbsp;<a href="/trade/list.do?codeType=${codeType}">委托</a></c:if>
+                    <c:if test="${codeType=='F1'}"><a href="/trade/list.do?codeType=${codeType}">技术服务</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='J1'}"><a href="/trade/list.do?codeType=${codeType}">检测服务</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='Z1'}"><a href="/trade/list.do?codeType=${codeType}">技术咨询</a>&nbsp;</c:if>
+                    <c:if test="${codeType=='P1'}"><a href="/trade/list.do?codeType=${codeType}">技术培训</a>&nbsp;</c:if>
                 </h3>
 
                 <!-- /input-group -->
@@ -178,7 +177,10 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <input class="btn btn-primary" type="button" value="新增" id="newBt" title="点击此处新增一条转让记录" onclick=""/>
+                        <c:if test="${editEnable or (departEditEnable and (adminDepartId==adminDepartId))}">
+                            <input class="btn btn-primary" type="button" value="新增" id="newBt" title="点击此处新增一条转让记录" />
+                        </c:if>
+
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -187,14 +189,13 @@
                             <tr>
                                 <th>序号</th>
                                 <th>项目编号</th>
-                                <th>年份</th>
-                                <th>单位</th>
                                 <th>项目名称</th>
-                                <th>院成果技<br>术编码</th>
                                 <th>项目负责人</th>
                                 <th>起始年月</th>
                                 <th>终止年月</th>
-                                <th>意向总金额<br></th>
+                                <th>签约总金额<br>（万元）</th>
+                                <th>到款金额<br>（万元）</th>
+                                <th>状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -203,22 +204,61 @@
                                     <tr class="odd">
                                         <td><c:out value="${tt.index + 1}"/></td>
                                         <td><c:out value="${trade.projectNum}"/></td>
-                                        <td><c:out value="${trade.projectYear}"/></td>
-                                        <td><c:out value="${trade.depart}"/></td>
                                         <td>
                                             <a href="detail.do?id=${trade.id}&codeType=${codeType}"><c:out value="${trade.projectName}"/></a>
                                         </td>
-                                        <td><c:out value="${trade.zaasCode}"/></td>
-                                        <td><c:out value="${trade.projectPerson}"/></td>
+                                        <td><a href="../member/list.do?projectId=${trade.id}&codeType=${codeType}"><c:out value="${trade.projectPerson}"/>&nbsp;&nbsp;<p class="fa fa-group"></p></a></td>
                                         <td><fmt:formatDate value="${trade.startDate}" dateStyle="medium" type="date"/></td>
                                         <td><fmt:formatDate value="${trade.endDate}" dateStyle="medium" type="date"/></td>
-                                        <td><c:out value="${trade.intentionAmount}"/></td>
                                         <td>
-                                            <c:if test="${editEnable or (departEditEnable and (adminDepartId==adminDepartId))}">
-                                                <input class="btn btn-primary" type="button" value="修改" id="editBt" title="edit this" data-toggle="modal" data-target=".edit" onclick="doEdit(<c:out value="${trade.id}"/>)"/>
+                                            <c:out value="${trade.signAmount==null?未录入:trade.intentionAmount/10000}"/>
+                                        </td>
+                                        <td>
+
+                                            <a href="../funds/list.do?projectId=${trade.id}&codeType=${codeType}"><p class="glyphicon-yen">&nbsp;<c:out value="${trade.receivedAmount==null?0.00:trade.receivedAmount/10000}"/></p></a>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${trade.submitState==0 and trade.assessState==0}">未提交</c:when>
+                                                <c:when test="${trade.submitState==0 and trade.assessState==1}">退回</c:when>
+                                                <c:when test="${trade.submitState==1 and trade.assessState==0}">未审核</c:when>
+                                                <c:when test="${trade.submitState==1 and trade.assessState==1}">审核通过</c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:if test="${trade.submitState==0 and isSubmitor and (editEnable or (departEditEnable and (trade.departId==adminDepartId)))}">
+                                                <input class="btn btn-primary" type="button" value="编辑" id="editBt" title="edit this" onclick="doEdit(<c:out value="${trade.id}"/>)"/>
                                                 <input class="btn btn-primary" type="button" value="删除" id="delBt" title="del this" onclick="doDel(<c:out value="${trade.id}"/>)"/>
-                                                <input class="btn btn-primary" type="button" value="排名表" id="delBt" title="人员排名表" onclick=""/>
-                                                <input class="btn btn-primary" type="button" value="经费表" id="delBt" title="经费表" onclick=""/>
+
+                                            </c:if>
+                                            <c:if test="${trade.submitState==1 and trade.assessState==0  and isAssessor and (editEnable or (departEditEnable and (trade.departId==adminDepartId)))}">
+                                                <input class="btn btn-primary" type="button" value="编辑" id="editBt" title="edit this" onclick="doEdit(<c:out value="${trade.id}"/>)"/>
+
+                                            </c:if>
+                                            <c:if test="${trade.joinState==0 and trade.submitState==1 and trade.assessState==1 and trade.attachment==null and (editEnable or (departEditEnable and (trade.departId==adminDepartId))) }">
+                                                <c:choose>
+                                                    <c:when test="${'A1,A2,A3,A4'.contains(trade.projectTypeCode)}">
+                                                        <a  href="../workFlow/printTable.do?id=${trade.id}&tableType=achieveTrans" onclick="return confirm('请于合同正式签订后一个月内，录入“签约总金额”，并按照我院归档格式要求上传合同正本PDF版。');" target="_blank" id="printBt" title="打印科技成果转化合同审核表" ><span class="glyphicon glyphicon-print"></span></a>
+                                                    </c:when>
+                                                    <c:when test="${trade.departFullName=='浙江省农业科学院' and 'K1,K2,F1,Z1,P1'.contains(trade.projectTypeCode)}">
+                                                        <a  href="../workFlow/printTable.do?id=${trade.id}&tableType=techTrans" onclick="return confirm('请于合同正式签订后一个月内，录入“签约总金额”，并按照我院归档格式要求上传合同正本PDF版。');" target="_blank" id="printBt" title="打印“四技服务”合同审核表" ><span class="glyphicon glyphicon-print"></span></a>
+                                                    </c:when>
+                                                    <c:when test="${'K1,K2,F1,Z1,P1'.contains(trade.projectTypeCode)}">
+                                                        <a  href="../workFlow/printTable.do?id=${trade.id}&tableType=techTransRecord" onclick="return confirm('请于合同正式签订后一个月内，录入“签约总金额”，并按照我院归档格式要求上传合同正本PDF版。');" target="_blank" id="printBt" title="打印“四技服务”合同备案表" ><span class="glyphicon glyphicon-print"></span></a>
+                                                    </c:when>
+                                                    <c:otherwise>
+
+                                                    </c:otherwise>
+                                                </c:choose>
+
+                                                <c:if test="${trade.oneCode!=null and trade.attachmentTable==null}">
+                                                    <a  href="goTradeUpload.do?codeType=${codeType}&id=${trade.id}&type=1" target="_self"  title="上传审批表PDF"><span class="glyphicon glyphicon-open-file"></span></a>
+                                                </c:if>
+
+                                                <c:if test="${trade.oneCode!=null and trade.attachment==null}">
+                                                    <a  href="goTradeUpload.do?codeType=${codeType}&id=${trade.id}" target="_self"  title="上传合同原件PDF"><span class="glyphicon glyphicon-level-up"></span></a>
+                                                </c:if>
+
                                             </c:if>
 
                                         </td>
@@ -305,49 +345,48 @@
             }
         });
     });
-
-    $(function() {
-        $('#datetimepicker1').datetimepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd',//显示格式
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            initialDate: new Date(),//初始化当前日期
-        });
-        $('#datetimepicker2').datetimepicker({
-            language: 'zh-CN',
-            format: 'yyyy-mm-dd',//显示格式
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            initialDate: new Date(),//初始化当前日期
-        });
+    
+    $("#newBt").click(function () {
+        window.location.href = "newFirst.do?codeType=${codeType}";
     });
+    
+    function doDel(id) {
 
-    function doDel(id){
-        if(confirm("是否确认删除")){
-            window.location.href = "del.do?id="+id;
-        }
+        $.post("beforeDel.do",{id:id},function(date){
+            if(date.fundsCount==0&&date.memberCount==0&&date.subsidiaryCount==0){
+                if(confirm("是否确认删除？")){
+                    window.location.href = "del.do?id="+id+"&codeType=${codeType}";
+                }
+            }else{
+                if(confirm("此条记录关联"+date.fundsCount+"条成员记录"+date.memberCount+"条经费记录"+date.subsidiaryCount+"条其他编码记录，删除操作将会将此彻底清空，是否确认？")){
+                    window.location.href = "del.do?id="+id+"&codeType=${codeType}";
+                }
+            }
+        },"json");
+
+
     }
-    function doSubmit(id){
-        if(confirm("是否确认提交")){
-            window.location.href = "submit.do?id="+id;
-        }
+
+    function doEdit(id) {
+        window.location.href = "edit.do?id="+id+"&codeType=${codeType}";
     }
-    function doSubmit(id){
-        if(confirm("是否确认审核通过")){
-            window.location.href = "submit.do?id="+id;
-        }
+
+    function goMember(id) {
+        window.location.href = "../member/list.do?projectId="+id+"&codeType=${codeType}";
     }
+
+    function goFunds(id) {
+        window.location.href = "../funds/list.do?projectId="+id+"&codeType=${codeType}";
+    }
+
+    function doPrint(id,tableType){
+        window.location.href = "/workFlow/printTable.do?id="+id+"&tableType="+tableType;
+    }
+
+    function doCompelete(id) {
+        window.location.href = "goTradeUpload.do?codeType=${codeType}&id="+id;
+    }
+    
 </script>
 </body>
 

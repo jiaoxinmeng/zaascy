@@ -1,5 +1,7 @@
 package com.netcenter.zaascy.bean;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,9 +12,10 @@ public class TradeFunds {
 
     private Integer year;
 
-    private BigDecimal date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
 
-    private BigDecimal depart;
+    private String depart;
 
     private BigDecimal funds;
 
@@ -24,9 +27,9 @@ public class TradeFunds {
 
     private Date modifyDate;
 
-    private String remarks;
+    private String remarks = " ";
 
-    public TradeFunds(Long id, Long projectId, Integer year, BigDecimal date, BigDecimal depart, BigDecimal funds, Long operatorId, String operator, Date createDate, Date modifyDate, String remarks) {
+    public TradeFunds(Long id, Long projectId, Integer year, Date date, String depart, BigDecimal funds, Long operatorId, String operator, Date createDate, Date modifyDate, String remarks) {
         this.id = id;
         this.projectId = projectId;
         this.year = year;
@@ -68,19 +71,19 @@ public class TradeFunds {
         this.year = year;
     }
 
-    public BigDecimal getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(BigDecimal date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public BigDecimal getDepart() {
+    public String getDepart() {
         return depart;
     }
 
-    public void setDepart(BigDecimal depart) {
+    public void setDepart(String depart) {
         this.depart = depart;
     }
 

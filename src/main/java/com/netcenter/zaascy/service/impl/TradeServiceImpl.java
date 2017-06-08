@@ -4,6 +4,7 @@ import com.netcenter.zaascy.bean.*;
 import com.netcenter.zaascy.dao.*;
 import com.netcenter.zaascy.service.TradeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,6 +22,8 @@ import java.util.List;
  */
 @Service(value="tradeService")
 public class TradeServiceImpl implements TradeService,Serializable {
+
+    private final static int moduleId = 720;
 
     @Resource(name="tradeDao")
     private TradeMapper dao;
@@ -38,6 +42,18 @@ public class TradeServiceImpl implements TradeService,Serializable {
 
     @Resource(name="departDao")
     private DepartMapper departDao;
+
+    @Resource(name = "userDao")
+    private UserMapper userDao;
+
+    @Resource(name="moduleDao")
+    private ModuleMapper moduleDao;
+
+    @Resource(name="roleRelationDao")
+    private RoleRelationMapper roleRelationDao;
+
+    @Resource(name="privilegeDao")
+    private PrivilegeMapper privilegeDao;
 
     public int deleteByPrimaryKey(Long id) {
         return dao.deleteByPrimaryKey(id);
@@ -107,7 +123,7 @@ public class TradeServiceImpl implements TradeService,Serializable {
             Integer result = Integer.parseInt(serialNum) + 1;
             return toString(result);
         }else{
-            return "0001";
+            return "001";
         }
     }
 
@@ -122,7 +138,7 @@ public class TradeServiceImpl implements TradeService,Serializable {
     }
 
     public void submit(Long id, Long userId, String name) {
-        dao.submit(id,userId,name,1,new Date());
+        dao.workflow(id,userId,name,1,0,new Date());
     }
 
     public void saveTradeChild(TradeChild tradeChild) {
@@ -133,9 +149,9 @@ public class TradeServiceImpl implements TradeService,Serializable {
         childDao.delChildByYearAndQuarter(year,quarter);
     }
 
-    public int addTradeByChild(Integer year, String quarter,String remarks,Long userId,String username) {
+    public Long addTradeByChild(Integer year, String quarter,String remarks,Long userId,String username) {
         Integer count = childDao.getCount(year,quarter);
-        Integer id = 0;
+        Long id = 0L;
         if(count>0){
             Trade trade = new Trade();
             //项目编号
@@ -143,7 +159,7 @@ public class TradeServiceImpl implements TradeService,Serializable {
             //年份
             trade.setProjectYear(year);
             //单位
-            trade.setDepartId("55");
+            trade.setDepartId(new Long(55));
             trade.setDepart(departDao.getDepartNameById(55));
             //项目类别
             trade.setProjectType("检测服务");
@@ -181,15 +197,15 @@ public class TradeServiceImpl implements TradeService,Serializable {
             //备注
             trade.setRemarks(remarks);
             //提交人
-            trade.setSubmiterId(userId);
-            trade.setSubmiter(username);
+//            trade.setSubmiterId(userId);
+//            trade.setSubmiter(username);
             //审核人
             //提交状态
             trade.setSubmitState(0);
             //审核状态
             trade.setAssessState(0);
             //合同下载状态
-            trade.setDownloadState(0);
+            //trade.setDownloadState(new Date());
             //交易行为同步状态
             trade.setJoinState(0);
             //控制字段
@@ -197,7 +213,8 @@ public class TradeServiceImpl implements TradeService,Serializable {
             trade.setOperator(username);
             trade.setCreateDate(new Date());
             trade.setModifyDate(new Date());
-            id = dao.insertSelective(trade);
+            dao.insertSelective(trade);
+            id = trade.getId();
         }
         return id;
     }
@@ -215,26 +232,69 @@ public class TradeServiceImpl implements TradeService,Serializable {
     }
 
     public TradeMember getMemberById(Long id) {
-        return memberDao.selectById(id);
+        return memberDao.selectByPrimaryKey(id);
     }
 
     public Integer getTradeCountByType(String typeCode) {
         return dao.getCountByType(typeCode);
     }
 
-    public List<Trade> getListByType(String codeType) {
-        return dao.selectByType(codeType);
+    public List<Trade> getListByType(String codeType, Long userId) {
+        //查询用户角色
+        List<RoleRelationKey> roleRelationKeys = roleRelationDao.getRelosByUserId(userId);
+        if(roleRelationKeys!=null && roleRelationKeys.size()>0){
+            for (RoleRelationKey relo : roleRelationKeys){
+                if(relo.getJuesId()==33||relo.getJuesId()==1){
+                    return dao.selectByType(codeType);
+                }
+            }
+        }
+
+        //查询审核者列表
+        String assessors = moduleDao.getAssessors(moduleId);
+        String renyId = userDao.getOneColumnById(userId,"reny_id","yongh_id");
+        if(renyId!=null&&assessors!=null && assessors.contains(renyId)){
+            return dao.selectByType(codeType);
+        }
+
+        //查询提交者权限
+        String submitors = moduleDao.getSubmitors(moduleId);
+        String departId = userDao.getOneColumnById(userId,"danw_id","yongh_id");
+        if(renyId!=null&&submitors!=null && submitors.contains(renyId)){
+            return dao.selectByTypeAndDepartId(codeType,departId);
+        }
+
+        //查询具体权限
+        List<Privilege> privileges = privilegeDao.getPrivilege(userId,moduleId);
+        if(privileges!=null && privileges.size()>0){
+            for(Privilege privilege : privileges){
+                if(privilege.getJuesjb()==60){
+                    return dao.selectByType(codeType);
+                }else if(privilege.getJuesjb()==40){
+                    return dao.selectByTypeAndDepartId(codeType,departId);
+                }
+            }
+        }
+
+        //查询个人参与项目权限
+        return dao.selectByTypeAndUserId(codeType,userId);
     }
 
     public void delMemberById(Long id) {
-        memberDao.deleteById(id);
+        memberDao.deleteByPrimaryKey(id);
     }
 
-    public void saveTradeMember(TradeMember member) {
+    public void saveTradeMember(TradeMember member, Long yonghId, String xingm) {
+        member.setOperatorId(yonghId);
+        member.setOperator(xingm);
         if(member.getId()!=null){
-            memberDao.updateSelective(member);
+            member.setModifyDate(new Date());
+            memberDao.updateByPrimaryKeySelective(member);
+
         }else{
+            member.setCreateDate(new Date());
             memberDao.insertSelective(member);
+
         }
     }
 
@@ -250,16 +310,60 @@ public class TradeServiceImpl implements TradeService,Serializable {
         fundsDao.deleteByPrimaryKey(id);
     }
 
-    public void saveFunds(TradeFunds funds) {
+    @Transactional(rollbackFor={Exception.class})
+    public void saveFunds(TradeFunds funds, Long yonghId, String xingm) {
+        funds.setOperatorId(yonghId);
+        funds.setOperator(xingm);
+        //如果id为空 则是新增
         if(funds.getId()==null){
+            funds.setCreateDate(new Date());
             fundsDao.insertSelective(funds);
+
+            Trade trade = dao.selectByPrimaryKey(funds.getProjectId());
+
+            //如果是第一次新增  不用计算加和  否则相加
+            if(trade.getReceivedAmount()==null){
+                trade.setReceivedAmount(funds.getFunds());
+            }else{
+                trade.setReceivedAmount(trade.getReceivedAmount().add(funds.getFunds()));
+            }
+
+            dao.updateByPrimaryKeySelective(trade);
         }else{
+            //更新前获取原始数据
+            TradeFunds funds_old = fundsDao.selectByPrimaryKey(funds.getId());
+
+            funds.setModifyDate(new Date());
             fundsDao.updateByPrimaryKeyWithBLOBs(funds);
+
+            Trade trade = dao.selectByPrimaryKey(funds.getProjectId());
+            //更新时 先减去原始值再加上新值
+            trade.setReceivedAmount(trade.getReceivedAmount().subtract(funds_old.getFunds()).add(funds.getFunds()));
+
+            dao.updateByPrimaryKeySelective(trade);
         }
+
+
+
     }
 
+    @Transactional(rollbackFor={Exception.class})
     public void access(Long id, Long userId, String username) {
-        dao.access(id,userId,username,1,new Date());
+        //审核时，生成项目编码
+        Trade trade = dao.selectByPrimaryKey(id);
+
+        if(trade.getProjectNum()==null){
+            String departNum = departDao.getDepartNumById(trade.getDepartId().intValue());
+            String mark = trade.getProjectYear() + departNum.trim() + trade.getProjectTypeCode().trim();
+            String serialNum = getSerialNum(mark);
+
+            trade.setProjectNum(mark+serialNum);
+        }
+
+
+
+        dao.updateByPrimaryKeySelective(trade);
+        dao.workflow(id,userId,username,1,1,new Date());
     }
 
     public List<TradeSubsidiary> getSubsidiaryList(Long projectId) {
@@ -270,12 +374,67 @@ public class TradeServiceImpl implements TradeService,Serializable {
         return fundsDao.getCountByProjectId(id);
     }
 
-    public Integer getMembersCountByProjectId(Long id) {
-        return null;
+    public Integer getMembersCountByProjectId(Long projectId) {
+        return memberDao.getMembersCountByProjectId(projectId);
     }
 
-    public Integer getSubsidiaryCountByProjectId(Long id) {
-        return null;
+    public Integer getSubsidiaryCountByProjectId(Long projectId) {
+        return tradeSubsidiaryDao.getSubsidiaryCountByProjectId(projectId);
+    }
+
+    public List<TradeSubsidiary> getOtherZaasCodes(Long projectId) {
+        return tradeSubsidiaryDao.getSubsidiaryListByProjectId(projectId);
+    }
+
+    public void saveTradeSubsidiary(TradeSubsidiary subsidiary,Long userId,String username) {
+        subsidiary.setOperatorId(userId);
+        subsidiary.setOperator(username);
+        if(subsidiary.getId()==null){
+            subsidiary.setCreateDate(new Date());
+            tradeSubsidiaryDao.insertSelective(subsidiary);
+        }else{
+            subsidiary.setModifyDate(new Date());
+            tradeSubsidiaryDao.updateByPrimaryKeySelective(subsidiary);
+        }
+    }
+
+    public void delSubsidiaryById(Long id) {
+        tradeSubsidiaryDao.deleteByPrimaryKey(id);
+    }
+
+    public void delFundsByProjectId(Long projectId) {
+        fundsDao.deleteByProjectId(projectId);
+    }
+
+    public void delMemberByProjectId(Long projectId) {
+        memberDao.deleteByProjectId(projectId);
+    }
+
+    public void delSubsidiaryByProjectId(Long projectId) {
+        tradeSubsidiaryDao.delSubsidiaryByProjectId(projectId);
+    }
+
+    public void delChildByProjectId(Long id) {
+        Trade trade = dao.selectByPrimaryKey(id);
+        if(trade!=null){
+            childDao.delChildByYearAndQuarter(trade.getProjectYear().toString(),getQuarter(trade.getProjectNum()));
+        }
+    }
+
+    public void back(Long id, Long userId, String username) {
+        dao.workflow(id,userId,username,0,1,new Date());
+    }
+
+    public void notAccess(Long id, Long userId, String username) {
+        dao.workflow(id,userId,username,1,0,new Date());
+    }
+
+    public List<HashMap<String,Integer>> getCharts(String columName, Boolean whereMark, String colunNameWhere, String nameWhere) {
+        return dao.getCharts(columName,whereMark,colunNameWhere,nameWhere);
+    }
+
+    public Integer getProjectCountByUserId(Long userId) {
+        return memberDao.getProjectCountByUserId(userId);
     }
 
 
@@ -283,10 +442,8 @@ public class TradeServiceImpl implements TradeService,Serializable {
         if(num==null){
             return "0";
         }else if(num.toString().length()<2){
-            return "000"+num.toString();
-        }else if(num.toString().length()<3){
             return "00"+num.toString();
-        }else if(num.toString().length()<4){
+        }else if(num.toString().length()<3){
             return "0"+num.toString();
         }else{
             return num.toString();
@@ -337,5 +494,20 @@ public class TradeServiceImpl implements TradeService,Serializable {
             projectNum += "004";
         }
         return projectNum;
+    }
+
+    public String getQuarter(String projectNum){
+        if(projectNum==null){
+            return "";
+        }else if(projectNum.contains("001")){
+            return "第一季度";
+        }else if(projectNum.contains("002")){
+            return "第二季度";
+        }else if(projectNum.contains("003")){
+            return "第三季度";
+        }else if(projectNum.contains("004")){
+            return "第四季度";
+        }
+        return "";
     }
 }

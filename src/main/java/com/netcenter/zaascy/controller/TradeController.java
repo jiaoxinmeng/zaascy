@@ -4,7 +4,6 @@ import com.netcenter.zaascy.bean.*;
 import com.netcenter.zaascy.service.CommonService;
 import com.netcenter.zaascy.service.TradeService;
 import com.netcenter.zaascy.util.ZaascyStub;
-import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
@@ -28,7 +27,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.ParseException;
@@ -48,7 +46,7 @@ public class TradeController{
     private static Log log = LogFactory.getLog(TradeController.class);
 
     @RequestMapping(value = "/newFirst")
-    public ModelAndView newFirst(HttpSession session){
+    public ModelAndView newFirst(String codeType,HttpSession session){
         ModelAndView mav = new ModelAndView();
         List<Depart> departList = commonService.getInstituteList();
         List<TradeResource> zaasTechTypeList = commonService.getResourceByType("zaasTechType");
@@ -62,22 +60,20 @@ public class TradeController{
         mav.addObject("departId",departId);
         mav.addObject("departList",departList);
         mav.addObject("zaasTechTypeList",zaasTechTypeList);
+        mav.addObject("codeType",codeType);
         mav.setViewName("trade_first");
         return mav;
     }
 
     @RequestMapping(value = "/newNext")
-    public ModelAndView newNext(String zaasCode, String zaasTechType, HttpSession session){
+    public ModelAndView newNext(String codeType,String zaasCode, String zaasTechType, HttpSession session){
         ModelAndView mav = new ModelAndView();
 
-        Integer departId = 0;
         User user = (User)session.getAttribute("user");
-
+        Long departId = new Long(0);
        if(user!=null){
-            departId = user.getDanwId().intValue();
+           departId = user.getDanwId();
         }
-
-        //log.info("zaasCode:"+zaasCode);
 
         List<Depart> departList = commonService.getDepartList();
         List<TradeResource> projectTypeList = commonService.getResourceByType("projectType");
@@ -90,6 +86,7 @@ public class TradeController{
         mav.addObject("departId",departId);
         mav.addObject("zaasCode",zaasCode);
         mav.addObject("zaasTechType",zaasTechType);
+        mav.addObject("codeType",codeType);
         mav.setViewName("trade_next");
         return mav;
     }
@@ -239,13 +236,13 @@ public class TradeController{
     }
 
     @RequestMapping(value = "/list")
-    public ModelAndView list(String codeType){
+    public ModelAndView list(String codeType,HttpSession session){
+        User user = (User) session.getAttribute("user");
         ModelAndView mav = new ModelAndView();
-        //List<Trade> tradeList = tradeService.selectAll();
         if(codeType==null||codeType.equals("")){
             mav.setViewName("index");
         }else{
-            List<Trade> tradeList = tradeService.getListByType(codeType);
+            List<Trade> tradeList = tradeService.getListByType(codeType,user.getYonghId());
             mav.addObject("tradeList",tradeList);
             mav.addObject("codeType",codeType);
             mav.setViewName("trade_list");
@@ -266,6 +263,8 @@ public class TradeController{
                 mav.addObject("otherZaasCodes",otherZaasCodes);
 
             }
+            List<TradeSubsidiary> otherZaasCodes = tradeService.getOtherZaasCodes(id);
+            mav.addObject("otherZaasCodes",otherZaasCodes);
 
         }
         mav.addObject("codeType",codeType);
@@ -274,20 +273,23 @@ public class TradeController{
     }
 
     @RequestMapping(value = "/edit")
-    public ModelAndView edit(Long id){
+    public ModelAndView edit(Long id,String codeType){
         ModelAndView mav = new ModelAndView();
         if(id!=0){
             Trade trade = tradeService.selectByPrimaryKey(id);
             mav.addObject("trade",trade);
         }
-        List<Depart> departList = commonService.getDepartList();
+        List<Depart> departList = commonService.getInstituteList();
         List<TradeResource> projectTypeList = commonService.getResourceByType("projectType");
         List<TradeResource> zaasTechTypeList = commonService.getResourceByType("zaasTechType");
         List<TradeResource> otherDepartList = commonService.getResourceByType("otherDepart");
+        List<TradeSubsidiary> otherZaasCodes = tradeService.getOtherZaasCodes(id);
         mav.addObject("projectTypeList",projectTypeList);
         mav.addObject("zaasTechTypeList",zaasTechTypeList);
         mav.addObject("departList",departList);
         mav.addObject("otherDepartList",otherDepartList);
+        mav.addObject("otherZaasCodes",otherZaasCodes);
+        mav.addObject("codeType",codeType);
         mav.setViewName("trade_edit");
         return mav;
     }
@@ -304,9 +306,16 @@ public class TradeController{
             trade.setOperatorId(user.getRenyId());
             trade.setOperator(user.getXingm());
         }
-        System.out.println(trade.toString());
+        //System.out.println(trade.toString());
         tradeService.saveTrade(trade);
-        attr.addAttribute("id",trade.getId());
+
+        Trade trade2 = tradeService.selectByPrimaryKey(trade.getId());
+        if(trade2.getJoinState()!=null&&trade2.getJoinState()==1&&trade2.getSignAmount()!=null){
+            //同步至51技术库
+            String str_nyj = sendNjy(trade2);
+            System.out.println(str_nyj);
+        }
+        attr.addAttribute("codeType",trade.getProjectTypeCode());
         mav.setViewName("redirect:/trade/list.do");
         return mav;
     }
@@ -314,56 +323,38 @@ public class TradeController{
     @RequestMapping(value = "/beforeDel")
     @ResponseBody
     public String beforeDel(Long id){
-        if(id!=null){
-            Integer fundsCount = tradeService.getFundsCountByProjectId(id);
-            Integer memberCount = tradeService.getMembersCountByProjectId(id);
-            Integer subsidiaryCount = tradeService.getSubsidiaryCountByProjectId(id);
-
+        JSONObject result = new JSONObject();
+        if(id==null){
+            return result.toString();
         }
-        return "";
+        Integer fundsCount = tradeService.getFundsCountByProjectId(id);
+        Integer memberCount = tradeService.getMembersCountByProjectId(id);
+        Integer subsidiaryCount = tradeService.getSubsidiaryCountByProjectId(id);
+
+        try {
+            result.put("fundsCount", fundsCount);
+            result.put("memberCount", memberCount);
+            result.put("subsidiaryCount", subsidiaryCount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result.toString();
     }
 
     @RequestMapping(value = "/del")
-    public ModelAndView del(Long id,RedirectAttributes attr){
+    public ModelAndView del(Long id,RedirectAttributes attr,String codeType){
         ModelAndView mav = new ModelAndView();
         if(id!=null){
+            tradeService.delChildByProjectId(id);
             tradeService.deleteByPrimaryKey(id);
+            tradeService.delFundsByProjectId(id);
+            tradeService.delMemberByProjectId(id);
+            tradeService.delSubsidiaryByProjectId(id);
+
         }
-        attr.addAttribute("id",id);
+        attr.addAttribute("codeType",codeType);
         mav.setViewName("redirect:/trade/list.do");
         return mav;
-    }
-
-    @RequestMapping(value = "/submit")
-    @ResponseBody
-    public String submit(Long id, HttpSession session){
-        User user = (User)session.getAttribute("user");
-        if(user!=null){
-            tradeService.submit(id,user.getYonghId(),user.getXingm());
-        }
-        JSONObject result = new JSONObject();
-        try {
-            result.put("code", "success");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result.toString();
-    }
-
-    @RequestMapping(value = "/access")
-    @ResponseBody
-    public String access(Long id, HttpSession session){
-        User user = (User)session.getAttribute("user");
-        if(user!=null){
-            tradeService.access(id,user.getYonghId(),user.getXingm());
-        }
-        JSONObject result = new JSONObject();
-        try {
-            result.put("code", "success");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return result.toString();
     }
 
     @RequestMapping(value = "/checkChildExist")
@@ -474,7 +465,8 @@ public class TradeController{
 
 
             if(sheet.getColumns()==10){
-                tradeChild.setYear(new Integer(sheet.getCell(0, i).getContents().trim()));
+                //tradeChild.setYear(new Integer(sheet.getCell(0, i).getContents().trim()));
+                tradeChild.setYear(Integer.parseInt(year));
                 tradeChild.setProjectNumber(sheet.getCell(1, i).getContents().trim());
                 tradeChild.setSampleNumber(sheet.getCell(2, i).getContents().trim());
                 tradeChild.setSampleName(sheet.getCell(3, i).getContents().trim());
@@ -514,12 +506,13 @@ public class TradeController{
         }
 
         //生成一条记录
-        Integer id = tradeService.addTradeByChild(Integer.parseInt(year),quarter,remarks,user.getYonghId(),user.getXingm());
-        Trade trade = tradeService.selectByPrimaryKey(new Long(id));
+        Long id = tradeService.addTradeByChild(Integer.parseInt(year),quarter,remarks,user.getYonghId(),user.getXingm());
+
+        Trade trade = tradeService.selectByPrimaryKey(id);
 
         try {
             result.put("childCount", list.size());
-            result.put("trade", trade);
+            result.put("tradeIntentionAmount", trade!=null?trade.getIntentionAmount():0);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -527,5 +520,237 @@ public class TradeController{
         return result.toString();
     }
 
+    @RequestMapping(value = "/goTradeUpload")
+    public ModelAndView goTradeUpload(Long id,String codeType,Integer type){
+        ModelAndView mav = new ModelAndView();
+        Trade trade = tradeService.selectByPrimaryKey(id);
+        if(trade!=null){
+            mav.addObject("projectName",trade.getProjectName());
+            mav.addObject("projectNum",trade.getProjectNum());
+            mav.addObject("id",trade.getId());
+        }
 
+        mav.addObject("codeType",codeType);
+        //1代表跳转到审批表上传
+        if(type!=null&&type==1){
+            mav.setViewName("trade_attachment_table_upload");
+        }else{
+            mav.setViewName("trade_complete");
+        }
+        return mav;
+    }
+
+    @RequestMapping(value = "/saveTradeComplete")
+    @ResponseBody
+    public String tradeComplete(MultipartHttpServletRequest request, @RequestParam(value = "myfile", required = false) CommonsMultipartFile myfile, HttpSession session){
+        JSONObject result = new JSONObject();
+        User user = (User)session.getAttribute("user");
+
+        String id = request.getParameter("id");
+        String signAmount = request.getParameter("signAmount");
+
+        if(id==null||signAmount==null||myfile==null){
+            try {
+                result.put("code","0");
+                result.put("msg","错误参数");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return result.toString();
+        }
+        //application/pdf
+        String contentType = myfile.getContentType();
+        //10M 10*1048576
+        Long contentSize = myfile.getSize();
+
+        if(!contentType.contains("pdf")){
+            try {
+                result.put("code","0");
+                result.put("msg","请上传正确格式的PDF文档");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return result.toString();
+        }else if(contentSize>10*1048576){
+            try {
+                result.put("code","0");
+                result.put("msg","文件过大，请不要超过10M");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return result.toString();
+        }
+
+        Trade trade = tradeService.selectByPrimaryKey(new Long(id));
+
+        if(trade!=null){
+            String path = session.getServletContext().getRealPath("contract").replace("contract", "contract/" + trade.getProjectYear() + "/");
+
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String timeStamp = sdf.format(date);
+
+            String fileName =  trade.getProjectNum()+"_"+timeStamp+".pdf";
+
+            System.out.println(fileName);
+            File targetFile = new File(path, fileName);
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+
+            //保存
+            try {
+                myfile.transferTo(targetFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //数据传入数据库
+            Trade record  = new Trade();
+            record.setId(trade.getId());
+            record.setAttachment(fileName);
+            record.setSignAmount(new BigDecimal(signAmount));
+            record.setOperatorId(user.getYonghId());
+            record.setOperator(user.getXingm());
+            record.setModifyDate(new Date());
+            tradeService.updateByPrimaryKeySelective(record);
+
+
+            //同步至51技术库
+            String str_nyj = sendNjy(trade);
+
+            try {
+                result.put("code", 1);
+                if(str_nyj.contains("recordSuccess")){
+                    result.put("msg", "上传成功,同步成功");
+                }else {
+                    result.put("msg", "上传成功,同步失败");
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result.toString();
+    }
+
+
+    @RequestMapping(value = "/saveTradeAttachmentTable")
+    @ResponseBody
+    public String tradeAttachmentTable(MultipartHttpServletRequest request, @RequestParam(value = "myfile", required = false) CommonsMultipartFile myfile, HttpSession session){
+        JSONObject result = new JSONObject();
+        User user = (User)session.getAttribute("user");
+
+        String id = request.getParameter("id");
+
+        if(id==null||myfile==null){
+            try {
+                result.put("code","0");
+                result.put("msg","错误参数");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return result.toString();
+        }
+        //application/pdf
+        String contentType = myfile.getContentType();
+        //10M 10*1048576
+        Long contentSize = myfile.getSize();
+
+        if(!contentType.contains("pdf")){
+            try {
+                result.put("code","0");
+                result.put("msg","请上传正确格式的PDF文档");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return result.toString();
+        }else if(contentSize>2*1048576){
+            try {
+                result.put("code","0");
+                result.put("msg","文件过大，请不要超过2M");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return result.toString();
+        }
+
+        Trade trade = tradeService.selectByPrimaryKey(new Long(id));
+
+        if(trade!=null){
+            String path = session.getServletContext().getRealPath("table").replace("table", "table/" + trade.getProjectYear() + "/");
+
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String timeStamp = sdf.format(date);
+
+            String fileName =  trade.getProjectNum()+"_"+timeStamp+".pdf";
+
+            System.out.println(fileName);
+
+            File targetFile = new File(path, fileName);
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+
+            //保存文件
+            try {
+                myfile.transferTo(targetFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //数据传入数据库
+            Trade record  = new Trade();
+            record.setId(trade.getId());
+            record.setAttachmentTable(fileName);
+            record.setOperatorId(user.getYonghId());
+            record.setOperator(user.getXingm());
+            record.setModifyDate(new Date());
+            tradeService.updateByPrimaryKeySelective(record);
+
+        }
+
+        return result.toString();
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));   //true:允许输入空值，
+    }
+
+    //同步至51技术库
+    public String sendNjy(Trade trade){
+        String str_nyj = "";
+        if(trade==null|| trade.getZaasCode()==null){
+            return str_nyj;
+        }
+        try {
+            ZaascyStub zaasStub = new ZaascyStub();
+            ZaascyStub.SaveTrade saveTrade = new ZaascyStub.SaveTrade();
+            saveTrade.setZaasCode(trade.getZaasCode());
+            saveTrade.setProjectName(trade.getProjectName()==null?"":trade.getProjectName());
+            saveTrade.setEndDate(trade.getEndDate());
+            saveTrade.setStartDate(trade.getStartDate());
+            saveTrade.setProjectYear(trade.getProjectYear()==null?0:trade.getProjectYear());
+            saveTrade.setSignAmount(trade.getSignAmount()==null?new BigDecimal("0.00"):trade.getSignAmount());
+            saveTrade.setProjectSummary(trade.getProjectSummary()==null?"":trade.getProjectSummary());
+            saveTrade.setDepartFullName(trade.getDepartFullName()==null?"":trade.getDepartFullName());
+            saveTrade.setCustomerDepart(trade.getCustomerDepart()==null?"":trade.getCustomerDepart());
+            saveTrade.setUsername(trade.getSubmiter()==null?"":trade.getCustomerDepart());
+            str_nyj = zaasStub.saveTrade(saveTrade).get_return();
+            System.out.println("返回结果-------"+str_nyj);
+        } catch (AxisFault axisFault) {
+            axisFault.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str_nyj;
+    }
 }

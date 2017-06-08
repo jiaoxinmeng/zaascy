@@ -22,4 +22,6 @@ public interface TradeResourceMapper {
     List<TradeResource> selectByType(String type);
 
     List<String> getProjectTypeList();
+
+    String getMessageContentByType(String type);
 }

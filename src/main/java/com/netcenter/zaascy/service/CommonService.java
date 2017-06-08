@@ -1,6 +1,7 @@
 package com.netcenter.zaascy.service;
 
 import com.netcenter.zaascy.bean.*;
+import org.codehaus.jettison.json.JSONObject;
 
 import java.util.List;
 
@@ -33,4 +34,10 @@ public interface CommonService {
     String getDepartFullNameById(Integer departId);
 
     List<String> getProjectTypeList();
+
+    List<String> getUsers(Long departId);
+
+    List<String> getUsers(Long departId, Integer personType);
+
+    void sendMessageBytype(String type,Long tradeId);
 }
